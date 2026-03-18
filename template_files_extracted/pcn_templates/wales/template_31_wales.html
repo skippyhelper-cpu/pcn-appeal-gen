@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PCN Appeal - Code 31 (Wales) — Entering and stopping in a box junction when prohibited</title>
+
+    <style>
+        body { font-family: Georgia, serif; line-height: 1.7; max-width: 800px; margin: 40px auto; padding: 20px; color: #1a1a1a; }
+        .address-block { margin-bottom: 20px; }
+        .date { text-align: right; margin-bottom: 20px; }
+        .subject { font-weight: bold; margin-bottom: 20px; border-left: 3px solid #333; padding-left: 12px; }
+        .signature { margin-top: 40px; }
+        h3 { margin-top: 28px; font-size: 1em; text-transform: uppercase; letter-spacing: 0.05em; }
+        ul { margin-top: 8px; }
+        li { margin-bottom: 4px; }
+    </style>
+
+</head>
+<body>
+    <div class="address-block">
+        {{USER_NAME}}<br>
+        {{USER_ADDRESS}}<br>
+        {{USER_POSTCODE}}
+    </div>
+
+    <div class="date">{{DATE}}</div>
+
+    <div class="address-block">
+        {{COUNCIL_NAME}}<br>
+        Parking Services<br>
+        {{COUNCIL_ADDRESS}}<br>
+        {{COUNCIL_POSTCODE}}
+    </div>
+
+    <div class="subject">
+        RE: Formal Representations Against Penalty Charge Notice {{PCN_REF}}<br>
+        Vehicle Registration: {{VEHICLE_REG}}<br>
+        Date of Contravention: {{CONTRAVENTION_DATE}}<br>
+        Location: {{LOCATION}}
+    </div>
+
+    <p>Dear Sir or Madam,</p>
+
+    <p>I am writing to make formal representations against Penalty Charge Notice {{PCN_REF}}, issued by {{COUNCIL_NAME}} in respect of vehicle {{VEHICLE_REG}} at {{LOCATION}} on {{CONTRAVENTION_DATE}}.</p>
+
+    <p>Having reviewed the circumstances and the evidence available, I believe the Penalty Charge Notice should be cancelled on the following grounds.</p>
+
+    <h3>1. The Contravention Did Not Occur</h3>
+    <p>{{CIRCUMSTANCES}}</p>
+    <p>Code 31 is a moving traffic contravention. The contravention occurs only where a vehicle enters the yellow box when the exit is not clear. Where the exit was clear at the moment of entry but subsequently became blocked due to other road users, no contravention occurred.</p>
+
+    <h3>2. Exit Not Blocked at Point of Entry</h3>
+    <p>The critical question is whether the exit was clear at the moment the vehicle entered the box. Where CCTV evidence does not clearly establish this, the contravention is not made out.</p>
+
+    <h3>3. CCTV Evidence</h3>
+    <p>Code 31 is generally enforced by CCTV. The footage must clearly show the vehicle entering the box when the exit was not clear. Ambiguous or incomplete footage does not establish the contravention.</p>
+
+    <h3>4. Yellow Box Marking Compliance</h3>
+    <p>Box junction markings must comply with Diagram 1043 of TSRGD 2016. Any material non-compliance may render the restriction unenforceable.</p>
+
+    <h3>5. Mitigating Circumstances</h3>
+    <p>{{MITIGATING_DETAILS}}</p>
+
+    <h3>6. Legal Framework</h3>
+    <p>In Wales, moving traffic enforcement is governed by the Traffic Management Act 2004 and the Civil Enforcement of Parking Contraventions (Wales) Regulations 2008. The authority must demonstrate it holds the requisite powers and that all statutory requirements are met.</p>
+
+
+    <p>In light of the above, I respectfully request that the Penalty Charge Notice is cancelled in full.</p>
+
+    <p>If you do not accept these representations, please treat this letter as a formal request for the following evidence:</p>
+    <ul>
+        <li>All Civil Enforcement Officer (CEO) notes and observations made at the time of the alleged contravention;</li>
+        <li>All photographic evidence taken by the CEO or any CCTV/camera system;</li>
+        <li>The relevant Traffic Regulation Order(s) (TRO) and any amendments or variations;</li>
+        <li>Confirmation that the TRO is valid, properly made and currently in force;</li>
+        <li>A full explanation of how all statutory requirements under the Traffic Management Act 2004 and the Civil Enforcement of Parking Contraventions (Wales) Regulations 2008 have been satisfied.</li>
+    </ul>
+
+    <p>I reserve the right to appeal to the Traffic Penalty Tribunal should representations be rejected, and to rely on any additional grounds that may arise from the evidence disclosed.</p>
+
+    <p>I look forward to your response within the statutory period.</p>
+
+    <div class="signature">
+        <p>Yours faithfully,</p>
+        <br>
+        <p>{{USER_NAME}}</p>
+    </div>
+</body>
+</html>

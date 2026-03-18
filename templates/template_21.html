@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PCN Appeal - Code 21</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 20px; }
+        .address-block { margin-bottom: 20px; }
+        .date { text-align: right; margin-bottom: 20px; }
+        .subject { font-weight: bold; margin-bottom: 20px; }
+        .signature { margin-top: 40px; }
+    </style>
+</head>
+<body>
+    <div class="address-block">
+        {{USER_NAME}}<br>
+        {{USER_ADDRESS}}<br>
+        {{USER_POSTCODE}}
+    </div>
+
+    <div class="date">{{DATE}}</div>
+
+    <div class="address-block">
+        {{COUNCIL_NAME}}<br>
+        Parking Services<br>
+        {{COUNCIL_ADDRESS}}
+    </div>
+
+    <div class="subject">
+        RE: Formal Representations Against Penalty Charge Notice {{PCN_REF}}<br>
+        Vehicle Registration: {{VEHICLE_REG}}<br>
+        Date of Contravention: {{CONTRAVENTION_DATE}}<br>
+        Location: {{LOCATION}}
+    </div>
+
+    <p>Dear Sir or Madam,</p>
+
+    <p>I am writing to make formal representations against Penalty Charge Notice {{PCN_REF}}, issued by {{COUNCIL_NAME}} in respect of vehicle {{VEHICLE_REG}} at {{LOCATION}} on {{CONTRAVENTION_DATE}}.</p>
+
+    <p>Having reviewed the circumstances and available evidence, I believe the Penalty Charge Notice should be cancelled on the following grounds.</p>
+
+    <h3>1. The Contravention Did Not Occur</h3>
+    <p>{{CIRCUMSTANCES}}</p>
+
+    <h3>2. Procedural Impropriety</h3>
+    <p>There may have been a procedural impropriety in the issuing of this PCN. The authority has statutory duties under the Traffic Management Act 2004 and the Civil Enforcement of Parking Contraventions (England) General Regulations 2007. Based on the available evidence and timeline, it is unclear whether these duties were fully complied with.</p>
+
+    <h3>3. Signage and Road Markings</h3>
+    <p>The alleged contravention may not have occurred. Signage and/or road markings at the location do not appear to clearly or correctly convey the restriction as required by the Traffic Signs Regulations and General Directions 2016 and relevant guidance. Visibility or positioning issues made it difficult to understand the terms when parking.</p>
+
+    <h3>4. Mitigating Circumstances</h3>
+    <p>Further to the above, I would draw your attention to the following mitigating circumstances that support my representations:</p>
+    <p>{{MITIGATING_DETAILS}}</p>
+
+    <h3>5. Legal Considerations</h3>
+    <p>Under the Traffic Management Act 2004, Section 66, a penalty charge may only be imposed where a contravention has actually occurred and where proper signage is in place in accordance with the Traffic Signs Regulations and General Directions 2016. The authority must also comply with the Civil Enforcement of Parking Contraventions (England) General Regulations 2007.</p>
+
+    <p>Taking the above points together, I respectfully request that the Penalty Charge Notice is cancelled.</p>
+
+    <p>If the authority does not agree, please treat this letter as a formal request for:</p>
+    <ul>
+        <li>All CEO notes and photographs;</li>
+        <li>The relevant Traffic Regulation Order(s) and any amendments;</li>
+        <li>A full explanation of how the statutory requirements have been satisfied.</li>
+    </ul>
+
+    <p>I look forward to your response and trust that the representation will be considered fairly in line with the council's policy and statutory guidance.</p>
+
+    <div class="signature">
+        <p>Yours faithfully,</p>
+        <p>{{USER_NAME}}</p>
+    </div>
+</body>
+</html>

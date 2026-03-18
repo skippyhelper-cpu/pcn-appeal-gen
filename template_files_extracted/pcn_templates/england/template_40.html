@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PCN Appeal - Code 40 (England) — Parked in a designated disabled person's parking place without displaying a valid disabled person's badge</title>
+
+    <style>
+        body { font-family: Georgia, serif; line-height: 1.7; max-width: 800px; margin: 40px auto; padding: 20px; color: #1a1a1a; }
+        .address-block { margin-bottom: 20px; }
+        .date { text-align: right; margin-bottom: 20px; }
+        .subject { font-weight: bold; margin-bottom: 20px; border-left: 3px solid #333; padding-left: 12px; }
+        .signature { margin-top: 40px; }
+        h3 { margin-top: 28px; font-size: 1em; text-transform: uppercase; letter-spacing: 0.05em; }
+        ul { margin-top: 8px; }
+        li { margin-bottom: 4px; }
+    </style>
+
+</head>
+<body>
+    <div class="address-block">
+        {{USER_NAME}}<br>
+        {{USER_ADDRESS}}<br>
+        {{USER_POSTCODE}}
+    </div>
+
+    <div class="date">{{DATE}}</div>
+
+    <div class="address-block">
+        {{COUNCIL_NAME}}<br>
+        Parking Services<br>
+        {{COUNCIL_ADDRESS}}<br>
+        {{COUNCIL_POSTCODE}}
+    </div>
+
+    <div class="subject">
+        RE: Formal Representations Against Penalty Charge Notice {{PCN_REF}}<br>
+        Vehicle Registration: {{VEHICLE_REG}}<br>
+        Date of Contravention: {{CONTRAVENTION_DATE}}<br>
+        Location: {{LOCATION}}
+    </div>
+
+    <p>Dear Sir or Madam,</p>
+
+    <p>I am writing to make formal representations against Penalty Charge Notice {{PCN_REF}}, issued by {{COUNCIL_NAME}} in respect of vehicle {{VEHICLE_REG}} at {{LOCATION}} on {{CONTRAVENTION_DATE}}.</p>
+
+    <p>Having reviewed the circumstances and the evidence available, I believe the Penalty Charge Notice should be cancelled on the following grounds.</p>
+
+    <h3>1. The Contravention Did Not Occur — A Valid Blue Badge Was Displayed</h3>
+    <p>{{CIRCUMSTANCES}}</p>
+    <p>A Blue Badge must be displayed with the front face showing the badge holder's photograph, the expiry date and the badge number. A CEO must make reasonable efforts to read the badge before issuing a PCN. Where the badge was present but obscured by sunlight, condensation or dashboard position, the CEO must take all practicable steps to inspect it. A failure to do so may constitute procedural impropriety: see TPT adjudicator guidance on Blue Badge enforcement.</p>
+
+    <h3>2. Badge Was Valid at Time of Issue</h3>
+    <p>If the Blue Badge was valid at the time of the alleged contravention — even if it expired shortly thereafter — the contravention did not occur. The authority must confirm the precise expiry date of the badge and the exact time of the alleged contravention before contending that the badge was invalid.</p>
+
+    <h3>3. Disabled Bay Designation Compliance</h3>
+    <p>A designated disabled bay must be established by a TRO and signed in accordance with TSRGD 2016, Diagram 1028.3. Where the bay marking or sign is absent, damaged or non-compliant, the designation may be unenforceable. I request confirmation that the bay was lawfully designated and that the signage was compliant at the time of the alleged contravention.</p>
+
+    <h3>4. Procedural Impropriety</h3>
+    <p>The PCN must comply with Section 66 of the Traffic Management Act 2004 and the Civil Enforcement of Parking Contraventions (England) General Regulations 2007. The Blue Badge scheme is administered under Section 21 of the Chronically Sick and Disabled Persons Act 1970 and the Disabled Persons (Badges for Motor Vehicles) (England) Regulations 2000. Any failure to comply with the obligations applicable to Blue Badge enforcement renders the PCN open to challenge.</p>
+
+    <h3>5. Mitigating Circumstances</h3>
+    <p>{{MITIGATING_DETAILS}}</p>
+
+    <h3>6. Legal Framework</h3>
+    <p>The authority must demonstrate: (a) a valid TRO designating the bay; (b) compliant signage under TSRGD 2016; and (c) the absence of a valid Blue Badge displayed in the prescribed manner. All three elements are required. The Disabled Persons (Badges for Motor Vehicles) (England) Regulations 2000 set out the display requirements with which the authority must engage.</p>
+
+
+    <p>In light of the above, I respectfully request that the Penalty Charge Notice is cancelled in full.</p>
+
+    <p>If you do not accept these representations, please treat this letter as a formal request for the following evidence:</p>
+    <ul>
+        <li>All Civil Enforcement Officer (CEO) notes and observations made at the time of the alleged contravention;</li>
+        <li>All photographic evidence taken by the CEO or any CCTV/camera system;</li>
+        <li>The relevant Traffic Regulation Order(s) (TRO) and any amendments or variations;</li>
+        <li>Confirmation that the TRO is valid, properly made and currently in force;</li>
+        <li>A full explanation of how all statutory requirements under the Traffic Management Act 2004 and the Civil Enforcement of Parking Contraventions (England) General Regulations 2007 have been satisfied.</li>
+    </ul>
+
+    <p>I reserve the right to appeal to the Traffic Penalty Tribunal should representations be rejected, and to rely on any additional grounds that may arise from the evidence disclosed.</p>
+
+    <p>I look forward to your response within the statutory period.</p>
+
+    <div class="signature">
+        <p>Yours faithfully,</p>
+        <br>
+        <p>{{USER_NAME}}</p>
+    </div>
+</body>
+</html>

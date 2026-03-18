@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCN Appeal Generator - Create Your Appeal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    <!-- Stripe.js -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LdlX40sAAAAADTiPnvn7tLAM-511ALVzSIzxgGp"></script>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-49TJRR76VG"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-49TJRR76VG');
+    </script>
+    <style>body{font-family:'Inter',sans-serif}</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="text-2xl font-bold text-blue-600">PCN Appeal Generator</a>
+                </div>
+                <div class="flex items-center">
+                    <a href="/" class="text-gray-600 hover:text-gray-900">← Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Progress Stepper -->
+        <div class="bg-white border-b mb-8 -mx-4 px-4 py-6 sm:-mx-8 sm:px-8">
+            <div class="flex items-center justify-center">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold">1</div>
+                    <span class="ml-3 text-sm font-medium text-blue-600">Details</span>
+                </div>
+                
+                <div class="w-16 mx-4 h-1 bg-gray-200 rounded"></div>
+                
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-semibold">2</div>
+                    <span class="ml-3 text-sm text-gray-500">Preview</span>
+                </div>
+                
+                <div class="w-16 mx-4 h-1 bg-gray-200 rounded"></div>
+                
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-semibold">3</div>
+                    <span class="ml-3 text-sm text-gray-500">Payment</span>
+                </div>
+                
+                <div class="w-16 mx-4 h-1 bg-gray-200 rounded"></div>
+                
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-semibold">4</div>
+                    <span class="ml-3 text-sm text-gray-500">Download</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold text-gray-900 mb-2">Enter Your Details</h1>
+            <p class="text-gray-600">Fill in your PCN information to generate your appeal letter</p>
+        </div>
+
+        <!-- Form -->
+        <div class="bg-white rounded-xl shadow-lg p-8">
+            <form id="appealForm" class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">PCN Reference Number</label>
+                        <input type="text" id="pcnRef" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="e.g., AB12345678">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Vehicle Registration</label>
+                        <input type="text" id="vehicleReg" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="e.g., AB12 CDE">
+                    </div>
+                </div>
+
+                <div id="council-container">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Council</label>
+                    <input type="text" id="council" required 
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                           placeholder="Type to search for your council..."
+                           autocomplete="off">
+                    <p class="text-sm text-gray-500 mt-1">Start typing to find your council (e.g., "Wirral", "Liverpool")</p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Country</label>
+                    <div class="flex gap-4 mt-2">
+                        <label class="inline-flex items-center">
+                            <input type="radio" id="countryEngland" name="country" value="england" checked class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                            <span class="ml-2 text-gray-700">England</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" id="countryWales" name="country" value="wales" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                            <span class="ml-2 text-gray-700">Wales</span>
+                        </label>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-1">Select where the PCN was issued. Wales has different legal framework.</p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Contravention Code</label>
+                    <select id="contraventionCode" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">Select contravention code</option>
+                        <optgroup label="Waiting/Loading Restrictions">
+                            <option value="01">01 - Parked in restricted street during prescribed hours</option>
+                            <option value="02">02 - Parked or loading/unloading in a restricted street</option>
+                            <option value="05">05 - Parked after the expiry of paid for time</option>
+                            <option value="06">06 - Parked without clearly displaying a valid pay and display ticket</option>
+                        </optgroup>
+                        <optgroup label="Payment/Permit Contraventions">
+                            <option value="11">11 - Parked without payment of the parking charge</option>
+                            <option value="12">12 - Parked in a residents' parking space without a permit</option>
+                            <option value="16">16 - Parked in a permit space without displaying a valid permit</option>
+                            <option value="21">21 - Parked in a suspended bay/space</option>
+                        </optgroup>
+                        <optgroup label="Loading/Time Restrictions">
+                            <option value="25">25 - Parked in a loading place during restricted hours</option>
+                            <option value="30">30 - Parked for longer than permitted</option>
+                        </optgroup>
+                        <optgroup label="Moving Traffic/Bus Lanes">
+                            <option value="31">31 - Entering and stopping in a box junction when prohibited</option>
+                            <option value="34">34 - Being in a bus lane</option>
+                        </optgroup>
+                        <optgroup label="Stopping Restrictions">
+                            <option value="40">40 - Stopped in a restricted area outside a school</option>
+                            <option value="45">45 - Stopped on a taxi rank</option>
+                            <option value="47">47 - Stopped on a restricted bus stop/stand</option>
+                        </optgroup>
+                        <optgroup label="Footway/Off-Carriageway">
+                            <option value="62">62 - Parked with one or more wheels on or over a footpath</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Date of Contravention</label>
+                        <input type="date" id="contraventionDate" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Time</label>
+                        <input type="time" id="contraventionTime" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                    <input type="text" id="location" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Street name and area">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Your Email</label>
+                    <input type="email" id="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="your@email.com">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
+                    <input type="text" id="applicantName" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Full name as it will appear on the letter">
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Your Address</label>
+                        <input type="text" id="applicantAddress" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Street address">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Postcode</label>
+                        <input type="text" id="applicantPostcode" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="e.g., CH41 1AA">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Circumstances</label>
+                    <textarea id="circumstances" rows="4" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Describe what happened and why you believe the PCN was issued unfairly..."></textarea>
+                <div class="mt-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Example Arguments (optional)</label>
+                    <select id="example-arguments" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm">
+                        <option value="">Select an example to get ideas...</option>
+                    </select>
+                    <p class="text-sm text-gray-500 mt-1">Choose an example and adapt it to your situation</p>
+                </div>
+                    <p class="text-sm text-gray-500 mt-1">Be specific and include any mitigating circumstances</p>
+                </div>
+
+                <!-- Evidence Upload Section -->
+                <div class="border-t pt-6 mt-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Supporting Evidence (Optional)
+                    </label>
+                    <p class="text-sm text-gray-500 mb-3">
+                        Upload photos or documents to support your appeal (e.g., photos of signage, permits, receipts).
+                        Maximum 3 files, 5MB each. Accepted formats: JPG, PNG, PDF.
+                    </p>
+                    
+                    <!-- File Input -->
+                    <div id="uploadArea" class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors cursor-pointer">
+                        <input type="file" id="evidenceFiles" accept=".jpg,.jpeg,.png,.pdf" multiple class="hidden">
+                        <div id="uploadPrompt">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <p class="mt-2 text-sm text-gray-600">
+                                <span class="text-blue-600 font-medium">Click to upload</span> or drag and drop
+                            </p>
+                            <p class="mt-1 text-xs text-gray-500">JPG, PNG, PDF up to 5MB each</p>
+                        </div>
+                    </div>
+                    
+                    <!-- File Preview Area -->
+                    <div id="filePreviewArea" class="mt-4 space-y-2 hidden"></div>
+                    
+                    <!-- File Count Indicator -->
+                    <p id="fileCountInfo" class="text-xs text-gray-500 mt-2 hidden">
+                        <span id="fileCount">0</span>/3 files uploaded
+                    </p>
+                </div>
+
+                <div class="flex items-center">
+                    <input type="checkbox" id="terms" required class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                    <label for="terms" class="ml-2 block text-sm text-gray-700">
+                        I understand this is a template generator and not legal advice. I will review the letter before submitting.
+                    </label>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button type="button" id="saveDraftBtn" class="order-2 sm:order-1 text-gray-600 hover:text-gray-800 px-6 py-2 rounded-lg border border-gray-300 hover:border-gray-400 transition-colors">
+                        <span class="flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
+                            </svg>
+                            Save Draft
+                        </span>
+                    </button>
+                    <button type="submit" id="submitBtn" class="order-1 sm:order-2 bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        Preview Your Letter
+                        <svg class="inline-block w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <p id="draftSavedMessage" class="text-center text-sm text-green-600 mt-2 hidden">
+                    <span class="flex items-center justify-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        Draft saved
+                    </span>
+                </p>
+            </form>
+        </div>
+    </main>
+
+    <!-- Draft Restore Modal -->
+    <div id="draftModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-2xl p-6 max-w-md mx-4">
+            <h3 class="text-xl font-semibold text-gray-900 mb-3">Restore Saved Draft?</h3>
+            <p class="text-gray-600 mb-6">We found a saved draft from a previous session. Would you like to restore it?</p>
+            <div class="flex gap-3 justify-end">
+                <button id="discardDraftBtn" class="px-4 py-2 text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:border-gray-400 transition-colors">
+                    Discard Draft
+                </button>
+                <button id="restoreDraftBtn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                    Restore Draft
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex justify-center gap-6 mb-4">
+                <a href="privacy.html" class="text-gray-400 hover:text-white">Privacy Policy</a>
+                <a href="terms.html" class="text-gray-400 hover:text-white">Terms of Service</a>
+                <a href="feedback.html" class="text-gray-400 hover:text-white">Feedback</a>
+            </div>
+            <p>&copy; 2026 PCN Appeal Generator. Not legal advice.</p>
+        </div>
+    </footer>
+
+    <script src="js/councils.js"></script>
+    <script src="js/council-search.js?v=3"></script>
+    <script src="js/example-arguments.js?v=2"></script>
+    <script src="js/firebase-config.js"></script>
+    <!-- jsPDF for PDF generation with images -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="js/pdf-generator.js"></script>
+    <script src="js/templates.js"></script>
+    <script type="module" src="js/app.js?v=6"></script>
+</body>
+</html>

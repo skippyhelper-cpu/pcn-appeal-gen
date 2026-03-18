@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PCN Appeal - Code 47 (England) — Stopped on a restricted bus stop or stand</title>
+
+    <style>
+        body { font-family: Georgia, serif; line-height: 1.7; max-width: 800px; margin: 40px auto; padding: 20px; color: #1a1a1a; }
+        .address-block { margin-bottom: 20px; }
+        .date { text-align: right; margin-bottom: 20px; }
+        .subject { font-weight: bold; margin-bottom: 20px; border-left: 3px solid #333; padding-left: 12px; }
+        .signature { margin-top: 40px; }
+        h3 { margin-top: 28px; font-size: 1em; text-transform: uppercase; letter-spacing: 0.05em; }
+        ul { margin-top: 8px; }
+        li { margin-bottom: 4px; }
+    </style>
+
+</head>
+<body>
+    <div class="address-block">
+        {{USER_NAME}}<br>
+        {{USER_ADDRESS}}<br>
+        {{USER_POSTCODE}}
+    </div>
+
+    <div class="date">{{DATE}}</div>
+
+    <div class="address-block">
+        {{COUNCIL_NAME}}<br>
+        Parking Services<br>
+        {{COUNCIL_ADDRESS}}<br>
+        {{COUNCIL_POSTCODE}}
+    </div>
+
+    <div class="subject">
+        RE: Formal Representations Against Penalty Charge Notice {{PCN_REF}}<br>
+        Vehicle Registration: {{VEHICLE_REG}}<br>
+        Date of Contravention: {{CONTRAVENTION_DATE}}<br>
+        Location: {{LOCATION}}
+    </div>
+
+    <p>Dear Sir or Madam,</p>
+
+    <p>I am writing to make formal representations against Penalty Charge Notice {{PCN_REF}}, issued by {{COUNCIL_NAME}} in respect of vehicle {{VEHICLE_REG}} at {{LOCATION}} on {{CONTRAVENTION_DATE}}.</p>
+
+    <p>Having reviewed the circumstances and the evidence available, I believe the Penalty Charge Notice should be cancelled on the following grounds.</p>
+
+    <h3>1. The Contravention Did Not Occur</h3>
+    <p>{{CIRCUMSTANCES}}</p>
+    <p>Code 47 applies to vehicles stopped on a restricted bus stop or stand. A stopping restriction at a bus stop means the vehicle must not wait there at all, even briefly. However, the contravention does not occur where the restriction was not in force at the time, where the bus stop markings and signs were non-compliant, or where the vehicle was a bus or vehicle permitted by the relevant TRO.</p>
+
+    <h3>2. Bus Stop Signage and Marking Compliance</h3>
+    <p>A restricted bus stop must be marked with yellow zig-zag lines and associated upright signs complying with TSRGD 2016. Where zig-zag markings are faded, incomplete or non-compliant, or where the associated sign does not meet statutory requirements, the restriction cannot be enforced. Any deficiency in the markings at the exact location of the alleged contravention is a complete defence.</p>
+
+    <h3>3. CCTV Enforcement Requirements</h3>
+    <p>Code 47 is commonly enforced by CCTV. The footage must clearly show the vehicle stopped on the restricted area — within the zig-zag lines at the bus stop — and must confirm that the stop was not for a lawful purpose. I request full disclosure of the CCTV evidence relied upon.</p>
+
+    <h3>4. Procedural Impropriety</h3>
+    <p>The PCN must comply with Section 66 of the Traffic Management Act 2004 and the Civil Enforcement of Parking Contraventions (England) General Regulations 2007. Where the PCN was issued by post on the basis of CCTV evidence, the authority must ensure it was served on the registered keeper within the statutory timeframe.</p>
+
+    <h3>5. Mitigating Circumstances</h3>
+    <p>{{MITIGATING_DETAILS}}</p>
+
+    <h3>6. Legal Framework</h3>
+    <p>Bus stop clearways are designated under TSRGD 2016 and enforced under Section 66 of the Traffic Management Act 2004. The authority must demonstrate compliant zig-zag markings and signs, a valid designation, and CCTV evidence that conclusively establishes the contravention.</p>
+
+
+    <p>In light of the above, I respectfully request that the Penalty Charge Notice is cancelled in full.</p>
+
+    <p>If you do not accept these representations, please treat this letter as a formal request for the following evidence:</p>
+    <ul>
+        <li>All Civil Enforcement Officer (CEO) notes and observations made at the time of the alleged contravention;</li>
+        <li>All photographic evidence taken by the CEO or any CCTV/camera system;</li>
+        <li>The relevant Traffic Regulation Order(s) (TRO) and any amendments or variations;</li>
+        <li>Confirmation that the TRO is valid, properly made and currently in force;</li>
+        <li>A full explanation of how all statutory requirements under the Traffic Management Act 2004 and the Civil Enforcement of Parking Contraventions (England) General Regulations 2007 have been satisfied.</li>
+    </ul>
+
+    <p>I reserve the right to appeal to the Traffic Penalty Tribunal should representations be rejected, and to rely on any additional grounds that may arise from the evidence disclosed.</p>
+
+    <p>I look forward to your response within the statutory period.</p>
+
+    <div class="signature">
+        <p>Yours faithfully,</p>
+        <br>
+        <p>{{USER_NAME}}</p>
+    </div>
+</body>
+</html>

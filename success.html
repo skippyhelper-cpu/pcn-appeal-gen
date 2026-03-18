@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful - PCN Appeal Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-49TJRR76VG"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-49TJRR76VG');
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .step-complete { background: #22c55e; color: white; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <a href="/" class="text-xl font-bold text-blue-600">PCN Appeal Generator</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Progress Stepper -->
+    <div class="bg-white border-b">
+        <div class="max-w-3xl mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-full step-complete flex items-center justify-center font-semibold">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <span class="ml-3 text-sm font-medium text-gray-900">Details</span>
+                </div>
+                
+                <div class="flex-1 mx-4 h-1 bg-green-500 rounded"></div>
+                
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-full step-complete flex items-center justify-center font-semibold">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <span class="ml-3 text-sm font-medium text-gray-900">Preview</span>
+                </div>
+                
+                <div class="flex-1 mx-4 h-1 bg-green-500 rounded"></div>
+                
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-full step-complete flex items-center justify-center font-semibold">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <span class="ml-3 text-sm font-medium text-gray-900">Payment</span>
+                </div>
+                
+                <div class="flex-1 mx-4 h-1 bg-green-500 rounded"></div>
+                
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-full step-complete flex items-center justify-center font-semibold">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <span class="ml-3 text-sm font-medium text-green-600">Download</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="container mx-auto px-4 py-12 max-w-2xl">
+        <div id="loading" class="text-center py-12">
+            <div class="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
+            <p class="text-gray-600">Loading your appeal...</p>
+        </div>
+
+        <div id="success" class="bg-white rounded-xl shadow-md p-6 md:p-8 text-center hidden">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h2 class="text-xl font-bold text-gray-800 mb-2">Payment Successful!</h2>
+            <p class="text-gray-600 mb-6">Your appeal letter is ready for download.</p>
+
+            <!-- Appeal Reference -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                <p class="text-sm text-gray-500">Your Appeal Reference</p>
+                <p id="appealRef" class="text-lg font-mono font-bold text-gray-900"></p>
+            </div>
+
+            <button id="downloadBtn"
+                class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 flex items-center justify-center mb-4">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                </svg>
+                <span>Download Appeal Letter (PDF)</span>
+            </button>
+
+            <p class="text-sm text-gray-500 mb-6">
+                A confirmation email has been sent to your email address with a copy of your appeal.
+            </p>
+
+            <a href="/" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-lg transition duration-200 inline-block text-center">
+                Generate Another Appeal
+            </a>
+        </div>
+
+        <div id="error" class="bg-white rounded-xl shadow-md p-6 md:p-8 text-center hidden">
+            <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </div>
+            <h2 class="text-xl font-bold text-gray-800 mb-2">Something went wrong</h2>
+            <p class="text-gray-600 mb-6">We couldn't retrieve your appeal details.</p>
+            <a href="/" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 inline-block text-center">
+                Start Over
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex justify-center gap-6 mb-4">
+                <a href="privacy.html" class="text-gray-400 hover:text-white">Privacy Policy</a>
+                <a href="terms.html" class="text-gray-400 hover:text-white">Terms of Service</a>
+                <a href="feedback.html" class="text-gray-400 hover:text-white">Feedback</a>
+            </div>
+            <p>&copy; 2026 PCN Appeal Generator. Not legal advice.</p>
+        </div>
+    </footer>
+
+    <script src="js/firebase-config.js"></script>
+    <script src="js/templates.js"></script>
+    <script src="js/pdf-generator.js"></script>
+    <script>
+        // Check for payment success redirect
+        const urlParams = new URLSearchParams(window.location.search);
+        const paymentStatus = urlParams.get('payment');
+        const appealId = urlParams.get('appeal');
+
+        if (paymentStatus === 'success' && appealId) {
+            // Track successful payment
+            gtag('event', 'purchase', {
+                transaction_id: appealId,
+                value: 2.99,
+                currency: 'GBP',
+                items: [{
+                    item_name: 'PCN Appeal Letter',
+                    item_category: 'Legal Document',
+                    price: 2.99,
+                    quantity: 1
+                }]
+            });
+            loadAppeal(appealId);
+        } else {
+            // Redirect to home
+            window.location.href = '/';
+        }
+
+        async function loadAppeal(appealId) {
+            try {
+                const doc = await db.collection('appeals').doc(appealId).get();
+                
+                if (!doc.exists || !doc.data().paid) {
+                    throw new Error('Appeal not found or not paid');
+                }
+
+                const data = doc.data();
+                window.formData = {
+                    appealId: appealId,
+                    pcnRef: data.pcnRef,
+                    vehicleReg: data.vehicleReg,
+                    council: data.council,
+                    contraventionCode: data.contraventionCode,
+                    contraventionDate: data.contraventionDate,
+                    contraventionTime: data.contraventionTime,
+                    location: data.location,
+                    circumstances: data.circumstances
+                };
+
+                // Display appeal reference
+                document.getElementById('appealRef').textContent = appealId.toUpperCase();
+
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('success').classList.remove('hidden');
+
+                // Set up download button
+                document.getElementById('downloadBtn').addEventListener('click', () => {
+                    // Track download
+                    gtag('event', 'download', {
+                        event_category: 'Appeal',
+                        event_label: 'PDF Download'
+                    });
+                    PDFGenerator.download(window.formData);
+                });
+
+            } catch (error) {
+                console.error('Error loading appeal:', error);
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('error').classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

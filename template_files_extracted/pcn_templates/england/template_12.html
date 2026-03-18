@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PCN Appeal - Code 12 (England) — Parked in a residents or shared use parking place without displaying a valid permit or ticket</title>
+
+    <style>
+        body { font-family: Georgia, serif; line-height: 1.7; max-width: 800px; margin: 40px auto; padding: 20px; color: #1a1a1a; }
+        .address-block { margin-bottom: 20px; }
+        .date { text-align: right; margin-bottom: 20px; }
+        .subject { font-weight: bold; margin-bottom: 20px; border-left: 3px solid #333; padding-left: 12px; }
+        .signature { margin-top: 40px; }
+        h3 { margin-top: 28px; font-size: 1em; text-transform: uppercase; letter-spacing: 0.05em; }
+        ul { margin-top: 8px; }
+        li { margin-bottom: 4px; }
+    </style>
+
+</head>
+<body>
+    <div class="address-block">
+        {{USER_NAME}}<br>
+        {{USER_ADDRESS}}<br>
+        {{USER_POSTCODE}}
+    </div>
+
+    <div class="date">{{DATE}}</div>
+
+    <div class="address-block">
+        {{COUNCIL_NAME}}<br>
+        Parking Services<br>
+        {{COUNCIL_ADDRESS}}<br>
+        {{COUNCIL_POSTCODE}}
+    </div>
+
+    <div class="subject">
+        RE: Formal Representations Against Penalty Charge Notice {{PCN_REF}}<br>
+        Vehicle Registration: {{VEHICLE_REG}}<br>
+        Date of Contravention: {{CONTRAVENTION_DATE}}<br>
+        Location: {{LOCATION}}
+    </div>
+
+    <p>Dear Sir or Madam,</p>
+
+    <p>I am writing to make formal representations against Penalty Charge Notice {{PCN_REF}}, issued by {{COUNCIL_NAME}} in respect of vehicle {{VEHICLE_REG}} at {{LOCATION}} on {{CONTRAVENTION_DATE}}.</p>
+
+    <p>Having reviewed the circumstances and the evidence available, I believe the Penalty Charge Notice should be cancelled on the following grounds.</p>
+
+    <h3>1. The Contravention Did Not Occur — A Valid Permit Was Displayed</h3>
+    <p>{{CIRCUMSTANCES}}</p>
+    <p>Code 12 requires that the vehicle was parked in a residents' or shared use bay without displaying a valid permit, voucher or pay and display ticket. If any such authority to park was present — whether a physical permit, a virtual permit, or a valid pay and display ticket where the bay permits such payment — the contravention did not occur. A CEO must take reasonable steps to examine any permit displayed before issuing a PCN.</p>
+
+    <h3>2. Virtual Permit / Cashless Registration</h3>
+    <p>Where a virtual permit scheme is in operation, no physical display is required. The authority must check its virtual permit database before issuing a code 12 PCN. Failure to do so is a procedural impropriety: see TPT adjudicator guidance on virtual permit checking obligations.</p>
+
+    <h3>3. Defective Bay Markings or Signage</h3>
+    <p>A residents' or shared use bay must be lawfully designated by a TRO and signed in accordance with TSRGD 2016. The bay markings (white lines) and associated signs must clearly identify the class of permit holder entitled to use the bay, and the hours during which restrictions apply. Where markings or signs are missing, damaged or non-compliant, the bay designation may be unenforceable.</p>
+
+    <h3>4. Procedural Impropriety</h3>
+    <p>The PCN must be issued in compliance with Section 66 of the Traffic Management Act 2004 and the Civil Enforcement of Parking Contraventions (England) General Regulations 2007. Any deficiency in the PCN itself — including failure to state the date of the notice or the correct contravention code — renders it invalid.</p>
+
+    <h3>5. Mitigating Circumstances</h3>
+    <p>{{MITIGATING_DETAILS}}</p>
+
+    <h3>6. Legal Framework</h3>
+    <p>The authority must demonstrate a valid TRO designating the bay, compliant signage under TSRGD 2016, and the absence of any valid permit or authority to park. All three elements are required to sustain the charge.</p>
+
+
+    <p>In light of the above, I respectfully request that the Penalty Charge Notice is cancelled in full.</p>
+
+    <p>If you do not accept these representations, please treat this letter as a formal request for the following evidence:</p>
+    <ul>
+        <li>All Civil Enforcement Officer (CEO) notes and observations made at the time of the alleged contravention;</li>
+        <li>All photographic evidence taken by the CEO or any CCTV/camera system;</li>
+        <li>The relevant Traffic Regulation Order(s) (TRO) and any amendments or variations;</li>
+        <li>Confirmation that the TRO is valid, properly made and currently in force;</li>
+        <li>A full explanation of how all statutory requirements under the Traffic Management Act 2004 and the Civil Enforcement of Parking Contraventions (England) General Regulations 2007 have been satisfied.</li>
+    </ul>
+
+    <p>I reserve the right to appeal to the Traffic Penalty Tribunal should representations be rejected, and to rely on any additional grounds that may arise from the evidence disclosed.</p>
+
+    <p>I look forward to your response within the statutory period.</p>
+
+    <div class="signature">
+        <p>Yours faithfully,</p>
+        <br>
+        <p>{{USER_NAME}}</p>
+    </div>
+</body>
+</html>

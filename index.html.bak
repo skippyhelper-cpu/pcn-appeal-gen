@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCN Appeal Generator - Fight Unfair Parking Tickets | UK</title>
+    <meta name="description" content="Generate professional PCN appeal letters in minutes. Fight unfair parking tickets with legally sound appeals. £2.99 per letter. UK councils.">
+    <meta name="keywords" content="PCN appeal, parking ticket appeal, penalty charge notice, appeal letter, UK parking, council parking ticket">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="PCN Appeal Generator - Fight Unfair Parking Tickets">
+    <meta property="og:description" content="Generate professional appeal letters for £2.99. Fight unfair PCNs with legally sound templates.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pcn-appeal-generator.web.app">
+    <link rel="canonical" href="https://pcn-appeal-generator.web.app">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>body{font-family:'Inter',sans-serif}</style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-blue-600">PCN Appeal Generator</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#how-it-works" class="text-gray-600 hover:text-gray-900">How it Works</a>
+                    <a href="#pricing" class="text-gray-600 hover:text-gray-900">Pricing</a>
+                    <a href="app.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Start Appeal</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+                    Fight Unfair Parking Tickets
+                    <span class="text-blue-600">With Professional Appeals</span>
+                </h1>
+                <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                    Generate legally sound PCN appeal letters in minutes. Don't pay unfair fines - 
+                    appeal with confidence using our expert-crafted templates for just £2.99.
+                </p>
+                <div class="flex justify-center gap-4">
+                    <a href="app.html" class="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700">
+                        Generate Your Appeal
+                    </a>
+                    <a href="#how-it-works" class="bg-gray-100 text-gray-700 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-200">
+                        Learn More
+                    </a>
+                </div>
+                <div class="mt-8 flex justify-center gap-8 text-sm text-gray-500">
+                    <span>✓ Legally sound templates</span>
+                    <span>✓ UK councils covered</span>
+                    <span>✓ 10 contravention codes</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">How It Works</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                        <span class="text-2xl font-bold text-blue-600">1</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Enter Your Details</h3>
+                    <p class="text-gray-600">Fill in your PCN reference, vehicle registration, and the circumstances of your appeal.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                        <span class="text-2xl font-bold text-blue-600">2</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">We Generate Your Letter</h3>
+                    <p class="text-gray-600">Our system selects the best template and creates a professionally formatted appeal letter.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                        <span class="text-2xl font-bold text-blue-600">3</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Download & Submit</h3>
+                    <p class="text-gray-600">Pay £2.99, download your PDF letter, and submit it to your council.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Why Use Our Generator?</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold mb-2">Legally Sound</h3>
+                    <p class="text-gray-600 text-sm">Templates based on UK traffic law and successful appeal precedents.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold mb-2">Quick & Easy</h3>
+                    <p class="text-gray-600 text-sm">Generate your letter in under 5 minutes. No legal knowledge needed.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - PCN Appeal Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    <!-- Stripe.js -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-49TJRR76VG"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-49TJRR76VG');
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        
+        .step-active { background: #2563eb; color: white; }
+        .step-complete { background: #22c55e; color: white; }
+        .step-pending { background: #e5e7eb; color: #6b7280; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <a href="/" class="text-xl font-bold text-blue-600">PCN Appeal Generator</a>
+                <a href="preview.html" class="text-gray-600 hover:text-gray-900">← Back to Preview</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Progress Stepper -->
+    <div class="bg-white border-b">
+        <div class="max-w-3xl mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-full step-complete flex items-center justify-center font-semibold">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <span class="ml-3 text-sm font-medium text-gray-900">Details</span>
+                </div>
+                
+                <div class="flex-1 mx-4 h-1 bg-green-500 rounded"></div>
+                
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-full step-complete flex items-center justify-center font-semibold">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <span class="ml-3 text-sm font-medium text-gray-900">Preview</span>
+                </div>
+                
+                <div class="flex-1 mx-4 h-1 bg-blue-500 rounded"></div>
+                
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-full step-active flex items-center justify-center font-semibold">3</div>
+                    <span class="ml-3 text-sm font-medium text-blue-600">Payment</span>
+                </div>
+                
+                <div class="flex-1 mx-4 h-1 bg-gray-200 rounded"></div>
+                
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-full step-pending flex items-center justify-center font-semibold">4</div>
+                    <span class="ml-3 text-sm font-medium text-gray-500">Download</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-2xl mx-auto px-4 py-12">
+        <!-- Loading State -->
+        <div id="loadingState" class="text-center py-12">
+            <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-blue-600 border-t-transparent"></div>
+            <p class="mt-4 text-gray-600" id="loadingText">Processing...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorState" class="hidden">
+            <div class="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
+                <svg class="w-16 h-16 mx-auto text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                </svg>
+                <h2 class="text-xl font-semibold text-red-800 mt-4">Something went wrong</h2>
+                <p class="text-red-600 mt-2" id="errorText">An error occurred while processing your request.</p>
+                <a href="app.html" class="inline-block mt-6 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                    Start Over
+                </a>
+            </div>
+        </div>
+
+        <!-- Payment Summary -->
+        <div id="paymentSummary" class="hidden">
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Complete Your Purchase</h2>
+                
+                <!-- Order Summary -->
+                <div class="border rounded-lg p-4 mb-6">
+                    <h3 class="font-semibold text-gray-700 mb-3">Order Summary</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">PCN Reference:</span>
+                            <span class="font-mono" id="summaryPcnRef">-</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Contravention:</span>
+                            <span id="summaryCode">-</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Council:</span>
+                            <span id="summaryCouncil">-</span>
+                        </div>
+                        <div class="border-t mt-3 pt-3 flex justify-between font-semibold">
+                            <span>Total:</span>
+                            <span class="text-blue-600">£2.99</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Email Confirmation -->
+                <div class="bg-blue-50 rounded-lg p-4 mb-6">
+                    <p class="text-sm text-blue-800">
+                        <strong>Email:</strong> <span id="summaryEmail">-</span>
+                        <br>Your letter will be sent to this address immediately after payment.
+                    </p>
+                </div>
+                
+                <!-- Secure Payment Notice -->
+                <div class="flex items-center gap-2 text-sm text-gray-500 mb-6">
+                    <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    Secure payment powered by Stripe
+                </div>
+                
+                <!-- Pay Button -->
+                <button id="payButton" class="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors">
+                    Pay £2.99 with Stripe
+                </button>
+                
+                <p class="text-xs text-gray-500 text-center mt-4">
+                    By clicking "Pay", you agree to our <a href="terms.html" class="underline">Terms of Service</a>.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="js/firebase-config.js"></script>
+    
+    <script>
+        const codeDescriptions = {
+            '01': '01 - Restricted street',
+            '02': '02 - Loading restriction',
+            '05': '05 - Expired paid time',
+            '06': '06 - No ticket displayed',
+            '11': '11 - No payment',
+            '12': '12 - No resident permit',
+            '16': '16 - No permit',
+            '21': '21 - Suspended bay',
+            '25': '25 - Loading place',
+            '30': '30 - Overstay',
+            '31': '31 - Box junction',
+            '34': '34 - Bus lane',
+            '40': '40 - School area',
+            '45': '45 - Taxi rank',
+            '47': '47 - Bus stop',
+            '62': '62 - Footway parking'
+        };
+
+        let appealData = null;
+        let appealId = null;
+
+        async function init() {
+            // Get data from sessionStorage
+            const storedData = sessionStorage.getItem('appealPreviewData');
+            
+            if (!storedData) {
+                showError('No appeal data found. Please start again.');
+                return;
+            }
+            
+            appealData = JSON.parse(storedData);
+            
+            // Populate summary
+            document.getElementById('summaryPcnRef').textContent = appealData.pcnRef;
+            document.getElementById('summaryCode').textContent = codeDescriptions[appealData.contraventionCode] || appealData.contraventionCode;
+            document.getElementById('summaryCouncil').textContent = appealData.council;
+            document.getElementById('summaryEmail').textContent = appealData.email;
+            
+            // Show payment form
+            document.getElementById('loadingState').classList.add('hidden');
+            document.getElementById('paymentSummary').classList.remove('hidden');
+        }
+
+        async function handlePayment() {
+            const payButton = document.getElementById('payButton');
+            payButton.disabled = true;
+            payButton.textContent = 'Processing...';
+            
+            document.getElementById('loadingText').textContent = 'Creating your appeal...';
+            document.getElementById('loadingState').classList.remove('hidden');
+            document.getElementById('paymentSummary').classList.add('hidden');
+            
+            try {
+                // Create appeal record in Firestore
+                const appealRef = await db.collection('appeals').add({
+                    ...appealData,
+                    captchaVerified: true,
+                    paid: false,
+                    paidAt: null,
+                    stripePaymentId: null,
+                    letterGenerated: false,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                appealId = appealRef.id;
+                
+                // Track payment initiation
+                gtag('event', 'begin_checkout', {
+                    items: [{
+                        item_name: 'PCN Appeal Letter',
+                        item_category: 'Legal Document',
+                        price: 2.99,
+                        quantity: 1
+                    }]
+                });
+                
+                // Create Stripe checkout session
+                document.getElementById('loadingText').textContent = 'Connecting to Stripe...';
+                
+                const response = await fetch('/createCheckoutSession', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        appealId: appealId,
+                        email: appealData.email,
+                        pcnRef: appealData.pcnRef
+                    })
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to create payment session');
+                }
+                
+                const data = await response.json();
+                
+                // Redirect to Stripe
+                if (data.url) {
+                    window.location.href = data.url;
+                } else {
+                    throw new Error('No checkout URL returned');
+                }
+                
+            } catch (error) {
+                console.error('Payment error:', error);
+                showError(error.message || 'Failed to process payment. Please try again.');
+                payButton.disabled = false;
+                payButton.textContent = 'Pay £2.99 with Stripe';
+            }
+        }
+
+        function showError(message) {
+            document.getElementById('loadingState').classList.add('hidden');
+            document.getElementById('paymentSummary').classList.add('hidden');
+            document.getElementById('errorState').classList.remove('hidden');
+            document.getElementById('errorText').textContent = message;
+        }
+
+        // Event listeners
+        document.getElementById('payButton').addEventListener('click', handlePayment);
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

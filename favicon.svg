@@ -1,0 +1,12 @@
+<!-- Favicon SVG - Simple document icon -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect x="15" y="5" width="70" height="90" rx="5" fill="#1e40af"/>
+  <rect x="20" y="15" width="60" height="5" fill="#fff"/>
+  <rect x="20" y="25" width="50" height="3" fill="#93c5fd"/>
+  <rect x="20" y="32" width="55" height="3" fill="#93c5fd"/>
+  <rect x="20" y="39" width="45" height="3" fill="#93c5fd"/>
+  <rect x="20" y="50" width="60" height="5" fill="#fff"/>
+  <rect x="20" y="60" width="50" height="3" fill="#93c5fd"/>
+  <rect x="20" y="67" width="55" height="3" fill="#93c5fd"/>
+  <rect x="20" y="74" width="40" height="3" fill="#93c5fd"/>
+</svg>

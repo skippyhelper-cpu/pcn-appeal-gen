@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PCN Appeal - Code 21 (England) — Parked wholly or partly in a suspended bay or space</title>
+
+    <style>
+        body { font-family: Georgia, serif; line-height: 1.7; max-width: 800px; margin: 40px auto; padding: 20px; color: #1a1a1a; }
+        .address-block { margin-bottom: 20px; }
+        .date { text-align: right; margin-bottom: 20px; }
+        .subject { font-weight: bold; margin-bottom: 20px; border-left: 3px solid #333; padding-left: 12px; }
+        .signature { margin-top: 40px; }
+        h3 { margin-top: 28px; font-size: 1em; text-transform: uppercase; letter-spacing: 0.05em; }
+        ul { margin-top: 8px; }
+        li { margin-bottom: 4px; }
+    </style>
+
+</head>
+<body>
+    <div class="address-block">
+        {{USER_NAME}}<br>
+        {{USER_ADDRESS}}<br>
+        {{USER_POSTCODE}}
+    </div>
+
+    <div class="date">{{DATE}}</div>
+
+    <div class="address-block">
+        {{COUNCIL_NAME}}<br>
+        Parking Services<br>
+        {{COUNCIL_ADDRESS}}<br>
+        {{COUNCIL_POSTCODE}}
+    </div>
+
+    <div class="subject">
+        RE: Formal Representations Against Penalty Charge Notice {{PCN_REF}}<br>
+        Vehicle Registration: {{VEHICLE_REG}}<br>
+        Date of Contravention: {{CONTRAVENTION_DATE}}<br>
+        Location: {{LOCATION}}
+    </div>
+
+    <p>Dear Sir or Madam,</p>
+
+    <p>I am writing to make formal representations against Penalty Charge Notice {{PCN_REF}}, issued by {{COUNCIL_NAME}} in respect of vehicle {{VEHICLE_REG}} at {{LOCATION}} on {{CONTRAVENTION_DATE}}.</p>
+
+    <p>Having reviewed the circumstances and the evidence available, I believe the Penalty Charge Notice should be cancelled on the following grounds.</p>
+
+    <h3>1. The Contravention Did Not Occur — The Bay Was Not Lawfully Suspended</h3>
+    <p>{{CIRCUMSTANCES}}</p>
+    <p>A bay suspension must be implemented in accordance with the authority's powers and the relevant TRO or, in the case of temporary suspensions, by means of a proper suspension notice lawfully placed and with adequate advance notice. TPT adjudicators have consistently held that where the suspension notice was not properly affixed, was illegible, or was placed with insufficient notice, the PCN cannot be sustained: see, for example, <em>Lambeth LBC v Appellant</em> (TPT, various).</p>
+
+    <h3>2. Inadequate Notice of Suspension</h3>
+    <p>The authority must give advance notice of a bay suspension, generally by affixing suspension notices to the posts of the parking bay signs at least 24 hours before the suspension takes effect (longer where practicable). Where this requirement was not met, parking in the bay does not constitute a contravention, as the motorist had no reasonable means of knowing the bay was suspended.</p>
+
+    <h3>3. Suspension Sign Compliance</h3>
+    <p>Suspension notices must comply with the relevant statutory requirements and must be clearly legible. Any sign that was damaged, obscured or incorrectly positioned would undermine the lawfulness of the suspension. I request copies of the suspension notice(s) and evidence of when and how they were placed.</p>
+
+    <h3>4. Procedural Impropriety</h3>
+    <p>The PCN must comply with Section 66 of the Traffic Management Act 2004 and the Civil Enforcement of Parking Contraventions (England) General Regulations 2007. Where the suspension itself was not lawfully implemented, issuing a PCN for code 21 constitutes a procedural impropriety.</p>
+
+    <h3>5. Mitigating Circumstances</h3>
+    <p>{{MITIGATING_DETAILS}}</p>
+
+    <h3>6. Legal Framework</h3>
+    <p>Bay suspensions may be implemented under Section 15 of the Road Traffic Regulation Act 1984 or under the relevant TRO. The authority must demonstrate that the suspension was lawfully implemented, that proper notice was given, and that the suspension notice was compliant and legible at the time of parking.</p>
+
+
+    <p>In light of the above, I respectfully request that the Penalty Charge Notice is cancelled in full.</p>
+
+    <p>If you do not accept these representations, please treat this letter as a formal request for the following evidence:</p>
+    <ul>
+        <li>All Civil Enforcement Officer (CEO) notes and observations made at the time of the alleged contravention;</li>
+        <li>All photographic evidence taken by the CEO or any CCTV/camera system;</li>
+        <li>The relevant Traffic Regulation Order(s) (TRO) and any amendments or variations;</li>
+        <li>Confirmation that the TRO is valid, properly made and currently in force;</li>
+        <li>A full explanation of how all statutory requirements under the Traffic Management Act 2004 and the Civil Enforcement of Parking Contraventions (England) General Regulations 2007 have been satisfied.</li>
+    </ul>
+
+    <p>I reserve the right to appeal to the Traffic Penalty Tribunal should representations be rejected, and to rely on any additional grounds that may arise from the evidence disclosed.</p>
+
+    <p>I look forward to your response within the statutory period.</p>
+
+    <div class="signature">
+        <p>Yours faithfully,</p>
+        <br>
+        <p>{{USER_NAME}}</p>
+    </div>
+</body>
+</html>

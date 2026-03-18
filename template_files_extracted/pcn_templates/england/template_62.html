@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PCN Appeal - Code 62 (England) — Parked with one or more wheels on or over a footpath or any part of a road other than a carriageway</title>
+
+    <style>
+        body { font-family: Georgia, serif; line-height: 1.7; max-width: 800px; margin: 40px auto; padding: 20px; color: #1a1a1a; }
+        .address-block { margin-bottom: 20px; }
+        .date { text-align: right; margin-bottom: 20px; }
+        .subject { font-weight: bold; margin-bottom: 20px; border-left: 3px solid #333; padding-left: 12px; }
+        .signature { margin-top: 40px; }
+        h3 { margin-top: 28px; font-size: 1em; text-transform: uppercase; letter-spacing: 0.05em; }
+        ul { margin-top: 8px; }
+        li { margin-bottom: 4px; }
+    </style>
+
+</head>
+<body>
+    <div class="address-block">
+        {{USER_NAME}}<br>
+        {{USER_ADDRESS}}<br>
+        {{USER_POSTCODE}}
+    </div>
+
+    <div class="date">{{DATE}}</div>
+
+    <div class="address-block">
+        {{COUNCIL_NAME}}<br>
+        Parking Services<br>
+        {{COUNCIL_ADDRESS}}<br>
+        {{COUNCIL_POSTCODE}}
+    </div>
+
+    <div class="subject">
+        RE: Formal Representations Against Penalty Charge Notice {{PCN_REF}}<br>
+        Vehicle Registration: {{VEHICLE_REG}}<br>
+        Date of Contravention: {{CONTRAVENTION_DATE}}<br>
+        Location: {{LOCATION}}
+    </div>
+
+    <p>Dear Sir or Madam,</p>
+
+    <p>I am writing to make formal representations against Penalty Charge Notice {{PCN_REF}}, issued by {{COUNCIL_NAME}} in respect of vehicle {{VEHICLE_REG}} at {{LOCATION}} on {{CONTRAVENTION_DATE}}.</p>
+
+    <p>Having reviewed the circumstances and the evidence available, I believe the Penalty Charge Notice should be cancelled on the following grounds.</p>
+
+    <h3>1. The Contravention Did Not Occur</h3>
+    <p>{{CIRCUMSTANCES}}</p>
+    <p>Code 62 applies to footway parking in areas designated as special enforcement areas (SEAs) under Schedule 3A to the Road Traffic Regulation Act 1984, or under a specific local provision. The contravention requires that at least one wheel of the vehicle was on or over the footway, verge or other part of the road other than the carriageway, without lawful authority. If the vehicle was wholly on the carriageway, code 62 is not made out.</p>
+
+    <h3>2. Special Enforcement Area Designation</h3>
+    <p>Code 62 can only be enforced in areas where the local authority has lawfully designated a special enforcement area for footway parking. I request confirmation that the location of the alleged contravention falls within a lawfully designated SEA, and that the requisite signage at the entry to the SEA was present and compliant.</p>
+
+    <h3>3. Necessity or Emergency</h3>
+    <p>Parking on the footway may be necessary in certain circumstances, for example where the carriageway is too narrow to allow a vehicle to park entirely within it without causing an obstruction to traffic. Adjudicators have taken a pragmatic view of footway parking in such circumstances. I invite the authority to consider whether the circumstances of the parking were such that remaining on the carriageway was impractical or unsafe.</p>
+
+    <h3>4. Photographic Evidence</h3>
+    <p>The CEO's photographic evidence must clearly show that at least one wheel was on or over the footway. Where the photographs do not unambiguously demonstrate this, the contravention cannot be established.</p>
+
+    <h3>5. Mitigating Circumstances</h3>
+    <p>{{MITIGATING_DETAILS}}</p>
+
+    <h3>6. Legal Framework</h3>
+    <p>Footway parking enforcement derives from Section 66 of the Traffic Management Act 2004 and Schedule 3A to the Road Traffic Regulation Act 1984. The authority must demonstrate that the location is within a lawfully designated SEA, that the signage is compliant, and that photographic evidence conclusively establishes the contravention.</p>
+
+
+    <p>In light of the above, I respectfully request that the Penalty Charge Notice is cancelled in full.</p>
+
+    <p>If you do not accept these representations, please treat this letter as a formal request for the following evidence:</p>
+    <ul>
+        <li>All Civil Enforcement Officer (CEO) notes and observations made at the time of the alleged contravention;</li>
+        <li>All photographic evidence taken by the CEO or any CCTV/camera system;</li>
+        <li>The relevant Traffic Regulation Order(s) (TRO) and any amendments or variations;</li>
+        <li>Confirmation that the TRO is valid, properly made and currently in force;</li>
+        <li>A full explanation of how all statutory requirements under the Traffic Management Act 2004 and the Civil Enforcement of Parking Contraventions (England) General Regulations 2007 have been satisfied.</li>
+    </ul>
+
+    <p>I reserve the right to appeal to the Traffic Penalty Tribunal should representations be rejected, and to rely on any additional grounds that may arise from the evidence disclosed.</p>
+
+    <p>I look forward to your response within the statutory period.</p>
+
+    <div class="signature">
+        <p>Yours faithfully,</p>
+        <br>
+        <p>{{USER_NAME}}</p>
+    </div>
+</body>
+</html>

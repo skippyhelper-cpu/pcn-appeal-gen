@@ -1,0 +1,46 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Appeals collection
+    match /appeals/{appealId} {
+      // Allow creating new appeals (for duplicate check)
+      allow create: if true;
+      
+      // Allow reading own appeals (for payment status check)
+      allow read: if true;
+      
+      // Allow updating appeal status (payment, letter generation)
+      // In production, this should be restricted to Cloud Functions
+      allow update: if true;
+      
+      // Only allow delete via Cloud Functions
+      allow delete: if false;
+    }
+    
+    // Payment records
+    match /payments/{paymentId} {
+      // Only Cloud Functions can access
+      allow read, write: if false;
+    }
+    
+    // Feedback collection
+    match /feedback/{feedbackId} {
+      // Allow anyone to submit feedback
+      allow create: if request.resource.data.keys().hasAll(['message', 'createdAt']) 
+                    && request.resource.data.message is string
+                    && request.resource.data.message.size() > 0
+                    && request.resource.data.message.size() < 5000;
+      
+      // Only read via Cloud Functions (admin)
+      allow read: if false;
+      
+      // No updates or deletes from client
+      allow update, delete: if false;
+    }
+    
+    // Mail collection (for Firebase Trigger Email extension if used)
+    match /mail/{mailId} {
+      allow read, write: if false;
+    }
+  }
+}
