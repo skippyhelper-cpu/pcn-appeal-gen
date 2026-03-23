@@ -1,13 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Preview Your Appeal Letter - PCN Appeal Generator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Times+New+Roman&display=swap" rel="stylesheet">
+    <title>Preview Your Appeal Letter - FineFighters</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,700;1,400&family=Times+New+Roman&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <!-- Shared Tailwind Configuration with Serif font -->
+    <script src="css/tailwind-config-preview.js"></script>
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- File-specific styles for preview page -->
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        .letter-paper {
+            box-shadow: 0 10px 30px rgba(18, 28, 40, 0.08);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
         
         .letter-content {
             font-family: 'Times New Roman', serif;
@@ -59,41 +70,47 @@
         .blur-sensitive:hover {
             filter: blur(2px);
         }
-        
-        /* Glass effect */
-        .glass {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        
-        /* Progress stepper */
-        .step-active { background: #2563eb; color: white; }
-        .step-complete { background: #22c55e; color: white; }
-        .step-pending { background: #e5e7eb; color: #6b7280; }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body class="bg-surface font-body text-on-surface selection:bg-secondary-fixed selection:text-on-secondary-fixed">
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded z-50">Skip to main content</a>
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <a href="/" class="text-xl font-bold text-blue-600">PCN Appeal Generator</a>
-                <a href="app.html" class="text-gray-600 hover:text-gray-900">← Back to Form</a>
+    
+    <!-- TopAppBar -->
+    <header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="text-xl font-bold text-[#00236f] font-['Inter'] tracking-tight">FineFighters</div>
+            <nav class="hidden md:flex items-center space-x-8 font-['Inter'] font-semibold tracking-tight">
+                <a class="text-slate-600 hover:text-[#00236f] transition-colors" href="index.html">Home</a>
+                <a class="text-slate-600 hover:text-[#00236f] transition-colors" href="faq.html">FAQ</a>
+            </nav>
+            <div class="flex items-center gap-4">
+                <a href="app.html" class="text-gray-600 hover:text-gray-900 font-medium">← Back to Form</a>
             </div>
         </div>
-    </nav>
-
-    <!-- Progress Stepper -->
-    <div class="bg-white border-b">
-        <div class="max-w-3xl mx-auto px-4 py-6" id="progressStepper"></div>
-    </div>
-
-    <!-- Main Content -->
-    <main id="main-content" class="max-w-4xl mx-auto px-4 py-8">
+    </header>
+    
+    <main id="main-content" class="pt-28 pb-20 px-6 max-w-7xl mx-auto">
+        <!-- Breadcrumb / Status -->
+        <div class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+                <span class="text-secondary font-semibold text-sm tracking-wider uppercase mb-2 block">Step 3 of 4: Document Review</span>
+                <h1 class="text-4xl md:text-5xl font-headline font-extrabold text-primary tracking-tight">Review Your Appeal</h1>
+                <p class="text-on-surface-variant mt-3 max-w-xl text-lg leading-relaxed">Our system has generated an appeal based on your provided details.</p>
+            </div>
+            <div class="flex gap-3">
+                <button id="modifyDetails" class="flex items-center gap-2 px-5 py-3 rounded-xl bg-surface-container-low text-primary font-semibold hover:bg-surface-container-high transition-all">
+                    <span class="material-symbols-outlined">edit</span>
+                    Modify Details
+                </button>
+                <button id="proceedToPayment" class="flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-on-primary font-semibold shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+                    <span class="material-symbols-outlined">download</span>
+                    Proceed to Download
+                </button>
+            </div>
+        </div>
+        
         <!-- Notice Banner -->
-        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6 flex items-start gap-3">
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-8 flex items-start gap-3">
             <svg class="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                 <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
             </svg>
@@ -102,40 +119,100 @@
                 <p class="text-yellow-700 text-sm">Complete payment to download the full letter without watermark. The final PDF will be clean and ready to submit.</p>
             </div>
         </div>
-
-        <!-- Letter Preview Container -->
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden relative">
-            <!-- Watermark Overlay -->
-            <div class="watermark-overlay" id="watermarkOverlay">
-                <!-- Watermarks will be generated by JS -->
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <!-- Sidebar: Strategy & Confidence -->
+            <div class="lg:col-span-4 space-y-6">
+                <!-- Argument Confidence Card -->
+                <div class="bg-surface-container-lowest p-8 rounded-full border border-outline-variant/20 shadow-sm">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg font-bold text-primary">Appeal Strength</h3>
+                        <span id="confidenceBadge" class="bg-tertiary-fixed text-on-tertiary-fixed px-3 py-1 rounded-full text-xs font-bold">HIGH</span>
+                    </div>
+                    <div class="relative h-4 w-full bg-surface-container-highest rounded-full overflow-hidden mb-4">
+                        <div id="confidenceBar" class="absolute top-0 left-0 h-full bg-gradient-to-r from-secondary to-secondary-container w-[88%] rounded-full"></div>
+                    </div>
+                    <p id="confidenceDescription" class="text-sm text-on-surface-variant leading-relaxed">Your appeal has been generated based on the details you provided.</p>
+                </div>
+                
+                <!-- Strategic Highlights -->
+                <div class="bg-surface-container-low p-8 rounded-full">
+                    <h3 class="text-lg font-bold text-primary mb-6">Legal Arguments Used</h3>
+                    <ul id="legalArgumentsList" class="space-y-6">
+                        <li class="flex gap-4">
+                            <div class="h-10 w-10 shrink-0 rounded-xl bg-white flex items-center justify-center text-secondary">
+                                <span class="material-symbols-outlined">signpost</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-on-surface">Signage Inadequacy</h4>
+                                <p class="text-sm text-on-surface-variant">Reference to LATOR 1996 Regulation 18 regarding clarity of traffic signs.</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-4">
+                            <div class="h-10 w-10 shrink-0 rounded-xl bg-white flex items-center justify-center text-secondary">
+                                <span class="material-symbols-outlined">history_edu</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-on-surface">Procedural Impropriety</h4>
+                                <p class="text-sm text-on-surface-variant">Identification of technical errors in the PCN issuance timing.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Support Callout -->
+                <div class="p-8 rounded-full border-2 border-dashed border-outline-variant flex flex-col items-center text-center">
+                    <span class="material-symbols-outlined text-4xl text-outline mb-4">gavel</span>
+                    <h3 class="font-bold text-on-surface">Need a specialized review?</h3>
+                    <p class="text-sm text-on-surface-variant mt-2 mb-6">Our senior paralegals can manually check your appeal for any errors.</p>
+                    <button class="text-secondary font-bold text-sm hover:underline underline-offset-4">Upgrade to Premium Review</button>
+                </div>
             </div>
             
-            <!-- Letter Content -->
-            <div class="p-8 md:p-12 no-select" id="letterContent">
-                <!-- Content will be populated by JS -->
-                <div class="text-center py-20 text-gray-500">
-                    <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                    </svg>
-                    <p>No preview data available.</p>
-                    <a href="app.html" class="text-blue-600 hover:underline mt-2 inline-block">Start your appeal</a>
+            <!-- Main Content: The Letter Preview -->
+            <div class="lg:col-span-8">
+                <div class="bg-white p-12 md:p-20 rounded-lg letter-paper border border-slate-100 min-h-[1000px] font-serif text-[#1a1a1a] relative">
+                    <!-- Watermark Overlay -->
+                    <div class="watermark-overlay" id="watermarkOverlay">
+                        <!-- Watermarks will be generated by JS -->
+                    </div>
+                    
+                    <!-- Letter Content -->
+                    <div class="no-select letter-content" id="letterContent">
+                        <!-- Content will be populated by JS -->
+                        <div class="text-center py-20 text-gray-500">
+                            <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            <p>No preview data available.</p>
+                            <a href="app.html" class="text-blue-600 hover:underline mt-2 inline-block">Start your appeal</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <!-- Action Buttons -->
-        <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="app.html" class="px-8 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors text-center">
-                ← Edit Details
-            </a>
-            <button id="proceedToPayment" class="px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2">
-                <span>Get Full Letter — £2.99</span>
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                </svg>
-            </button>
-        </div>
     </main>
+    
+    <!-- Footer -->
+    <footer class="w-full py-12 border-t border-slate-200 bg-slate-50 font-['Inter'] text-sm leading-relaxed">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="space-y-4">
+                <div class="text-lg font-bold text-[#00236f]">FineFighters</div>
+                <p class="text-slate-500">Professional legal support for parking fine appeals. Our AI-driven platform helps you exercise your legal rights with confidence and precision.</p>
+                <p class="text-slate-500">© 2024 FineFighters. Professional Legal Support.</p>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="flex flex-col gap-3">
+                    <a class="text-slate-500 hover:text-[#0051d5] transition-opacity hover:opacity-80 underline underline-offset-4" href="terms.html">Terms of Service</a>
+                    <a class="text-slate-500 hover:text-[#0051d5] transition-opacity hover:opacity-80 underline underline-offset-4" href="privacy.html">Privacy Policy</a>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <a class="text-slate-500 hover:text-[#0051d5] transition-opacity hover:opacity-80 underline underline-offset-4" href="faq.html">FAQ</a>
+                    <a class="text-slate-500 hover:text-[#0051d5] transition-opacity hover:opacity-80 underline underline-offset-4" href="feedback.html">Contact Support</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -194,7 +271,60 @@
             const htmlContent = template.generate(data);
             
             document.getElementById('letterContent').innerHTML = htmlContent;
+            
+            // Update confidence score if available
+            if (data.confidenceScore) {
+                const confidenceBar = document.getElementById('confidenceBar');
+                const confidenceBadge = document.getElementById('confidenceBadge');
+                const confidenceDesc = document.getElementById('confidenceDescription');
+                
+                confidenceBar.style.width = `${data.confidenceScore}%`;
+                
+                let badgeText = 'LOW';
+                let badgeClass = 'bg-red-100 text-red-800';
+                if (data.confidenceScore >= 70) {
+                    badgeText = 'MEDIUM';
+                    badgeClass = 'bg-yellow-100 text-yellow-800';
+                }
+                if (data.confidenceScore >= 85) {
+                    badgeText = 'HIGH';
+                    badgeClass = 'bg-tertiary-fixed text-on-tertiary-fixed';
+                }
+                
+                confidenceBadge.textContent = badgeText;
+                confidenceBadge.className = `px-3 py-1 rounded-full text-xs font-bold ${badgeClass}`;
+                
+                confidenceDesc.textContent = `Your appeal has been generated based on the details you provided.`;
+            }
+            
+            // Update legal arguments if available
+            if (data.legalArguments && data.legalArguments.length > 0) {
+                const argsList = document.getElementById('legalArgumentsList');
+                argsList.innerHTML = '';
+                
+                const icons = ['signpost', 'history_edu', 'photo_library', 'description', 'fact_check'];
+                
+                data.legalArguments.forEach((arg, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'flex gap-4';
+                    li.innerHTML = `
+                        <div class="h-10 w-10 shrink-0 rounded-xl bg-white flex items-center justify-center text-secondary">
+                            <span class="material-symbols-outlined">${icons[index % icons.length]}</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-on-surface">${arg.title}</h4>
+                            <p class="text-sm text-on-surface-variant">${arg.description}</p>
+                        </div>
+                    `;
+                    argsList.appendChild(li);
+                });
+            }
         }
+
+        // Handle modify details
+        document.getElementById('modifyDetails').addEventListener('click', function() {
+            window.location.href = 'app.html';
+        });
 
         // Handle proceed to payment
         document.getElementById('proceedToPayment').addEventListener('click', async function() {
@@ -215,7 +345,6 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('progressStepper').innerHTML = window.renderProgressStepper(2);
             generateWatermarks();
             const data = getAppealData();
             if (data) {

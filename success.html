@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Successful - PCN Appeal Generator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Payment Successful - FineFighters</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -17,65 +18,175 @@
         gtag('js', new Date());
         gtag('config', 'G-49TJRR76VG');
     </script>
+    <!-- Shared Tailwind Configuration -->
+    <script src="css/tailwind-config.js"></script>
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- File-specific styles for success page -->
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .step-complete { background: #22c55e; color: white; }
+        .premium-gradient {
+            background: linear-gradient(135deg, #00236f 0%, #1e3a8a 100%);
+        }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <a href="/" class="text-xl font-bold text-blue-600">PCN Appeal Generator</a>
+<body class="bg-background text-on-surface font-body selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+    <!-- TopAppBar -->
+    <header class="fixed top-0 w-full z-50 glass-header shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="text-xl font-bold text-primary font-headline tracking-tight">PCN Advocate</div>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a class="font-['Inter'] font-semibold tracking-tight text-slate-600 hover:text-[#00236f] transition-colors" href="#">How it Works</a>
+                <a class="font-['Inter'] font-semibold tracking-tight text-slate-600 hover:text-[#00236f] transition-colors" href="#">Pricing</a>
+                <a class="font-['Inter'] font-semibold tracking-tight text-slate-600 hover:text-[#00236f] transition-colors" href="#">FAQ</a>
+            </nav>
+            <div class="flex items-center gap-4">
+                <a href="/" class="bg-secondary text-on-secondary px-6 py-2.5 rounded-xl font-semibold active:scale-95 duration-200 shadow-lg shadow-secondary/20">
+                    New Appeal
+                </a>
             </div>
         </div>
-    </nav>
+    </header>
 
     <!-- Progress Stepper -->
-    <div class="bg-white border-b">
+    <div class="bg-white border-b mt-20">
         <div class="max-w-3xl mx-auto px-4 py-6" id="progressStepper"></div>
     </div>
 
-    <main class="container mx-auto px-4 py-12 max-w-2xl">
-        <div id="loading" class="text-center py-12">
+    <main class="pt-8 pb-24 px-6">
+        <!-- Loading State -->
+        <div id="loading" class="max-w-4xl mx-auto text-center py-12">
             <div class="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
             <p class="text-gray-600">Loading your appeal...</p>
         </div>
 
-        <div id="success" class="bg-white rounded-xl shadow-md p-6 md:p-8 text-center hidden">
-            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
+        <!-- Success Content -->
+        <div id="success" class="max-w-4xl mx-auto hidden">
+            <!-- Success Hero Section -->
+            <section class="text-center mb-16">
+                <div class="inline-flex items-center justify-center w-20 h-20 bg-secondary-container/10 rounded-full mb-8">
+                    <span class="material-symbols-outlined text-secondary text-5xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                </div>
+                <h1 class="text-5xl font-extrabold text-primary font-headline tracking-tight mb-4">You're All Set!</h1>
+                <p class="text-xl text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
+                    Your professional appeal letter has been generated. We've taken the stress out of the paperwork—now it's time to take action.
+                </p>
+            </section>
+            
+            <!-- Bento Grid Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-16">
+                <!-- Main Action Card -->
+                <div class="md:col-span-8 bg-surface-container-lowest rounded-3xl p-10 shadow-[0_20px_40px_rgba(18,28,40,0.06)] flex flex-col items-center justify-center border border-outline-variant/10">
+                    <div class="mb-8 text-center">
+                        <span class="material-symbols-outlined text-6xl text-primary mb-4">picture_as_pdf</span>
+                        <h2 class="text-2xl font-bold text-primary mb-2">Appeal Letter Finalised</h2>
+                        <p class="text-on-surface-variant">Click below to download your PDF appeal letter</p>
+                    </div>
+                    <button id="downloadBtn" class="premium-gradient text-on-primary px-12 py-5 rounded-full text-xl font-bold flex items-center gap-3 active:scale-95 transition-all shadow-xl shadow-primary/30 cursor-pointer">
+                        <span class="material-symbols-outlined">download</span>
+                        Download Your PDF
+                    </button>
+                </div>
+                
+                <!-- Status Sidebar -->
+                <div class="md:col-span-4 flex flex-col gap-6">
+                    <div class="bg-tertiary-fixed p-6 rounded-2xl border border-tertiary/10">
+                        <h3 class="font-bold text-on-tertiary-fixed mb-2 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-on-tertiary-fixed">info</span>
+                            Reference ID
+                        </h3>
+                        <p id="appealRef" class="font-mono text-lg text-on-tertiary-fixed-variant"></p>
+                    </div>
+                    <div class="bg-surface-container-low p-6 rounded-2xl">
+                        <h3 class="font-bold text-primary mb-2">Estimated Time</h3>
+                        <p class="text-on-surface-variant text-sm leading-relaxed">Most councils respond within 14–28 working days of receiving an appeal.</p>
+                    </div>
+                </div>
+                
+                <!-- Instructions Section (Asymmetric) -->
+                <div class="md:col-span-12 mt-4">
+                    <h2 class="text-3xl font-bold text-primary mb-8 ml-2">How to Submit</h2>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-surface-container p-8 rounded-2xl border border-outline-variant/10">
+                            <div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center text-on-primary mb-6">
+                                <span class="material-symbols-outlined">alternate_email</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-primary mb-4">Option 1: Online/Email</h3>
+                            <p class="text-on-surface-variant leading-relaxed mb-6">
+                                Visit the council website listed on your ticket or use the email address provided. Simply upload or attach the PDF you just downloaded.
+                            </p>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3 text-sm text-on-surface">
+                                    <span class="material-symbols-outlined text-secondary text-sm">check</span>
+                                    Fastest processing time
+                                </li>
+                                <li class="flex items-start gap-3 text-sm text-on-surface">
+                                    <span class="material-symbols-outlined text-secondary text-sm">check</span>
+                                    Instant receipt confirmation
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="bg-surface-container-low p-8 rounded-2xl">
+                            <div class="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center text-on-primary mb-6">
+                                <span class="material-symbols-outlined">mail</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-primary mb-4">Option 2: By Post</h3>
+                            <p class="text-on-surface-variant leading-relaxed mb-6">
+                                Print the letter and send it to the address on the back of your PCN. We recommend using a "Signed For" service.
+                            </p>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3 text-sm text-on-surface">
+                                    <span class="material-symbols-outlined text-secondary text-sm">check</span>
+                                    Physical proof of delivery
+                                </li>
+                                <li class="flex items-start gap-3 text-sm text-on-surface">
+                                    <span class="material-symbols-outlined text-secondary text-sm">check</span>
+                                    Include physical photo evidence
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h2 class="text-xl font-bold text-gray-800 mb-2">Payment Successful!</h2>
-            <p class="text-gray-600 mb-6">Your appeal letter is ready for download.</p>
-
-            <!-- Appeal Reference -->
-            <div class="bg-gray-50 rounded-lg p-4 mb-6">
-                <p class="text-sm text-gray-500">Your Appeal Reference</p>
-                <p id="appealRef" class="text-lg font-mono font-bold text-gray-900"></p>
-            </div>
-
-            <button id="downloadBtn"
-                class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 flex items-center justify-center mb-4">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                </svg>
-                <span>Download Appeal Letter (PDF)</span>
-            </button>
-
-            <p class="text-sm text-gray-500 mb-6">
-                A confirmation email has been sent to your email address with a copy of your appeal.
-            </p>
-
-            <a href="/" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-lg transition duration-200 inline-block text-center">
-                Generate Another Appeal
-            </a>
+            
+            <!-- FAQ Accordion Style -->
+            <section class="mt-24">
+                <div class="max-w-3xl mx-auto">
+                    <h2 class="text-3xl font-bold text-primary text-center mb-12">What Happens Next?</h2>
+                    <div class="space-y-4">
+                        <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-100">
+                            <h4 class="font-bold text-primary mb-2 flex items-center justify-between">
+                                Will the 50% discount be frozen?
+                                <span class="material-symbols-outlined text-slate-400">expand_more</span>
+                            </h4>
+                            <p class="text-on-surface-variant leading-relaxed">
+                                Yes, in most cases. If you appeal within the first 14 days, the council will usually freeze the discount rate until they make a decision.
+                            </p>
+                        </div>
+                        <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-100">
+                            <h4 class="font-bold text-primary mb-2 flex items-center justify-between">
+                                What if my appeal is rejected?
+                                <span class="material-symbols-outlined text-slate-400">expand_more</span>
+                            </h4>
+                            <p class="text-on-surface-variant leading-relaxed">
+                                If the council rejects your informal appeal, they will send a "Notice of Rejection." You can then choose to pay at the discount rate or take it to an independent tribunal.
+                            </p>
+                        </div>
+                        <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-100">
+                            <h4 class="font-bold text-primary mb-2 flex items-center justify-between">
+                                Should I pay the fine now?
+                                <span class="material-symbols-outlined text-slate-400">expand_more</span>
+                            </h4>
+                            <p class="text-on-surface-variant leading-relaxed">
+                                No. Paying the fine is an admission of liability, which usually closes the case and prevents you from appealing further.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
 
-        <div id="error" class="bg-white rounded-xl shadow-md p-6 md:p-8 text-center hidden">
+        <!-- Error Content -->
+        <div id="error" class="max-w-4xl mx-auto text-center py-12 hidden">
             <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -90,14 +201,25 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 py-8 mt-12">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <div class="flex justify-center gap-6 mb-4">
-                <a href="privacy.html" class="text-gray-400 hover:text-white">Privacy Policy</a>
-                <a href="terms.html" class="text-gray-400 hover:text-white">Terms of Service</a>
-                <a href="feedback.html" class="text-gray-400 hover:text-white">Feedback</a>
+    <footer class="w-full py-12 border-t border-slate-200 bg-slate-50 font-['Inter'] text-sm leading-relaxed">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="flex flex-col gap-4">
+                <div class="text-lg font-bold text-primary">PCN Advocate</div>
+                <p class="text-slate-500 max-w-sm">
+                    Empowering drivers with professional legal arguments to challenge unfair parking tickets effectively.
+                </p>
+                <p class="text-slate-500 mt-4">© 2026 Filspire Ltd. Not legal advice.</p>
             </div>
-            <p>&copy; 2026 Filspire Ltd. Not legal advice.</p>
+            <div class="grid grid-cols-2 gap-4 items-start">
+                <div class="flex flex-col gap-3">
+                    <a class="text-slate-500 hover:text-[#0051d5] transition-opacity underline underline-offset-4" href="terms.html">Terms of Service</a>
+                    <a class="text-slate-500 hover:text-[#0051d5] transition-opacity underline underline-offset-4" href="privacy.html">Privacy Policy</a>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <a class="text-slate-500 hover:text-[#0051d5] transition-opacity underline underline-offset-4" href="feedback.html">Feedback</a>
+                    <a class="text-slate-500 hover:text-[#0051d5] transition-opacity underline underline-offset-4" href="faq.html">FAQ</a>
+                </div>
+            </div>
         </div>
     </footer>
 
@@ -120,7 +242,7 @@
                 value: 2.99,
                 currency: 'GBP',
                 items: [{
-                    item_name: 'PCN Appeal Letter',
+                    item_name: 'FineFighters Appeal Letter',
                     item_category: 'Legal Document',
                     price: 2.99,
                     quantity: 1

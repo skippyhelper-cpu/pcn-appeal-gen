@@ -1,460 +1,457 @@
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>PCN Appeal Generator - Fight Unfair Parking Tickets | UK</title>
- <meta name="description" content="Generate professional PCN appeal letters in minutes. Fight unfair parking tickets with legally sound appeals. £2.99 per letter. UK councils.">
- <meta name="keywords" content="PCN appeal, parking ticket appeal, penalty charge notice, appeal letter, UK parking, council parking ticket">
- <meta name="robots" content="index, follow">
- <meta property="og:title" content="PCN Appeal Generator - Fight Unfair Parking Tickets">
- <meta property="og:description" content="Generate professional appeal letters for £2.99. Fight unfair PCNs with legally sound templates.">
- <meta property="og:type" content="website">
- <meta property="og:url" content="https://pcn-appeal-generator.web.app">
- <link rel="canonical" href="https://pcn-appeal-generator.web.app">
- <!-- Google Analytics -->
- <script async src="https://www.googletagmanager.com/gtag/js?id=G-49TJRR76VG"></script>
- <script>
- window.dataLayer = window.dataLayer || [];
- function gtag(){dataLayer.push(arguments);}
- gtag('js', new Date());
- gtag('config', 'G-49TJRR76VG');
- </script>
- <script src="https://cdn.tailwindcss.com"></script>
- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
- <style>
- body { font-family: 'Inter', sans-serif; }
- 
- /* Glass effect with better opacity for readability */
- .glass {
- background: rgba(255, 255, 255, 0.85);
- backdrop-filter: blur(12px);
- -webkit-backdrop-filter: blur(12px);
- border: 1px solid rgba(255, 255, 255, 0.5);
- }
- 
- .glass-dark {
- background: rgba(30, 58, 138, 0.9);
- backdrop-filter: blur(12px);
- -webkit-backdrop-filter: blur(12px);
- }
- 
- .gradient-bg {
- background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
- }
- 
- .hero-pattern {
- background-image: 
- radial-gradient(circle at 20% 50%, rgba(255,255,255,0.08) 0%, transparent 50%),
- radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 40%),
- radial-gradient(circle at 40% 80%, rgba(255,255,255,0.08) 0%, transparent 40%);
- }
- 
- .floating {
- animation: float 6s ease-in-out infinite;
- }
- 
- @keyframes float {
- 0%, 100% { transform: translateY(0px); }
- 50% { transform: translateY(-15px); }
- }
- 
- /* High contrast text on dark backgrounds */
- .text-on-dark {
- color: rgba(255, 255, 255, 0.95);
- }
- 
- .text-muted-on-dark {
- color: rgba(255, 255, 255, 0.8);
- }
- </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FineFighters - Fight Unfair Parking Tickets | UK</title>
+  <meta name="description" content="Generate professional PCN appeal letters in minutes. Fight unfair parking tickets with FineFighters. £2.99 per letter. UK councils.">
+  <meta name="keywords" content="PCN appeal, parking ticket appeal, penalty charge notice, appeal letter, UK parking, council parking ticket">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="FineFighters - Fight Unfair Parking Tickets">
+  <meta property="og:description" content="Generate professional appeal letters for £2.99. Fight unfair PCNs with FineFighters.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://finefighters.co.uk">
+  <link rel="canonical" href="https://finefighters.co.uk">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-49TJRR76VG"></script>
+  <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-49TJRR76VG');
+  </script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <!-- Shared Tailwind Configuration -->
+  <script src="css/tailwind-config.js"></script>
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- File-specific styles -->
+  <style>
+    .mono-label { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+  </style>
 </head>
-<body class="bg-gray-50">
- <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded z-50">Skip to main content</a>
- <!-- Navigation -->
- <nav class="fixed top-0 left-0 right-0 z-50 glass shadow-sm">
- <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
- <div class="flex justify-between h-16 items-center">
- <a href="/" class="text-xl font-bold text-blue-700">
- PCN Appeal Generator
- </a>
- <div class="flex items-center space-x-6">
- <a href="#how-it-works" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">How it Works</a>
- <a href="faq.html" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">FAQ</a>
- <a href="app.html" class="bg-blue-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20">
- Start Appeal
- </a>
- </div>
- </div>
- </div>
- </nav>
+<body class="bg-background text-on-surface selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-white px-4 py-2 rounded z-50">Skip to main content</a>
+  
+  <!-- Navigation -->
+  <header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="/" class="text-xl font-bold text-primary tracking-tight font-headline">
+        FineFighters
+      </a>
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="#how-it-works" class="text-slate-600 hover:text-primary transition-colors font-semibold">How it Works</a>
+        <a href="#features" class="text-slate-600 hover:text-primary transition-colors font-semibold">Features</a>
+        <a href="faq.html" class="text-slate-600 hover:text-primary transition-colors font-semibold">FAQ</a>
+      </nav>
+      <div class="flex items-center gap-4">
+        <a href="app.html" class="bg-secondary hover:bg-primary-container text-white px-6 py-2.5 rounded-xl font-semibold active:scale-95 duration-200 transition-all shadow-md">
+          Start Appeal
+        </a>
+      </div>
+    </div>
+  </header>
 
- <!-- Hero Section -->
- <section id="main-content" class="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 pt-20 pb-8">
- <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
- <div class="grid lg:grid-cols-2 gap-12 items-center">
- <div>
- <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white">
- Fight Unfair<br>
- <span class="text-yellow-400">Parking Tickets</span>
- </h1>
- <p class="text-xl text-gray-100 mb-8 max-w-lg">
- Generate professionally crafted PCN appeal letters tailored to your contravention code. 
- One payment, instant download.
- </p>
- <div class="flex flex-col sm:flex-row gap-4">
- <a href="app.html" class="bg-white text-blue-800 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-gray-100 transition-all shadow-xl text-center">
- Start Your Appeal
- </a>
- <a href="#how-it-works" class="bg-white/30 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white/40 transition-all text-center border-2 border-white/50">
- See How It Works
- </a>
- </div>
- 
- <!-- Price Badge -->
- <div class="mt-10 inline-flex items-center bg-white/30 rounded-full px-6 py-3 border-2 border-white/50">
- <span class="text-3xl font-bold text-white">£2.99</span>
- <span class="text-gray-100 ml-2">per appeal letter</span>
- </div>
- </div>
- 
- <!-- Hero Illustration: Car with PCN -->
- <div class="hidden lg:flex justify-center items-center">
- <div class="relative floating">
- <!-- Car SVG -->
- <svg class="w-80 h-auto" viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
- <!-- Car body -->
- <path d="M50 140 L80 140 L100 100 L300 100 L320 140 L350 140 L350 160 L50 160 Z" fill="#1e3a8a" stroke="#1e40af" stroke-width="2"/>
- <!-- Car roof -->
- <path d="M120 100 L140 60 L260 60 L280 100" fill="#1e3a8a" stroke="#1e40af" stroke-width="2"/>
- <!-- Windows -->
- <path d="M130 95 L145 65 L200 65 L200 95 Z" fill="#93c5fd" fill-opacity="0.7"/>
- <path d="M205 95 L205 65 L255 65 L270 95 Z" fill="#93c5fd" fill-opacity="0.7"/>
- <!-- Headlights -->
- <rect x="335" y="142" width="15" height="8" rx="2" fill="#fef08a"/>
- <rect x="50" y="142" width="15" height="8" rx="2" fill="#fef08a"/>
- <!-- Wheels -->
- <circle cx="100" cy="160" r="25" fill="#374151"/>
- <circle cx="100" cy="160" r="15" fill="#6b7280"/>
- <circle cx="300" cy="160" r="25" fill="#374151"/>
- <circle cx="300" cy="160" r="15" fill="#6b7280"/>
- </svg>
- 
- <!-- PCN Ticket on windshield -->
- <div class="absolute top-8 left-1/2 transform -translate-x-1/2 rotate-12">
- <div class="bg-yellow-100 border-2 border-yellow-500 rounded-lg p-3 shadow-lg" style="width: 90px;">
- <div class="text-red-600 font-bold text-xs text-center border-b border-red-300 pb-1 mb-1">PENALTY</div>
- <div class="text-xs text-gray-700 text-center">PCN</div>
- <div class="text-xs text-gray-500 text-center mt-1">#123456</div>
- </div>
- </div>
- 
- <!-- Appeal badge -->
- <div class="absolute -bottom-4 -right-4 bg-green-500 text-white rounded-full p-3 shadow-lg">
- <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
- </svg>
- </div>
- </div>
- </div>
- </div>
- 
- <!-- Scroll indicator -->
- <div class="flex justify-center pb-4">
- <a href="#codes" class="flex flex-col items-center text-white/70 hover:text-white transition-colors">
- <span class="text-sm mb-1">Scroll to see more</span>
- <svg class="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
- </svg>
- </a>
- </div>
- </div>
- </section>
+  <main id="main-content" class="pt-20">
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden py-24 md:py-32">
+      <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div class="z-10">
+          <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-primary leading-[1.1] mb-8">
+            Fight Unfair<br/>Parking Tickets<br/><span class="text-secondary">in Minutes</span>.
+          </h1>
+          <p class="text-lg md:text-xl text-on-surface-variant leading-relaxed mb-10 max-w-lg">
+            Generate professionally crafted PCN appeal letters tailored to your contravention code. One payment, instant download.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href="app.html" class="bg-primary text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-xl hover:translate-y-[-2px] transition-all active:scale-95 flex items-center justify-center gap-2">
+              Start Your Appeal Now
+              <span class="material-symbols-outlined">arrow_forward</span>
+            </a>
+            <a href="#how-it-works" class="bg-surface-container-highest text-primary px-8 py-4 rounded-xl font-bold text-lg hover:bg-surface-container-high transition-all flex items-center justify-center gap-2">
+              See How It Works
+            </a>
+          </div>
+          
+          <!-- Price Badge -->
+        </div>
+        
+        <!-- Hero Illustration -->
+        <div class="relative">
+          <div class="absolute -top-20 -right-20 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
+          <div class="absolute -bottom-20 -left-20 w-96 h-96 bg-tertiary/10 rounded-full blur-3xl"></div>
+          <div class="relative bg-surface-container-lowest rounded-[2rem] p-8 shadow-2xl border border-outline-variant/20">
+            <!-- Car with PCN -->
+            <div class="flex justify-center mb-6">
+              <svg class="w-64 h-auto" viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M50 140 L80 140 L100 100 L300 100 L320 140 L350 140 L350 160 L50 160 Z" fill="#00236f" stroke="#00174b" stroke-width="2"/>
+                <path d="M120 100 L140 60 L260 60 L280 100" fill="#00236f" stroke="#00174b" stroke-width="2"/>
+                <path d="M130 95 L145 65 L200 65 L200 95 Z" fill="#dbe1ff" fill-opacity="0.7"/>
+                <path d="M205 95 L205 65 L255 65 L270 95 Z" fill="#dbe1ff" fill-opacity="0.7"/>
+                <rect x="335" y="142" width="15" height="8" rx="2" fill="#ffe083"/>
+                <rect x="50" y="142" width="15" height="8" rx="2" fill="#ffe083"/>
+                <circle cx="100" cy="160" r="25" fill="#444651"/>
+                <circle cx="100" cy="160" r="15" fill="#757682"/>
+                <circle cx="300" cy="160" r="25" fill="#444651"/>
+                <circle cx="300" cy="160" r="15" fill="#757682"/>
+              </svg>
+            </div>
+            
+            <!-- PCN Ticket -->
+            <div class="flex items-center justify-between mb-6 border-b border-surface-container pb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-error-container rounded-lg flex items-center justify-center">
+                  <span class="material-symbols-outlined text-error" data-weight="fill">description</span>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Notice Number</p>
+                  <p class="mono-label font-bold text-primary">AB12-CDEF-34</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <p class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Penalty</p>
+                <p class="text-xl font-extrabold text-error">£70.00</p>
+              </div>
+            </div>
+            
+            <div class="space-y-4">
+              <div class="p-4 bg-surface-container-low rounded-xl">
+                <h4 class="font-bold text-primary mb-1">Contravention Code 01</h4>
+                <p class="text-sm text-on-surface-variant">Parked in a restricted street during prescribed hours.</p>
+              </div>
+              <div class="space-y-3">
+                <div class="flex items-center gap-3 text-sm font-medium text-on-surface">
+                  <span class="material-symbols-outlined text-secondary">check_circle</span>
+                  Grounds for appeal: Signage obscured
+                </div>
+                <div class="flex items-center gap-3 text-sm font-medium text-on-surface">
+                  <span class="material-symbols-outlined text-secondary">check_circle</span>
+                  Evidence: Your photos & circumstances
+                </div>
+                <div class="flex items-center gap-3 text-sm font-medium text-on-surface">
+                  <span class="material-symbols-outlined text-secondary">check_circle</span>
+                  Legal Authority: Traffic Management Act 2004
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
- <!-- Contravention Codes -->
- <section id="codes" class="py-20 bg-white">
- <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
- <div class="text-center mb-12">
- <h2 class="text-3xl font-bold text-gray-900 mb-4">We Handle All Major Contravention Codes</h2>
- <p class="text-gray-600 max-w-2xl mx-auto">Tailored appeal templates for each type of parking contravention</p>
- </div>
- 
- <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
- <div class="bg-gray-50 rounded-xl p-4 text-center hover:shadow-lg transition-shadow border border-gray-200">
- <span class="text-2xl font-bold text-blue-600">01</span>
- <p class="text-sm text-gray-700 mt-1 font-medium">Restricted Street</p>
- </div>
- <div class="bg-gray-50 rounded-xl p-4 text-center hover:shadow-lg transition-shadow border border-gray-200">
- <span class="text-2xl font-bold text-blue-600">05</span>
- <p class="text-sm text-gray-700 mt-1 font-medium">Expired Time</p>
- </div>
- <div class="bg-gray-50 rounded-xl p-4 text-center hover:shadow-lg transition-shadow border border-gray-200">
- <span class="text-2xl font-bold text-blue-600">11</span>
- <p class="text-sm text-gray-700 mt-1 font-medium">No Payment</p>
- </div>
- <div class="bg-gray-50 rounded-xl p-4 text-center hover:shadow-lg transition-shadow border border-gray-200">
- <span class="text-2xl font-bold text-blue-600">12</span>
- <p class="text-sm text-gray-700 mt-1 font-medium">No Permit</p>
- </div>
- <div class="bg-gray-50 rounded-xl p-4 text-center hover:shadow-lg transition-shadow border border-gray-200">
- <span class="text-2xl font-bold text-blue-600">31</span>
- <p class="text-sm text-gray-700 mt-1 font-medium">Box Junction</p>
- </div>
- <div class="bg-gray-50 rounded-xl p-4 text-center hover:shadow-lg transition-shadow border border-gray-200">
- <span class="text-2xl font-bold text-blue-600">34</span>
- <p class="text-sm text-gray-700 mt-1 font-medium">Bus Lane</p>
- </div>
- <div class="bg-gray-50 rounded-xl p-4 text-center hover:shadow-lg transition-shadow border border-gray-200">
- <span class="text-2xl font-bold text-blue-600">47</span>
- <p class="text-sm text-gray-700 mt-1 font-medium">Bus Stop</p>
- </div>
- <div class="bg-gray-50 rounded-xl p-4 text-center hover:shadow-lg transition-shadow border border-gray-200">
- <span class="text-2xl font-bold text-blue-600">62</span>
- <p class="text-sm text-gray-700 mt-1 font-medium">Footway Parking</p>
- </div>
- </div>
- 
- <p class="text-center text-gray-500 mt-6">+ 8 more contravention codes covered</p>
- </div>
- </section>
+    <!-- Contravention Codes -->
+    <section class="py-20 bg-primary text-white overflow-hidden">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col lg:flex-row gap-16 items-center">
+          <div class="lg:w-1/3">
+            <h2 class="text-3xl font-bold mb-6">Expertise Across All Codes</h2>
+            <p class="text-blue-100/70 mb-8">Whether it's a council PCN, Bus Lane fine, or Private Parking Charge Notice, we handle every major contravention category.</p>
+            <div class="flex items-center gap-4">
+              <div class="text-center px-6 py-4 bg-white/10 rounded-2xl backdrop-blur-sm">
+                <div class="text-2xl font-bold text-tertiary-fixed">16+</div>
+                <div class="text-[10px] uppercase font-bold tracking-widest text-blue-200">Codes</div>
+              </div>
+              <div class="text-center px-6 py-4 bg-white/10 rounded-2xl backdrop-blur-sm">
+                <div class="text-2xl font-bold text-tertiary-fixed">100%</div>
+                <div class="text-[10px] uppercase font-bold tracking-widest text-blue-200">Legal</div>
+              </div>
+            </div>
+          </div>
+          <div class="lg:w-2/3 grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div class="p-4 border border-white/10 rounded-xl hover:bg-white/5 transition-colors group">
+              <span class="mono-label text-tertiary-fixed font-bold block mb-1">Code 01</span>
+              <span class="text-sm font-medium">Yellow Lines</span>
+            </div>
+            <div class="p-4 border border-white/10 rounded-xl hover:bg-white/5 transition-colors group">
+              <span class="mono-label text-tertiary-fixed font-bold block mb-1">Code 05</span>
+              <span class="text-sm font-medium">Expired Time</span>
+            </div>
+            <div class="p-4 border border-white/10 rounded-xl hover:bg-white/5 transition-colors group">
+              <span class="mono-label text-tertiary-fixed font-bold block mb-1">Code 11</span>
+              <span class="text-sm font-medium">No Payment</span>
+            </div>
+            <div class="p-4 border border-white/10 rounded-xl hover:bg-white/5 transition-colors group">
+              <span class="mono-label text-tertiary-fixed font-bold block mb-1">Code 12</span>
+              <span class="text-sm font-medium">No Permit</span>
+            </div>
+            <div class="p-4 border border-white/10 rounded-xl hover:bg-white/5 transition-colors group">
+              <span class="mono-label text-tertiary-fixed font-bold block mb-1">Code 31</span>
+              <span class="text-sm font-medium">Box Junction</span>
+            </div>
+            <div class="p-4 border border-white/10 rounded-xl hover:bg-white/5 transition-colors group">
+              <span class="mono-label text-tertiary-fixed font-bold block mb-1">Code 34</span>
+              <span class="text-sm font-medium">Bus Lanes</span>
+            </div>
+            <div class="p-4 border border-white/10 rounded-xl hover:bg-white/5 transition-colors group">
+              <span class="mono-label text-tertiary-fixed font-bold block mb-1">Code 47</span>
+              <span class="text-sm font-medium">Bus Stop</span>
+            </div>
+            <div class="p-4 border border-white/10 rounded-xl hover:bg-white/5 transition-colors group">
+              <span class="mono-label text-tertiary-fixed font-bold block mb-1">Code 62</span>
+              <span class="text-sm font-medium">Footway</span>
+            </div>
+          </div>
+        </div>
+        <p class="text-center text-blue-200/60 mt-8">+ 8 more contravention codes covered</p>
+      </div>
+    </section>
 
- <!-- How It Works -->
- <section id="how-it-works" class="py-20 bg-gray-50">
- <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
- <div class="text-center mb-16">
- <h2 class="text-3xl font-bold text-gray-900 mb-4">How It Works</h2>
- <p class="text-gray-600 max-w-2xl mx-auto">Generate a professionally structured PCN appeal letter in under 5 minutes. Our system creates tailored content based on your specific contravention code and circumstances.</p>
- </div>
- 
- <div class="grid md:grid-cols-3 gap-8">
- <!-- Step 1 -->
- <div class="relative">
- <div class="bg-white rounded-2xl p-8 h-full shadow-md border border-gray-100">
- <div class="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-blue-600/20">
- <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
- </svg>
- </div>
- <h3 class="text-xl font-semibold text-gray-900 mb-3">1. Enter Your PCN Details</h3>
- <p class="text-gray-600 mb-3">Provide your PCN reference number, vehicle registration, council name, and contravention code from your ticket.</p>
- <div class="bg-gray-50 rounded-lg p-3 text-sm text-gray-500">
- <strong>Tip:</strong> Have your PCN to hand—it takes about 2 minutes to enter all details.
- </div>
- </div>
- <div class="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
- <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
- <path d="M9 5l7 7-7 7"></path>
- </svg>
- </div>
- </div>
- 
- <!-- Step 2 -->
- <div class="relative">
- <div class="bg-white rounded-2xl p-8 h-full shadow-md border border-gray-100">
- <div class="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-blue-600/20">
- <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
- </svg>
- </div>
- <h3 class="text-xl font-semibold text-gray-900 mb-3">2. Preview Your Appeal Letter</h3>
- <p class="text-gray-600 mb-3">We generate a complete appeal letter tailored to your contravention code with relevant legal arguments and template language.</p>
- <div class="bg-gray-50 rounded-lg p-3 text-sm text-gray-500">
- <strong>Includes:</strong> Correct legal framework, statutory grounds, and space for your evidence.
- </div>
- </div>
- <div class="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
- <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
- <path d="M9 5l7 7-7 7"></path>
- </svg>
- </div>
- </div>
- 
- <!-- Step 3 -->
- <div>
- <div class="bg-white rounded-2xl p-8 h-full shadow-md border border-gray-100">
- <div class="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-blue-600/20">
- <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
- </svg>
- </div>
- <h3 class="text-xl font-semibold text-gray-900 mb-3">3. Download & Submit</h3>
- <p class="text-gray-600 mb-3">Pay £2.99 and instantly download your PDF letter. A copy is also sent to your email for your records.</p>
- <div class="bg-gray-50 rounded-lg p-3 text-sm text-gray-500">
- <strong>Then:</strong> Email or post to your council—full instructions included.
- </div>
- </div>
- </div>
- </div>
- 
- <!-- Additional Process Info -->
- <div class="mt-16 bg-white rounded-2xl p-8 shadow-md border border-gray-100">
- <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">The Complete Appeal Process</h3>
- 
- <div class="grid md:grid-cols-4 gap-6">
- <div class="text-center">
- <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
- <span class="text-blue-600 font-bold">1</span>
- </div>
- <h4 class="font-semibold text-gray-900 mb-2">Generate Letter</h4>
- <p class="text-sm text-gray-600">Use our tool to create your appeal letter in minutes</p>
- </div>
- 
- <div class="text-center">
- <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
- <span class="text-blue-600 font-bold">2</span>
- </div>
- <h4 class="font-semibold text-gray-900 mb-2">Personalise</h4>
- <p class="text-sm text-gray-600">Add your specific evidence and circumstances</p>
- </div>
- 
- <div class="text-center">
- <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
- <span class="text-blue-600 font-bold">3</span>
- </div>
- <h4 class="font-semibold text-gray-900 mb-2">Submit to Council</h4>
- <p class="text-sm text-gray-600">Email or post within the 28-day deadline</p>
- </div>
- 
- <div class="text-center">
- <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
- <span class="text-green-600 font-bold">✓</span>
- </div>
- <h4 class="font-semibold text-gray-900 mb-2">Await Response</h4>
- <p class="text-sm text-gray-600">Council must respond within 56 days</p>
- </div>
- </div>
- 
- <div class="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-200">
- <p class="text-blue-900 text-sm text-center"><strong>What if rejected?</strong> You can appeal to the independent Traffic Penalty Tribunal—completely free. About 60-70% of tribunal cases succeed or are not contested by councils.</p>
- </div>
- </div>
- </div>
- </section>
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-24">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row items-end justify-between mb-20 gap-8">
+          <div class="max-w-xl">
+            <h2 class="text-4xl font-extrabold text-primary mb-6">As Easy as 1-2-3</h2>
+            <p class="text-on-surface-variant text-lg">We've distilled the complex legal appeal process into a simple guided journey that anyone can complete.</p>
+          </div>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-12 relative">
+          <!-- Progress Line (Desktop) -->
+          <div class="hidden md:block absolute top-12 left-0 w-full h-[2px] bg-surface-container-highest -z-10">
+            <div class="h-full bg-secondary w-2/3"></div>
+          </div>
+          
+          <!-- Step 1 -->
+          <div class="flex flex-col items-start">
+            <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center text-3xl font-black text-primary shadow-xl border-4 border-surface-container-low mb-8">1</div>
+            <h3 class="text-2xl font-bold text-primary mb-4">Enter Your PCN Details</h3>
+            <p class="text-on-surface-variant leading-relaxed">Provide your PCN reference number, vehicle registration, council name, and contravention code from your ticket.</p>
+            <div class="mt-4 p-3 bg-surface-container-low rounded-lg text-sm text-on-surface-variant">
+              <strong>Tip:</strong> Have your PCN to hand—it takes about 2 minutes to enter all details.
+            </div>
+          </div>
+          
+          <!-- Step 2 -->
+          <div class="flex flex-col items-start">
+            <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center text-3xl font-black text-primary shadow-xl border-4 border-surface-container-low mb-8">2</div>
+            <h3 class="text-2xl font-bold text-primary mb-4">Preview Your Appeal</h3>
+            <p class="text-on-surface-variant leading-relaxed">We generate a complete appeal letter tailored to your contravention code with relevant legal arguments.</p>
+            <div class="mt-4 p-3 bg-surface-container-low rounded-lg text-sm text-on-surface-variant">
+              <strong>Includes:</strong> Correct legal framework, statutory grounds, and space for your evidence.
+            </div>
+          </div>
+          
+          <!-- Step 3 -->
+          <div class="flex flex-col items-start">
+            <div class="w-20 h-20 bg-secondary rounded-full flex items-center justify-center text-3xl font-black text-white shadow-xl border-4 border-secondary-fixed mb-8">
+              <span class="material-symbols-outlined text-4xl">download</span>
+            </div>
+            <h3 class="text-2xl font-bold text-primary mb-4">Download & Submit</h3>
+            <p class="text-on-surface-variant leading-relaxed">Pay £2.99 and instantly download your PDF letter. A copy is also sent to your email.</p>
+            <div class="mt-4 p-3 bg-surface-container-low rounded-lg text-sm text-on-surface-variant">
+              <strong>Then:</strong> Email or post to your council—full instructions included.
+            </div>
+          </div>
+        </div>
+        
+        <!-- Complete Process -->
+        <div class="mt-20 bg-surface-container-low rounded-[2rem] p-10">
+          <h3 class="text-2xl font-bold text-primary mb-8 text-center">The Complete Appeal Process</h3>
+          
+          <div class="grid md:grid-cols-4 gap-6">
+            <div class="text-center">
+              <div class="w-12 h-12 bg-secondary-container rounded-full flex items-center justify-center mx-auto mb-3">
+                <span class="text-white font-bold">1</span>
+              </div>
+              <h4 class="font-semibold text-primary mb-2">Generate Letter</h4>
+              <p class="text-sm text-on-surface-variant">Use our tool to create your appeal letter in minutes</p>
+            </div>
+            
+            <div class="text-center">
+              <div class="w-12 h-12 bg-secondary-container rounded-full flex items-center justify-center mx-auto mb-3">
+                <span class="text-white font-bold">2</span>
+              </div>
+              <h4 class="font-semibold text-primary mb-2">Personalise</h4>
+              <p class="text-sm text-on-surface-variant">Add your specific evidence and circumstances</p>
+            </div>
+            
+            <div class="text-center">
+              <div class="w-12 h-12 bg-secondary-container rounded-full flex items-center justify-center mx-auto mb-3">
+                <span class="text-white font-bold">3</span>
+              </div>
+              <h4 class="font-semibold text-primary mb-2">Submit to Council</h4>
+              <p class="text-sm text-on-surface-variant">Email or post within the 28-day deadline</p>
+            </div>
+            
+            <div class="text-center">
+              <div class="w-12 h-12 bg-tertiary-container rounded-full flex items-center justify-center mx-auto mb-3">
+                <span class="text-white font-bold">✓</span>
+              </div>
+              <h4 class="font-semibold text-primary mb-2">Await Response</h4>
+              <p class="text-sm text-on-surface-variant">Council must respond within 56 days</p>
+            </div>
+          </div>
+          
+          <div class="mt-8 p-4 bg-primary-container/20 rounded-lg border border-primary-container/30">
+            <p class="text-primary text-sm text-center"><strong>What if rejected?</strong> You can appeal to the independent Traffic Penalty Tribunal—completely free. About 60-70% of tribunal cases succeed or are not contested by councils.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
- <!-- Features -->
- <section class="py-20 bg-white">
- <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
- <div class="grid md:grid-cols-2 gap-12 items-center">
- <div>
- <h2 class="text-3xl font-bold text-gray-900 mb-6">Why Use Our Appeal Generator?</h2>
- 
- <div class="space-y-6">
- <div class="flex gap-4">
- <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
- <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
- </svg>
- </div>
- <div>
- <h3 class="font-semibold text-gray-900">Tailored Templates</h3>
- <p class="text-gray-600">Different appeal arguments for each contravention code, not generic letters.</p>
- </div>
- </div>
- 
- <div class="flex gap-4">
- <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
- <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
- </svg>
- </div>
- <div>
- <h3 class="font-semibold text-gray-900">England & Wales Support</h3>
- <p class="text-gray-600">Correct legal framework for your jurisdiction - TMA 2004 vs Welsh regulations.</p>
- </div>
- </div>
- 
- <div class="flex gap-4">
- <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
- <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
- </svg>
- </div>
- <div>
- <h3 class="font-semibold text-gray-900">Instant Download & Email</h3>
- <p class="text-gray-600">Get your PDF immediately after payment. A copy is also sent to your email address.</p>
- </div>
- </div>
- 
- <div class="flex gap-4">
- <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
- <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
- </svg>
- </div>
- <div>
- <h3 class="font-semibold text-gray-900">No Hidden Fees</h3>
- <p class="text-gray-600">Just £2.99 per letter. No subscriptions, no upsells.</p>
- </div>
- </div>
- </div>
- </div>
- 
- <!-- Document Preview -->
- <div class="bg-white rounded-2xl p-6 shadow-xl border border-gray-100">
- <div class="bg-gray-50 rounded-lg p-8 border border-gray-200">
- <div class="text-center mb-6 pb-4 border-b">
- <p class="text-sm text-gray-600">Appeal Reference: <span class="font-mono text-gray-800">AB12-CDEF-34</span></p>
- <h3 class="text-lg font-semibold mt-2 text-gray-900">FORMAL REPRESENTATIONS</h3>
- <p class="text-sm text-gray-600">Penalty Charge Notice Appeal</p>
- </div>
- <div class="space-y-4 text-sm text-gray-700">
- <p>Dear Sir or Madam,</p>
- <p>I am writing to make formal representations against Penalty Charge Notice <span class="bg-yellow-200 px-1 font-medium">PCN12345678</span>...</p>
- <div class="p-3 bg-blue-100 rounded border-l-4 border-blue-600 text-blue-800">
- <p class="font-medium">Legal Ground: Defective Signage</p>
- <p class="text-xs mt-1">The restriction was not clearly indicated by traffic signs compliant with TSRGD 2016...</p>
- </div>
- </div>
- </div>
- </div>
- </div>
- </div>
- </section>
+    <!-- Features / Why Use Us -->
+    <section id="features" class="py-24 bg-surface-container-low">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-16 text-center">
+          <h2 class="text-4xl font-extrabold text-primary mb-4">The Professional Edge</h2>
+          <p class="text-on-surface-variant max-w-2xl mx-auto">We leverage years of legal precedent and council policy to ensure your appeal is technically perfect.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Feature 1 -->
+          <div class="md:col-span-2 bg-surface-container-lowest p-10 rounded-[2rem] shadow-sm flex flex-col justify-between">
+            <div>
+              <span class="material-symbols-outlined text-secondary text-4xl mb-6">bolt</span>
+              <h3 class="text-2xl font-bold text-primary mb-4">Generate in <span class="text-secondary">Under 3 Minutes</span></h3>
+              <p class="text-on-surface-variant text-lg leading-relaxed">Stop wasting hours researching complex traffic laws. Our engine processes your ticket details and matches them against our database of successful appeals instantly.</p>
+            </div>
+            <div class="mt-8 flex items-center gap-4">
+              <div class="px-4 py-2 bg-surface-container rounded-lg font-mono text-sm text-secondary">SAVE_TIME</div>
+              <div class="px-4 py-2 bg-surface-container rounded-lg font-mono text-sm text-secondary">AUTO_GEN</div>
+            </div>
+          </div>
+          
+          <!-- Feature 2 -->
+          <div class="bg-primary p-10 rounded-[2rem] text-white flex flex-col justify-between overflow-hidden relative">
+            <div class="absolute -right-10 -bottom-10 opacity-10">
+              <span class="material-symbols-outlined text-[12rem]">gavel</span>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold mb-4 leading-tight">Legal Precision by Design</h3>
+              <p class="text-blue-100/80 leading-relaxed">Our letters use the exact legal terminology and act citations required to trigger a mandatory review by council officers.</p>
+            </div>
+            <div class="mt-8 font-bold text-tertiary-fixed">
+              "Technically Superior Appeals"
+            </div>
+          </div>
+          
+          <!-- Feature 3 -->
+          <div class="bg-surface-container-highest p-10 rounded-[2rem] flex flex-col gap-6">
+            <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm">
+              <span class="material-symbols-outlined text-primary">security</span>
+            </div>
+            <h3 class="text-xl font-bold text-primary">Tailored Templates</h3>
+            <p class="text-on-surface-variant text-sm">Different appeal arguments for each contravention code, not generic letters.</p>
+          </div>
+          
+          <!-- Feature 4 -->
+          <div class="md:col-span-2 bg-white p-10 rounded-[2rem] border border-outline-variant/30 flex items-center gap-8">
+            <div class="hidden sm:block">
+              <div class="w-24 h-24 rounded-full bg-secondary-fixed flex items-center justify-center">
+                <span class="material-symbols-outlined text-secondary text-5xl">groups</span>
+              </div>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-primary mb-2">Supported Councils</h3>
+              <p class="text-on-surface-variant mb-6">Our system is pre-configured for over 300+ local authorities across the UK, including TfL and private parking firms.</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-surface-container text-xs font-bold rounded-full">LONDON</span>
+                <span class="px-3 py-1 bg-surface-container text-xs font-bold rounded-full">MANCHESTER</span>
+                <span class="px-3 py-1 bg-surface-container text-xs font-bold rounded-full">BIRMINGHAM</span>
+                <span class="px-3 py-1 bg-surface-container text-xs font-bold rounded-full">+297 MORE</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Additional Features -->
+        <div class="grid md:grid-cols-2 gap-8 mt-12">
+          <div class="flex gap-4 p-6 bg-white rounded-2xl border border-outline-variant/30">
+            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-green-600">check_circle</span>
+            </div>
+            <div>
+              <h3 class="font-semibold text-primary mb-2">England & Wales Support</h3>
+              <p class="text-on-surface-variant">Correct legal framework for your jurisdiction - TMA 2004 vs Welsh regulations.</p>
+            </div>
+          </div>
+          
+          <div class="flex gap-4 p-6 bg-white rounded-2xl border border-outline-variant/30">
+            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-green-600">check_circle</span>
+            </div>
+            <div>
+              <h3 class="font-semibold text-primary mb-2">Instant Download & Email</h3>
+              <p class="text-on-surface-variant">Get your PDF immediately after payment. A copy is also sent to your email address.</p>
+            </div>
+          </div>
+          
+          <div class="flex gap-4 p-6 bg-white rounded-2xl border border-outline-variant/30">
+            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-green-600">check_circle</span>
+            </div>
+            <div>
+              <h3 class="font-semibold text-primary mb-2">No Hidden Fees</h3>
+              <p class="text-on-surface-variant">Just £2.99 per letter. No subscriptions, no upsells.</p>
+            </div>
+          </div>
+          
+          <div class="flex gap-4 p-6 bg-white rounded-2xl border border-outline-variant/30">
+            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-green-600">check_circle</span>
+            </div>
+            <div>
+              <h3 class="font-semibold text-primary mb-2">GDPR Compliant</h3>
+              <p class="text-on-surface-variant">Your evidence and personal details are encrypted and never shared.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
- <!-- CTA -->
- <section class="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 py-20">
- <div class="max-w-4xl mx-auto px-4 text-center">
- <h2 class="text-3xl font-bold text-white mb-4">Ready to Appeal?</h2>
- <p class="text-xl text-gray-100 mb-8">Generate your professional appeal letter in minutes</p>
- <a href="app.html" class="inline-block bg-white text-blue-800 px-10 py-4 rounded-xl text-lg font-semibold hover:bg-gray-100 transition-all shadow-xl">
- Start Your Appeal — £2.99
- </a>
- </div>
- </section>
+    <!-- CTA Section -->
+    <section class="py-24 relative overflow-hidden">
+      <div class="max-w-5xl mx-auto px-6 text-center">
+        <div class="bg-surface-container rounded-[3rem] p-12 md:p-20 relative z-10">
+          <h2 class="text-4xl md:text-5xl font-extrabold text-primary mb-8 tracking-tight">Don't settle for unfair fines.</h2>
+          <p class="text-on-surface-variant text-xl mb-12 max-w-2xl mx-auto">Generate a professional appeal letter and fight your parking ticket with our expert tool.</p>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+            <a href="app.html" class="w-full sm:w-auto bg-secondary text-white px-10 py-5 rounded-2xl font-bold text-xl shadow-lg active:scale-95 transition-all">
+              Start Appeal - Only £2.99
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full -z-10 opacity-30">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-secondary-fixed rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-tertiary-fixed-dim rounded-full blur-3xl"></div>
+      </div>
+    </section>
+  </main>
 
- <!-- Footer -->
- <footer class="bg-gray-900 text-gray-300 py-12">
- <div class="max-w-7xl mx-auto px-4">
- <div class="grid md:grid-cols-4 gap-8 mb-8">
- <div>
- <h3 class="text-white font-semibold mb-4">PCN Appeal Generator</h3>
- <p class="text-sm text-gray-400">Professional appeal letter templates for UK parking contraventions.</p>
- </div>
- <div>
- <h3 class="text-white font-semibold mb-4">Quick Links</h3>
- <ul class="space-y-2 text-sm">
- <li><a href="app.html" class="hover:text-white transition-colors">Start Appeal</a></li>
- <li><a href="faq.html" class="hover:text-white transition-colors">FAQ</a></li>
- <li><a href="feedback.html" class="hover:text-white transition-colors">Feedback</a></li>
- </ul>
- </div>
- <div>
- <h3 class="text-white font-semibold mb-4">Legal</h3>
- <ul class="space-y-2 text-sm">
- <li><a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
- <li><a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a></li>
- </ul>
- </div>
- <div>
- <h3 class="text-white font-semibold mb-4">Contact</h3>
- <p class="text-sm text-gray-400">Questions? Email us at:<br><a href="mailto:filspire@gmail.com" class="text-blue-400 hover:text-blue-300">filspire@gmail.com</a></p>
- </div>
- </div>
- <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-500">
- <p>© 2026 Filspire Ltd. This is not legal advice.</p>
- </div>
- </div>
- </footer>
+  <!-- Footer -->
+  <footer class="w-full py-12 border-t border-slate-200 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8 items-center">
+      <div class="space-y-4">
+        <div class="text-lg font-bold text-primary font-headline">FineFighters</div>
+        <p class="text-sm leading-relaxed text-on-surface-variant">Professional appeal letter templates for UK parking contraventions.</p>
+      </div>
+      <div>
+        <h3 class="text-primary font-semibold mb-4">Quick Links</h3>
+        <ul class="space-y-2 text-sm">
+          <li><a href="app.html" class="text-on-surface-variant hover:text-primary transition-colors">Start Appeal</a></li>
+          <li><a href="faq.html" class="text-on-surface-variant hover:text-primary transition-colors">FAQ</a></li>
+          <li><a href="feedback.html" class="text-on-surface-variant hover:text-primary transition-colors">Feedback</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-primary font-semibold mb-4">Legal</h3>
+        <ul class="space-y-2 text-sm">
+          <li><a href="privacy.html" class="text-on-surface-variant hover:text-primary transition-colors">Privacy Policy</a></li>
+          <li><a href="terms.html" class="text-on-surface-variant hover:text-primary transition-colors">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-primary font-semibold mb-4">Contact</h3>
+        <p class="text-sm text-on-surface-variant">Questions? Email us at:<br><a href="mailto:filspire@gmail.com" class="text-secondary hover:text-primary transition-colors font-medium">filspire@gmail.com</a></p>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-6 border-t border-slate-200 mt-8 pt-8 text-center text-sm text-on-surface-variant">
+      <p>© 2026 Filspire Ltd. This is not legal advice.</p>
+    </div>
+  </footer>
 </body>
 </html>

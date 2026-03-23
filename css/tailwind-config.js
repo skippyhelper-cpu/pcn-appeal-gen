@@ -1,0 +1,67 @@
+// Shared Tailwind Configuration
+// This file provides the common color palette, font definitions, and border radius settings
+// used across all HTML pages.
+
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "tertiary-fixed-dim": "#eec200",
+        "secondary-fixed-dim": "#b4c5ff",
+        "on-secondary-fixed": "#00174b",
+        "primary": "#00236f",
+        "secondary-container": "#316bf3",
+        "surface-variant": "#d9e3f4",
+        "surface-dim": "#d1dbec",
+        "error": "#ba1a1a",
+        "outline": "#757682",
+        "secondary-fixed": "#dbe1ff",
+        "inverse-surface": "#27313e",
+        "surface-bright": "#f8f9ff",
+        "tertiary": "#735c00",
+        "on-tertiary-fixed-variant": "#574500",
+        "on-primary-fixed": "#00164e",
+        "on-surface": "#121c28",
+        "on-tertiary-fixed": "#231b00",
+        "surface-tint": "#4059aa",
+        "primary-container": "#1e3a8a",
+        "on-secondary-container": "#fefcff",
+        "outline-variant": "#c5c5d3",
+        "on-primary": "#ffffff",
+        "error-container": "#ffdad6",
+        "on-tertiary": "#ffffff",
+        "inverse-on-surface": "#eaf1ff",
+        "primary-fixed": "#dce1ff",
+        "on-primary-container": "#90a8ff",
+        "surface-container-lowest": "#ffffff",
+        "on-background": "#121c28",
+        "on-error-container": "#93000a",
+        "on-secondary-fixed-variant": "#003ea8",
+        "tertiary-container": "#cea700",
+        "secondary": "#0051d5",
+        "tertiary-fixed": "#ffe083",
+        "background": "#f8f9ff",
+        "surface-container-high": "#dfe9fa",
+        "on-secondary": "#ffffff",
+        "on-primary-fixed-variant": "#264191",
+        "inverse-primary": "#b6c4ff",
+        "surface-container-highest": "#d9e3f4",
+        "surface": "#f8f9ff",
+        "on-tertiary-container": "#4e3e00",
+        "on-surface-variant": "#444651",
+        "surface-container-low": "#eef4ff",
+        "primary-fixed-dim": "#b6c4ff",
+        "surface-container": "#e5eeff",
+        "on-error": "#ffffff"
+      },
+      fontFamily: {
+        "headline": ["Inter"],
+        "body": ["Inter"],
+        "label": ["Inter"],
+        "serif": ["Lora", "serif"]
+      },
+      borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+    },
+  },
+}

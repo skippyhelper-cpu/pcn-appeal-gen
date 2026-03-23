@@ -1,4 +1,4 @@
-// Firebase configuration for PCN Appeal Generator
+// Firebase configuration for FineFighters
 const firebaseConfig = {
     apiKey: "AIzaSyCgMSN9xBJ9iZhgmevdQCB8OM19hMtvYTg",
     authDomain: "pcn-appeal-generator.firebaseapp.com",

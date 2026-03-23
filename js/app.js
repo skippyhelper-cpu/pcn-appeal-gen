@@ -13,7 +13,7 @@
  * or reCAPTCHA Enterprise is required for production security.
  */
 
-// PCN Appeal Generator - Main Application Logic
+// FineFighters - Main Application Logic
 
 // Global state
 let currentStep = 1;
