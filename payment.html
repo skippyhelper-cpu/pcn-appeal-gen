@@ -41,43 +41,7 @@
 
     <!-- Progress Stepper -->
     <div class="bg-white border-b">
-        <div class="max-w-3xl mx-auto px-4 py-6">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <div class="w-10 h-10 rounded-full step-complete flex items-center justify-center font-semibold">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
-                    <span class="ml-3 text-sm font-medium text-gray-900">Details</span>
-                </div>
-                
-                <div class="flex-1 mx-4 h-1 bg-green-500 rounded"></div>
-                
-                <div class="flex items-center">
-                    <div class="w-10 h-10 rounded-full step-complete flex items-center justify-center font-semibold">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
-                    <span class="ml-3 text-sm font-medium text-gray-900">Preview</span>
-                </div>
-                
-                <div class="flex-1 mx-4 h-1 bg-blue-500 rounded"></div>
-                
-                <div class="flex items-center">
-                    <div class="w-10 h-10 rounded-full step-active flex items-center justify-center font-semibold">3</div>
-                    <span class="ml-3 text-sm font-medium text-blue-600">Payment</span>
-                </div>
-                
-                <div class="flex-1 mx-4 h-1 bg-gray-200 rounded"></div>
-                
-                <div class="flex items-center">
-                    <div class="w-10 h-10 rounded-full step-pending flex items-center justify-center font-semibold">4</div>
-                    <span class="ml-3 text-sm font-medium text-gray-500">Download</span>
-                </div>
-            </div>
-        </div>
+        <div class="max-w-3xl mx-auto px-4 py-6" id="progressStepper"></div>
     </div>
 
     <!-- Main Content -->
@@ -158,29 +122,23 @@
         </div>
     </main>
 
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex justify-center gap-6 mb-4">
+                <a href="privacy.html" class="text-gray-400 hover:text-white">Privacy Policy</a>
+                <a href="terms.html" class="text-gray-400 hover:text-white">Terms of Service</a>
+                <a href="feedback.html" class="text-gray-400 hover:text-white">Feedback</a>
+            </div>
+            <p>&copy; 2026 Filspire Ltd. Not legal advice.</p>
+        </div>
+    </footer>
+
     <!-- Scripts -->
+    <script src="js/shared.js"></script>
     <script src="js/firebase-config.js"></script>
     
     <script>
-        const codeDescriptions = {
-            '01': '01 - Restricted street',
-            '02': '02 - Loading restriction',
-            '05': '05 - Expired paid time',
-            '06': '06 - No ticket displayed',
-            '11': '11 - No payment',
-            '12': '12 - No resident permit',
-            '16': '16 - No permit',
-            '21': '21 - Suspended bay',
-            '25': '25 - Loading place',
-            '30': '30 - Overstay',
-            '31': '31 - Box junction',
-            '34': '34 - Bus lane',
-            '40': '40 - School area',
-            '45': '45 - Taxi rank',
-            '47': '47 - Bus stop',
-            '62': '62 - Footway parking'
-        };
-
         let appealData = null;
         let appealId = null;
 
@@ -195,9 +153,12 @@
             
             appealData = JSON.parse(storedData);
             
+            // Render progress stepper
+            document.getElementById('progressStepper').innerHTML = window.renderProgressStepper(3);
+            
             // Populate summary
             document.getElementById('summaryPcnRef').textContent = appealData.pcnRef;
-            document.getElementById('summaryCode').textContent = codeDescriptions[appealData.contraventionCode] || appealData.contraventionCode;
+            document.getElementById('summaryCode').textContent = window.codeDescriptions[appealData.contraventionCode] || appealData.contraventionCode;
             document.getElementById('summaryCouncil').textContent = appealData.council;
             document.getElementById('summaryEmail').textContent = appealData.email;
             

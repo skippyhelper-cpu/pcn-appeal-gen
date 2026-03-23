@@ -34,51 +34,7 @@
 
     <!-- Progress Stepper -->
     <div class="bg-white border-b">
-        <div class="max-w-3xl mx-auto px-4 py-6">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <div class="w-10 h-10 rounded-full step-complete flex items-center justify-center font-semibold">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
-                    <span class="ml-3 text-sm font-medium text-gray-900">Details</span>
-                </div>
-                
-                <div class="flex-1 mx-4 h-1 bg-green-500 rounded"></div>
-                
-                <div class="flex items-center">
-                    <div class="w-10 h-10 rounded-full step-complete flex items-center justify-center font-semibold">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
-                    <span class="ml-3 text-sm font-medium text-gray-900">Preview</span>
-                </div>
-                
-                <div class="flex-1 mx-4 h-1 bg-green-500 rounded"></div>
-                
-                <div class="flex items-center">
-                    <div class="w-10 h-10 rounded-full step-complete flex items-center justify-center font-semibold">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
-                    <span class="ml-3 text-sm font-medium text-gray-900">Payment</span>
-                </div>
-                
-                <div class="flex-1 mx-4 h-1 bg-green-500 rounded"></div>
-                
-                <div class="flex items-center">
-                    <div class="w-10 h-10 rounded-full step-complete flex items-center justify-center font-semibold">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
-                    <span class="ml-3 text-sm font-medium text-green-600">Download</span>
-                </div>
-            </div>
-        </div>
+        <div class="max-w-3xl mx-auto px-4 py-6" id="progressStepper"></div>
     </div>
 
     <main class="container mx-auto px-4 py-12 max-w-2xl">
@@ -141,10 +97,11 @@
                 <a href="terms.html" class="text-gray-400 hover:text-white">Terms of Service</a>
                 <a href="feedback.html" class="text-gray-400 hover:text-white">Feedback</a>
             </div>
-            <p>&copy; 2026 PCN Appeal Generator. Not legal advice.</p>
+            <p>&copy; 2026 Filspire Ltd. Not legal advice.</p>
         </div>
     </footer>
 
+    <script src="js/shared.js"></script>
     <script src="js/firebase-config.js"></script>
     <script src="js/templates.js"></script>
     <script src="js/pdf-generator.js"></script>
@@ -155,6 +112,8 @@
         const appealId = urlParams.get('appeal');
 
         if (paymentStatus === 'success' && appealId) {
+            // Render progress stepper
+            document.getElementById('progressStepper').innerHTML = window.renderProgressStepper(4);
             // Track successful payment
             gtag('event', 'purchase', {
                 transaction_id: appealId,

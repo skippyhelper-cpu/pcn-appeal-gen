@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pcn-appeal-generator.web.app/sitemap.xml

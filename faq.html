@@ -1,246 +1,470 @@
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ - PCN Appeal Generator</title>
-    <meta name="description" content="Frequently asked questions about PCN appeals, parking tickets, and how to fight unfair fines.">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-49TJRR76VG"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-49TJRR76VG');
-    </script>
-    <style>body{font-family:'Inter',sans-serif}</style>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>FAQ - PCN Appeal Generator</title>
+ <meta name="description" content="Frequently asked questions about PCN appeals, parking tickets, and how to fight unfair fines.">
+ <script src="https://cdn.tailwindcss.com"></script>
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+ <!-- Google Analytics -->
+ <script async src="https://www.googletagmanager.com/gtag/js?id=G-49TJRR76VG"></script>
+ <script>
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
+ gtag('config', 'G-49TJRR76VG');
+ </script>
+ <style>body{font-family:'Inter',sans-serif}</style>
 </head>
 <body class="bg-gray-50">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <a href="/" class="text-2xl font-bold text-blue-600">PCN Appeal Generator</a>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <a href="/" class="text-gray-600 hover:text-gray-900">Home</a>
-                    <a href="app.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Start Appeal</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+ <!-- Navigation -->
+ <nav class="bg-white shadow-sm">
+ <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+ <div class="flex justify-between h-16">
+ <div class="flex items-center">
+ <a href="/" class="text-2xl font-bold text-blue-600">PCN Appeal Generator</a>
+ </div>
+ <div class="flex items-center space-x-4">
+ <a href="/" class="text-gray-600 hover:text-gray-900">Home</a>
+ <a href="app.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Start Appeal</a>
+ </div>
+ </div>
+ </div>
+ </nav>
 
-    <!-- FAQ Header -->
-    <section class="bg-blue-600 text-white py-16">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <h1 class="text-4xl font-bold mb-4">Frequently Asked Questions</h1>
-            <p class="text-xl text-blue-100">Everything you need to know about PCN appeals</p>
-        </div>
-    </section>
+ <!-- FAQ Header -->
+ <section class="bg-blue-600 text-white py-16">
+ <div class="max-w-4xl mx-auto px-4 text-center">
+ <h1 class="text-4xl font-bold mb-4">Frequently Asked Questions</h1>
+ <p class="text-xl text-blue-100">Everything you need to know about PCN appeals</p>
+ </div>
+ </section>
 
-    <!-- FAQ Content -->
-    <section class="py-16">
-        <div class="max-w-4xl mx-auto px-4">
-            
-            <!-- Q1 -->
-            <div class="bg-white rounded-xl shadow-sm mb-6">
-                <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
-                    <span class="text-lg font-semibold text-gray-900">Is my ticket a council PCN or a private parking ticket?</span>
-                    <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </button>
-                <div class="px-6 pb-4 hidden">
-                    <p class="text-gray-600 mb-2"><strong>Council PCNs</strong> are issued by local authorities and are legally enforceable under the Traffic Management Act 2004. They typically:</p>
-                    <ul class="list-disc list-inside text-gray-600 mb-4 ml-4">
-                        <li>Have "Penalty Charge Notice" or "PCN" written on them</li>
-                        <li>Are issued by your local council</li>
-                        <li>Have fines of £60-£130 (reduced by 50% if paid within 14 days)</li>
-                        <li>Can be appealed to the council and then to the Traffic Penalty Tribunal</li>
-                    </ul>
-                    <p class="text-gray-600 mb-2"><strong>Private parking tickets</strong> are issued by private companies and are not legally enforceable in the same way. They:</p>
-                    <ul class="list-disc list-inside text-gray-600 ml-4">
-                        <li>May be called "Parking Charge Notices" (different from PCNs)</li>
-                        <li>Are issued by private parking companies</li>
-                        <li>Are invoices for alleged breach of contract</li>
-                        <li>Require different appeal processes</li>
-                    </ul>
-                    <p class="text-gray-600 mt-4"><strong>Our service handles council PCNs only.</strong></p>
-                </div>
-            </div>
+ <!-- FAQ Content -->
+ <section class="py-16">
+ <div class="max-w-4xl mx-auto px-4">
+ 
+ <!-- Q1 -->
+ <div class="bg-white rounded-xl shadow-sm mb-6">
+ <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+ <span class="text-lg font-semibold text-gray-900">Is my ticket a council PCN or a private parking ticket?</span>
+ <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+ </svg>
+ </button>
+ <div class="px-6 pb-4 hidden">
+ <p class="text-gray-600 mb-2"><strong>Council PCNs</strong> are issued by local authorities and are legally enforceable under the Traffic Management Act 2004. They typically:</p>
+ <ul class="list-disc list-inside text-gray-600 mb-4 ml-4">
+ <li>Have "Penalty Charge Notice" or "PCN" written on them</li>
+ <li>Are issued by your local council</li>
+ <li>Have fines of £60-£130 (reduced by 50% if paid within 14 days)</li>
+ <li>Can be appealed to the council and then to the Traffic Penalty Tribunal</li>
+ </ul>
+ <p class="text-gray-600 mb-2"><strong>Private parking tickets</strong> are issued by private companies and are not legally enforceable in the same way. They:</p>
+ <ul class="list-disc list-inside text-gray-600 ml-4">
+ <li>May be called "Parking Charge Notices" (different from PCNs)</li>
+ <li>Are issued by private parking companies</li>
+ <li>Are invoices for alleged breach of contract</li>
+ <li>Require different appeal processes</li>
+ </ul>
+ <p class="text-gray-600 mt-4"><strong>Our service handles council PCNs only.</strong></p>
+ </div>
+ </div>
 
-            <!-- Q2 -->
-            <div class="bg-white rounded-xl shadow-sm mb-6">
-                <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
-                    <span class="text-lg font-semibold text-gray-900">How long do I have to appeal a PCN?</span>
-                    <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </button>
-                <div class="px-6 pb-4 hidden">
-                    <p class="text-gray-600 mb-4">You have different timeframes depending on the stage:</p>
-                    <ul class="list-disc list-inside text-gray-600 ml-4 space-y-2">
-                        <li><strong>14 days:</strong> Pay at reduced rate (usually 50% discount)</li>
-                        <li><strong>28 days:</strong> Make an informal appeal (before the Notice to Owner is issued)</li>
-                        <li><strong>28 days from Notice to Owner:</strong> Make formal representations</li>
-                        <li><strong>After formal rejection:</strong> Appeal to Traffic Penalty Tribunal within 28 days</li>
-                    </ul>
-                    <p class="text-gray-600 mt-4"><strong>Important:</strong> If you appeal within 14 days and your appeal is rejected, you usually still get the 14-day discount period to pay.</p>
-                </div>
-            </div>
+ <!-- Q2 -->
+ <div class="bg-white rounded-xl shadow-sm mb-6">
+ <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+ <span class="text-lg font-semibold text-gray-900">How long do I have to appeal a PCN?</span>
+ <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+ </svg>
+ </button>
+ <div class="px-6 pb-4 hidden">
+ <p class="text-gray-600 mb-4">You have different timeframes depending on the stage:</p>
+ <ul class="list-disc list-inside text-gray-600 ml-4 space-y-2">
+ <li><strong>14 days:</strong> Pay at reduced rate (usually 50% discount)</li>
+ <li><strong>28 days:</strong> Make an informal appeal (before the Notice to Owner is issued)</li>
+ <li><strong>28 days from Notice to Owner:</strong> Make formal representations</li>
+ <li><strong>After formal rejection:</strong> Appeal to Traffic Penalty Tribunal within 28 days</li>
+ </ul>
+ <p class="text-gray-600 mt-4"><strong>Important:</strong> If you appeal within 14 days and your appeal is rejected, you usually still get the 14-day discount period to pay.</p>
+ </div>
+ </div>
 
-            <!-- Q3 -->
-            <div class="bg-white rounded-xl shadow-sm mb-6">
-                <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
-                    <span class="text-lg font-semibold text-gray-900">What are my chances of winning an appeal?</span>
-                    <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </button>
-                <div class="px-6 pb-4 hidden">
-                    <p class="text-gray-600 mb-4">Success rates vary, but many appeals are successful. Common winning grounds include:</p>
-                    <ul class="list-disc list-inside text-gray-600 ml-4 space-y-2">
-                        <li>Signs or road markings were unclear, obscured, or missing</li>
-                        <li>The contravention didn't actually occur</li>
-                        <li>You were loading/unloading (allowed activity)</li>
-                        <li>You had broken down</li>
-                        <li>You had a valid permit but it wasn't displayed</li>
-                        <li>The council made a procedural error</li>
-                        <li>Mitigating circumstances (emergency, medical issue)</li>
-                    </ul>
-                    <p class="text-gray-600 mt-4">Even if you think you have no chance, it's often worth appealing as councils sometimes don't contest appeals or make errors that work in your favour.</p>
-                </div>
-            </div>
+ <!-- Q3 -->
+ <div class="bg-white rounded-xl shadow-sm mb-6">
+ <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+ <span class="text-lg font-semibold text-gray-900">What are my chances of winning an appeal?</span>
+ <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+ </svg>
+ </button>
+ <div class="px-6 pb-4 hidden">
+ <p class="text-gray-600 mb-4">Success rates vary, but many appeals are successful. Common winning grounds include:</p>
+ <ul class="list-disc list-inside text-gray-600 ml-4 space-y-2">
+ <li>Signs or road markings were unclear, obscured, or missing</li>
+ <li>The contravention didn't actually occur</li>
+ <li>You were loading/unloading (allowed activity)</li>
+ <li>You had broken down</li>
+ <li>You had a valid permit but it wasn't displayed</li>
+ <li>The council made a procedural error</li>
+ <li>Mitigating circumstances (emergency, medical issue)</li>
+ </ul>
+ <p class="text-gray-600 mt-4">Even if you think you have no chance, it's often worth appealing as councils sometimes don't contest appeals or make errors that work in your favour.</p>
+ </div>
+ </div>
 
-            <!-- Q4 -->
-            <div class="bg-white rounded-xl shadow-sm mb-6">
-                <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
-                    <span class="text-lg font-semibold text-gray-900">What evidence should I gather?</span>
-                    <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </button>
-                <div class="px-6 pb-4 hidden">
-                    <p class="text-gray-600 mb-4">Useful evidence includes:</p>
-                    <ul class="list-disc list-inside text-gray-600 ml-4 space-y-2">
-                        <li><strong>Photographs:</strong> Signs, road markings, your vehicle position, surrounding area</li>
-                        <li><strong>Receipts:</strong> Parking payment receipts, breakdown service receipts</li>
-                        <li><strong>Permit evidence:</strong> Photos of valid permit, permit application confirmation</li>
-                        <li><strong>Medical evidence:</strong> If appealing on medical grounds</li>
-                        <li><strong>Witness statements:</strong> From passengers or bystanders</li>
-                        <li><strong>Weather reports:</strong> If weather affected signage visibility</li>
-                    </ul>
-                    <p class="text-gray-600 mt-4"><strong>Tip:</strong> Take photos as soon as possible after receiving the ticket, before conditions change.</p>
-                </div>
-            </div>
+ <!-- Q4 -->
+ <div class="bg-white rounded-xl shadow-sm mb-6">
+ <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+ <span class="text-lg font-semibold text-gray-900">What evidence should I gather?</span>
+ <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+ </svg>
+ </button>
+ <div class="px-6 pb-4 hidden">
+ <p class="text-gray-600 mb-4">Useful evidence includes:</p>
+ <ul class="list-disc list-inside text-gray-600 ml-4 space-y-2">
+ <li><strong>Photographs:</strong> Signs, road markings, your vehicle position, surrounding area</li>
+ <li><strong>Receipts:</strong> Parking payment receipts, breakdown service receipts</li>
+ <li><strong>Permit evidence:</strong> Photos of valid permit, permit application confirmation</li>
+ <li><strong>Medical evidence:</strong> If appealing on medical grounds</li>
+ <li><strong>Witness statements:</strong> From passengers or bystanders</li>
+ <li><strong>Weather reports:</strong> If weather affected signage visibility</li>
+ </ul>
+ <p class="text-gray-600 mt-4"><strong>Tip:</strong> Take photos as soon as possible after receiving the ticket, before conditions change.</p>
+ </div>
+ </div>
 
-            <!-- Q5 -->
-            <div class="bg-white rounded-xl shadow-sm mb-6">
-                <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
-                    <span class="text-lg font-semibold text-gray-900">What happens if my appeal is rejected?</span>
-                    <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </button>
-                <div class="px-6 pb-4 hidden">
-                    <p class="text-gray-600 mb-4">If the council rejects your appeal, you have options:</p>
-                    <ol class="list-decimal list-inside text-gray-600 ml-4 space-y-2">
-                        <li><strong>Pay the fine:</strong> You can pay at any stage. If you pay within 14 days of the rejection, you may still get the discount.</li>
-                        <li><strong>Appeal to the Traffic Penalty Tribunal:</strong> This is an independent body that reviews council decisions. It's free and you don't need a lawyer.</li>
-                    </ol>
-                    <p class="text-gray-600 mt-4"><strong>Important:</strong> If you don't pay or appeal to the tribunal within the deadline, the council can increase the fine and eventually take enforcement action.</p>
-                </div>
-            </div>
+ <!-- Q5 -->
+ <div class="bg-white rounded-xl shadow-sm mb-6">
+ <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+ <span class="text-lg font-semibold text-gray-900">What happens if my appeal is rejected?</span>
+ <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+ </svg>
+ </button>
+ <div class="px-6 pb-4 hidden">
+ <p class="text-gray-600 mb-4">If the council rejects your appeal, you have options:</p>
+ <ol class="list-decimal list-inside text-gray-600 ml-4 space-y-2">
+ <li><strong>Pay the fine:</strong> You can pay at any stage. If you pay within 14 days of the rejection, you may still get the discount.</li>
+ <li><strong>Appeal to the Traffic Penalty Tribunal:</strong> This is an independent body that reviews council decisions. It's free and you don't need a lawyer.</li>
+ </ol>
+ <p class="text-gray-600 mt-4"><strong>Important:</strong> If you don't pay or appeal to the tribunal within the deadline, the council can increase the fine and eventually take enforcement action.</p>
+ </div>
+ </div>
 
-            <!-- Q6 -->
-            <div class="bg-white rounded-xl shadow-sm mb-6">
-                <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
-                    <span class="text-lg font-semibold text-gray-900">How does your service work?</span>
-                    <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </button>
-                <div class="px-6 pb-4 hidden">
-                    <p class="text-gray-600 mb-4">Our service helps you create a professional appeal letter:</p>
-                    <ol class="list-decimal list-inside text-gray-600 ml-4 space-y-2">
-                        <li><strong>Enter your details:</strong> Fill in your PCN information and circumstances</li>
-                        <li><strong>We generate your letter:</strong> Our system creates a professionally formatted appeal letter based on your specific situation</li>
-                        <li><strong>Download and submit:</strong> Pay £2.99, download your PDF letter, and send it to your council</li>
-                    </ol>
-                    <p class="text-gray-600 mt-4"><strong>Note:</strong> We provide template letters based on successful appeal structures. We are not solicitors and this is not legal advice. You should review and personalise the letter before submitting.</p>
-                </div>
-            </div>
+ <!-- Q6 -->
+ <div class="bg-white rounded-xl shadow-sm mb-6">
+ <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+ <span class="text-lg font-semibold text-gray-900">How does your service work?</span>
+ <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+ </svg>
+ </button>
+ <div class="px-6 pb-4 hidden">
+ <p class="text-gray-600 mb-4">Our service helps you create a professional appeal letter:</p>
+ <ol class="list-decimal list-inside text-gray-600 ml-4 space-y-2">
+ <li><strong>Enter your details:</strong> Fill in your PCN information and circumstances</li>
+ <li><strong>We generate your letter:</strong> Our system creates a professionally formatted appeal letter based on your specific situation</li>
+ <li><strong>Download and submit:</strong> Pay £2.99, download your PDF letter, and send it to your council</li>
+ </ol>
+ <p class="text-gray-600 mt-4"><strong>Note:</strong> We provide template letters based on successful appeal structures. We are not solicitors and this is not legal advice. You should review and personalise the letter before submitting.</p>
+ </div>
+ </div>
 
-            <!-- Q7 -->
-            <div class="bg-white rounded-xl shadow-sm mb-6">
-                <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
-                    <span class="text-lg font-semibold text-gray-900">Is this legal advice?</span>
-                    <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </button>
-                <div class="px-6 pb-4 hidden">
-                    <p class="text-gray-600 mb-4"><strong>No.</strong> We are not solicitors and this is not legal advice.</p>
-                    <p class="text-gray-600 mb-4">We provide template appeal letters based on common successful grounds for appeal. You should:</p>
-                    <ul class="list-disc list-inside text-gray-600 ml-4 space-y-2">
-                        <li>Review the generated letter carefully</li>
-                        <li>Ensure all details are accurate</li>
-                        <li>Personalise it with your specific circumstances</li>
-                        <li>Seek legal advice if your case is complex</li>
-                    </ul>
-                    <p class="text-gray-600 mt-4">For complex cases or if you're unsure, consider contacting Citizens Advice or a solicitor specialising in parking law.</p>
-                </div>
-            </div>
+ <!-- Q7 -->
+ <div class="bg-white rounded-xl shadow-sm mb-6">
+ <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+ <span class="text-lg font-semibold text-gray-900">Is this legal advice?</span>
+ <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+ </svg>
+ </button>
+ <div class="px-6 pb-4 hidden">
+ <p class="text-gray-600 mb-4"><strong>No.</strong> We are not solicitors and this is not legal advice.</p>
+ <p class="text-gray-600 mb-4">We provide template appeal letters based on common successful grounds for appeal. You should:</p>
+ <ul class="list-disc list-inside text-gray-600 ml-4 space-y-2">
+ <li>Review the generated letter carefully</li>
+ <li>Ensure all details are accurate</li>
+ <li>Personalise it with your specific circumstances</li>
+ <li>Seek legal advice if your case is complex</li>
+ </ul>
+ <p class="text-gray-600 mt-4">For complex cases or if you're unsure, consider contacting Citizens Advice or a solicitor specialising in parking law.</p>
+ </div>
+ </div>
 
-        </div>
-    </section>
+ <!-- Q8: How do I appeal a PCN -->
+ <div class="bg-white rounded-xl shadow-sm mb-6">
+ <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+ <span class="text-lg font-semibold text-gray-900">How do I appeal a PCN?</span>
+ <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+ </svg>
+ </button>
+ <div class="px-6 pb-4 hidden">
+ <p class="text-gray-600 mb-4">The PCN appeal process in England and Wales follows these stages:</p>
+ 
+ <div class="bg-blue-50 rounded-lg p-4 mb-4">
+ <h4 class="font-semibold text-blue-900 mb-2">Stage 1: Informal Appeal (Recommended First Step)</h4>
+ <p class="text-gray-600 text-sm">Before the council issues a Notice to Owner (NtO), you can make an informal challenge. This is your best opportunity—most councils will still offer the 50% discount if your informal appeal is rejected.</p>
+ </div>
+ 
+ <div class="bg-gray-50 rounded-lg p-4 mb-4">
+ <h4 class="font-semibold text-gray-900 mb-2">Stage 2: Formal Representations</h4>
+ <p class="text-gray-600 text-sm">If your informal appeal is rejected, you'll receive a Notice to Owner. You then have 28 days to make formal representations on specific statutory grounds.</p>
+ </div>
+ 
+ <div class="bg-gray-50 rounded-lg p-4 mb-4">
+ <h4 class="font-semibold text-gray-900 mb-2">Stage 3: Traffic Penalty Tribunal</h4>
+ <p class="text-gray-600 text-sm">If the council rejects your formal representations, you can appeal to the independent Traffic Penalty Tribunal (or Transport for London Tribunal for Greater London). This is free and can be done online.</p>
+ </div>
+ 
+ <p class="text-gray-600"><strong>How to submit:</strong> Most councils accept appeals via their website, email, or post. Include your PCN number, vehicle registration, and clearly state your grounds for appeal with any supporting evidence.</p>
+ </div>
+ </div>
 
-    <!-- CTA -->
-    <section class="py-16 bg-blue-600">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold text-white mb-4">Ready to Appeal Your PCN?</h2>
-            <p class="text-xl text-blue-100 mb-8">Generate your professional appeal letter in minutes</p>
-            <a href="app.html" class="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100">
-                Start Your Appeal Now
-            </a>
-        </div>
-    </section>
+ <!-- Q9: Grounds for appeal -->
+ <div class="bg-white rounded-xl shadow-sm mb-6">
+ <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+ <span class="text-lg font-semibold text-gray-900">What are the grounds for appeal?</span>
+ <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+ </svg>
+ </button>
+ <div class="px-6 pb-4 hidden">
+ <p class="text-gray-600 mb-4">There are specific statutory grounds for appeal under the Traffic Management Act 2004:</p>
+ 
+ <div class="space-y-4">
+ <div class="border-l-4 border-green-500 pl-4">
+ <h4 class="font-semibold text-gray-900">The contravention did not occur</h4>
+ <p class="text-gray-600 text-sm">The alleged parking violation simply didn't happen. For example, you weren't parked where claimed, or the time recorded was incorrect.</p>
+ </div>
+ 
+ <div class="border-l-4 border-green-500 pl-4">
+ <h4 class="font-semibold text-gray-900">Incorrect signage or road markings</h4>
+ <p class="text-gray-600 text-sm">Traffic signs must comply with the Traffic Signs Regulations and General Directions 2016. Missing, obscured, or non-compliant signs are strong grounds for appeal.</p>
+ </div>
+ 
+ <div class="border-l-4 border-green-500 pl-4">
+ <h4 class="font-semibold text-gray-900">Vehicle was taken without consent</h4>
+ <p class="text-gray-600 text-sm">Your vehicle was stolen or used without your permission at the time of the contravention. You'll need a crime reference number.</p>
+ </div>
+ 
+ <div class="border-l-4 border-green-500 pl-4">
+ <h4 class="font-semibold text-gray-900">You were a permitted vehicle</h4>
+ <p class="text-gray-600 text-sm">You were loading/unloading (where permitted), a medical professional on urgent duty, or had a valid permit that wasn't properly displayed.</p>
+ </div>
+ 
+ <div class="border-l-4 border-green-500 pl-4">
+ <h4 class="font-semibold text-gray-900">Vehicle breakdown</h4>
+ <p class="text-gray-600 text-sm">Your vehicle broke down and you couldn't move it. Evidence from a breakdown service strengthens this appeal.</p>
+ </div>
+ 
+ <div class="border-l-4 border-green-500 pl-4">
+ <h4 class="font-semibold text-gray-900">Procedural impropriety</h4>
+ <p class="text-gray-600 text-sm">The council failed to follow proper procedures—wrong dates, missing information on the PCN, or failure to consider your representations properly.</p>
+ </div>
+ 
+ <div class="border-l-4 border-green-500 pl-4">
+ <h4 class="font-semibold text-gray-900">Penalty exceeds the relevant amount</h4>
+ <p class="text-gray-600 text-sm">The council is demanding more than the lawful penalty amount, or has incorrectly applied charges.</p>
+ </div>
+ </div>
+ 
+ <p class="text-gray-600 mt-4"><strong>Compelling reasons:</strong> Even if no statutory ground applies, you can include mitigating circumstances—medical emergencies, hospital visits, or other exceptional situations. Councils have discretion to cancel PCNs on compassionate grounds.</p>
+ </div>
+ </div>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 py-8">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <div class="flex justify-center gap-6 mb-4">
-                <a href="privacy.html" class="text-gray-400 hover:text-white">Privacy Policy</a>
-                <a href="terms.html" class="text-gray-400 hover:text-white">Terms of Service</a>
-                <a href="feedback.html" class="text-gray-400 hover:text-white">Feedback</a>
-            </div>
-            <p>&copy; 2026 PCN Appeal Generator. Not legal advice.</p>
-        </div>
-    </footer>
+ <!-- Q10: What happens if you ignore -->
+ <div class="bg-white rounded-xl shadow-sm mb-6">
+ <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+ <span class="text-lg font-semibold text-gray-900">What happens if I ignore a PCN?</span>
+ <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+ </svg>
+ </button>
+ <div class="px-6 pb-4 hidden">
+ <p class="text-gray-600 mb-4"><strong>Ignoring a PCN is never recommended.</strong> The consequences escalate significantly:</p>
+ 
+ <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+ <h4 class="font-semibold text-red-900 mb-2">⚠️ Do Not Ignore Your PCN</h4>
+ <p class="text-red-800 text-sm">Councils have legal powers to recover unpaid PCNs. Ignoring them can result in court action, bailiffs, and additional fees exceeding £400.</p>
+ </div>
+ 
+ <div class="space-y-3">
+ <div class="flex items-start gap-3">
+ <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-semibold text-sm flex-shrink-0">1</span>
+ <div>
+ <p class="font-semibold text-gray-900">Notice to Owner (NtO)</p>
+ <p class="text-gray-600 text-sm">After 28 days of non-payment, the council sends an NtO to the registered keeper. The full penalty becomes payable.</p>
+ </div>
+ </div>
+ 
+ <div class="flex items-start gap-3">
+ <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-semibold text-sm flex-shrink-0">2</span>
+ <div>
+ <p class="font-semibold text-gray-900">Charge Certificate</p>
+ <p class="text-gray-600 text-sm">If you don't pay or make representations within 28 days of the NtO, the penalty increases by 50% (typically from £70 to £105 or £130 to £195).</p>
+ </div>
+ </div>
+ 
+ <div class="flex items-start gap-3">
+ <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 text-gray-700 font-semibold text-sm flex-shrink-0">3</span>
+ <div>
+ <p class="font-semibold text-gray-900">Order for Recovery</p>
+ <p class="text-gray-600 text-sm">The council registers the debt with the Traffic Enforcement Centre (TEC) at Northampton County Court. An £8 court fee is added.</p>
+ </div>
+ </div>
+ 
+ <div class="flex items-start gap-3">
+ <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-200 text-red-700 font-semibold text-sm flex-shrink-0">4</span>
+ <div>
+ <p class="font-semibold text-gray-900">Enforcement Agents (Bailiffs)</p>
+ <p class="text-gray-600 text-sm">The debt is passed to enforcement agents who can visit your property, clamp your vehicle, and add enforcement fees of £75–£310+. <strong>Total debt can exceed £400.</strong></p>
+ </div>
+ </div>
+ </div>
+ 
+ <p class="text-gray-600 mt-4"><strong>Good news:</strong> You can still submit a late appeal (Witness Statement or Statutory Declaration) at stages 1-3 if you had a valid reason for not responding—such as not receiving notices or having a valid appeal you couldn't submit. Once bailiffs are involved, options become very limited.</p>
+ </div>
+ </div>
 
-    <script>
-        function toggleFaq(button) {
-            const content = button.nextElementSibling;
-            const arrow = button.querySelector('svg');
-            
-            if (content.classList.contains('hidden')) {
-                content.classList.remove('hidden');
-                arrow.classList.add('rotate-180');
-                
-                // Track FAQ expansion
-                const question = button.querySelector('span').textContent;
-                gtag('event', 'faq_expand', {
-                    event_category: 'FAQ',
-                    event_label: question.substring(0, 50)
-                });
-            } else {
-                content.classList.add('hidden');
-                arrow.classList.remove('rotate-180');
-            }
-        }
-    </script>
+ <!-- Q11: Success rate statistics -->
+ <div class="bg-white rounded-xl shadow-sm mb-6">
+ <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+ <span class="text-lg font-semibold text-gray-900">What's the success rate of PCN appeals?</span>
+ <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+ </svg>
+ </button>
+ <div class="px-6 pb-4 hidden">
+ <p class="text-gray-600 mb-4">Appeal success rates vary significantly depending on the stage and quality of your appeal:</p>
+ 
+ <div class="grid md:grid-cols-2 gap-4 mb-4">
+ <div class="bg-green-50 rounded-lg p-4 text-center">
+ <div class="text-3xl font-bold text-green-700">~60-70%</div>
+ <p class="text-green-900 text-sm font-medium">Tribunal Success Rate</p>
+ <p class="text-gray-600 text-xs mt-1">Cases decided by adjudicators</p>
+ </div>
+ <div class="bg-blue-50 rounded-lg p-4 text-center">
+ <div class="text-3xl font-bold text-blue-700">~50%</div>
+ <p class="text-blue-900 text-sm font-medium">Cases Not Contested</p>
+ <p class="text-gray-600 text-xs mt-1">Councils don't contest many appeals</p>
+ </div>
+ </div>
+ 
+ <p class="text-gray-600 mb-3"><strong>Key statistics (Traffic Penalty Tribunal data):</strong></p>
+ <ul class="list-disc list-inside text-gray-600 ml-4 space-y-2">
+ <li>Only about <strong>1-2%</strong> of PCNs issued are ever appealed</li>
+ <li>Of appeals that reach tribunal, <strong>56-70%</strong> are either won by the appellant or not contested by the council</li>
+ <li>Many councils withdraw or concede appeals before tribunal</li>
+ <li>Signage and procedural grounds have the highest success rates</li>
+ <li>Loading/unloading appeals succeed in approximately <strong>60-70%</strong> of cases</li>
+ </ul>
+ 
+ <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mt-4">
+ <h4 class="font-semibold text-yellow-900 mb-2">💡 Why You Should Always Appeal</h4>
+ <p class="text-yellow-800 text-sm">The low appeal rate (1-2%) suggests most people simply pay up. Those who appeal have a good chance of success. Even if your initial appeal is rejected, you lose nothing by trying—and you keep the 50% discount period in most cases.</p>
+ </div>
+ 
+ <p class="text-gray-600 mt-4 text-sm"><em>Note: Statistics are based on Traffic Penalty Tribunal annual reports. Exact figures vary by year and region. Always check current data on the TPT website.</em></p>
+ </div>
+ </div>
+
+ <!-- Q12: Council cancellation rates -->
+ <div class="bg-white rounded-xl shadow-sm mb-6">
+ <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+ <span class="text-lg font-semibold text-gray-900">Which councils are most likely to cancel a PCN?</span>
+ <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+ </svg>
+ </button>
+ <div class="px-6 pb-4 hidden">
+ <p class="text-gray-600 mb-4">PCN cancellation rates vary widely between councils. While we can't guarantee outcomes, certain patterns emerge from tribunal data:</p>
+ 
+ <div class="bg-blue-50 rounded-lg p-4 mb-4">
+ <h4 class="font-semibold text-blue-900 mb-2">Higher Cancellation Indicators</h4>
+ <p class="text-blue-800 text-sm">Councils tend to cancel PCNs more readily when:</p>
+ <ul class="list-disc list-inside text-blue-700 text-sm ml-4 mt-2 space-y-1">
+ <li>First-time offender in a low-emission zone</li>
+ <li>Clear signage or road marking issues</li>
+ <li>Procedural errors on the PCN itself</li>
+ <li>Medical or emergency circumstances</li>
+ <li>Vehicle breakdown with evidence</li>
+ </ul>
+ </div>
+ 
+ <p class="text-gray-600 mb-3"><strong>What affects council decisions:</strong></p>
+ <ul class="list-disc list-inside text-gray-600 ml-4 space-y-2">
+ <li><strong>Budget pressures:</strong> Some councils rely heavily on PCN revenue and contest more appeals</li>
+ <li><strong>Staff resources:</strong> Under-resourced councils may not contest all appeals</li>
+ <li><strong>Policy differences:</strong> Some councils have more lenient policies for first-time contraventions</li>
+ <li><strong>Seasonal variations:</strong> Councils may be more lenient during appeals peaks</li>
+ </ul>
+ 
+ <div class="bg-gray-50 rounded-lg p-4 mt-4">
+ <h4 class="font-semibold text-gray-900 mb-2">Research Your Council</h4>
+ <p class="text-gray-600 text-sm">You can check your council's PCN statistics through:</p>
+ <ul class="list-disc list-inside text-gray-600 text-sm ml-4 mt-2 space-y-1">
+ <li>Traffic Penalty Tribunal annual reports</li>
+ <li>Your council's published parking reports</li>
+ <li>Freedom of Information requests (via WhatDoTheyKnow)</li>
+ <li>PEP World parking reports</li>
+ </ul>
+ </div>
+ 
+ <p class="text-gray-600 mt-4"><strong>Important:</strong> Regardless of statistics, the strength of your appeal matters most. A well-argued case with supporting evidence has the best chance of success with any council.</p>
+ </div>
+ </div>
+
+ </div>
+ </section>
+
+ <!-- CTA -->
+ <section class="py-16 bg-blue-600">
+ <div class="max-w-4xl mx-auto px-4 text-center">
+ <h2 class="text-3xl font-bold text-white mb-4">Ready to Appeal Your PCN?</h2>
+ <p class="text-xl text-blue-100 mb-8">Generate your professional appeal letter in minutes</p>
+ <a href="app.html" class="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100">
+ Start Your Appeal Now
+ </a>
+ </div>
+ </section>
+
+ <!-- Footer -->
+ <footer class="bg-gray-900 text-gray-400 py-8">
+ <div class="max-w-7xl mx-auto px-4 text-center">
+ <div class="flex justify-center gap-6 mb-4">
+ <a href="privacy.html" class="text-gray-400 hover:text-white">Privacy Policy</a>
+ <a href="terms.html" class="text-gray-400 hover:text-white">Terms of Service</a>
+ <a href="feedback.html" class="text-gray-400 hover:text-white">Feedback</a>
+ </div>
+ <p>&copy; 2026 Filspire Ltd. Not legal advice.</p>
+ </div>
+ </footer>
+
+ <script>
+ function toggleFaq(button) {
+ const content = button.nextElementSibling;
+ const arrow = button.querySelector('svg');
+ 
+ if (content.classList.contains('hidden')) {
+ content.classList.remove('hidden');
+ arrow.classList.add('rotate-180');
+ 
+ // Track FAQ expansion
+ const question = button.querySelector('span').textContent;
+ gtag('event', 'faq_expand', {
+ event_category: 'FAQ',
+ event_label: question.substring(0, 50)
+ });
+ } else {
+ content.classList.add('hidden');
+ arrow.classList.remove('rotate-180');
+ }
+ }
+ </script>
 </body>
 </html>

@@ -1,3 +1,18 @@
+/**
+ * RATE LIMITING CONSIDERATIONS FOR PRODUCTION
+ * ============================================
+ * Client-side rate limiting should be implemented alongside server-side protections:
+ * 
+ * 1. Debounce form submissions to prevent rapid duplicate requests
+ * 2. Show user-friendly messages when rate limited (HTTP 429)
+ * 3. Implement exponential backoff for retry logic on transient failures
+ * 4. Consider using Firebase App Check for additional protection
+ * 
+ * Note: Client-side protections alone are NOT sufficient.
+ * Server-side rate limiting via Firebase Extensions, Cloud Armor,
+ * or reCAPTCHA Enterprise is required for production security.
+ */
+
 // PCN Appeal Generator - Main Application Logic
 
 // Global state
@@ -18,25 +33,35 @@ const MAX_FILES = 3;
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'application/pdf'];
 
-// Contravention code descriptions
-const codeDescriptions = {
-    '01': 'Parked in a restricted street during prescribed hours',
-    '02': 'Parked or loading/unloading in a restricted street where waiting and loading restrictions are in force',
-    '05': 'Parked after the expiry of paid for time',
-    '06': 'Parked without clearly displaying a valid pay and display ticket or voucher',
-    '11': 'Parked without payment of the parking charge',
-    '12': 'Parked in a residents\' parking space without displaying a valid permit',
-    '16': 'Parked in a permit space without displaying a valid permit',
-    '21': 'Parked in a suspended bay/space or part of bay/space',
-    '25': 'Parked in a loading place during restricted hours without loading',
-    '30': 'Parked for longer than permitted',
-    '31': 'Entering and stopping in a box junction when prohibited',
-    '34': 'Being in a bus lane',
-    '40': 'Stopped in a restricted area outside a school',
-    '45': 'Stopped on a taxi rank',
-    '47': 'Stopped on a restricted bus stop/stand',
-    '62': 'Parked with one or more wheels on or over a footpath or any part of a road other than a carriageway'
+const FILE_SIGNATURES = {
+    'image/jpeg': [[0xFF, 0xD8, 0xFF]],
+    'image/png': [[0x89, 0x50, 0x4E, 0x47]],
+    'application/pdf': [[0x25, 0x50, 0x44, 0x46]]
 };
+
+function validateFileSignature(file) {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const arr = new Uint8Array(e.target.result);
+            const signatures = FILE_SIGNATURES[file.type];
+            
+            if (!signatures) {
+                resolve(false);
+                return;
+            }
+            
+            const isValid = signatures.some(sig => {
+                if (arr.length < sig.length) return false;
+                return sig.every((byte, index) => arr[index] === byte);
+            });
+            
+            resolve(isValid);
+        };
+        reader.onerror = () => resolve(false);
+        reader.readAsArrayBuffer(file.slice(0, 8));
+    });
+}
 
 // DOM Elements
 const step1 = document.getElementById('step1');
@@ -60,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeFileUpload();
     initializeDraftSystem();
     trackFormAnalytics();
+    initializeInputValidation();
 });
 
 function initializeApp() {
@@ -77,6 +103,24 @@ function initializeApp() {
         contraventionSelect.addEventListener('change', (e) => {
             const code = e.target.value;
             if (codeDescription) {
+                const codeDescriptions = window.codeDescriptions || {
+                    '01': 'Restricted street',
+                    '02': 'Loading restriction',
+                    '05': 'Expired paid time',
+                    '06': 'No ticket displayed',
+                    '11': 'No payment',
+                    '12': 'No resident permit',
+                    '16': 'No permit',
+                    '21': 'Suspended bay',
+                    '25': 'Loading place',
+                    '30': 'Overstay',
+                    '31': 'Box junction',
+                    '34': 'Bus lane',
+                    '40': 'School area',
+                    '45': 'Taxi rank',
+                    '47': 'Bus stop',
+                    '62': 'Footway parking'
+                };
                 if (code && codeDescriptions[code]) {
                     codeDescription.textContent = codeDescriptions[code];
                 } else {
@@ -366,7 +410,7 @@ function initializeFileUpload() {
     });
 }
 
-function handleFiles(files) {
+async function handleFiles(files) {
     const filesArray = Array.from(files);
     
     for (const file of filesArray) {
@@ -375,25 +419,27 @@ function handleFiles(files) {
             break;
         }
         
-        // Validate file type
         if (!ALLOWED_TYPES.includes(file.type)) {
             showAlert(`Invalid file type: ${file.name}. Only JPG, PNG, and PDF are allowed.`, 'error');
             continue;
         }
         
-        // Validate file size
+        const validSignature = await validateFileSignature(file);
+        if (!validSignature) {
+            showAlert(`Invalid file content: ${file.name}. File signature does not match its extension.`, 'error');
+            continue;
+        }
+        
         if (file.size > MAX_FILE_SIZE) {
             showAlert(`File too large: ${file.name}. Maximum size is 5MB.`, 'error');
             continue;
         }
         
-        // Check for duplicates
         if (uploadedFiles.some(f => f.file.name === file.name && f.file.size === file.size)) {
             showAlert(`File already added: ${file.name}`, 'warning');
             continue;
         }
         
-        // Generate preview
         const fileId = 'file_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
         
         if (file.type.startsWith('image/')) {
@@ -409,7 +455,6 @@ function handleFiles(files) {
             };
             reader.readAsDataURL(file);
         } else {
-            // PDF - no preview, just show icon
             uploadedFiles.push({
                 id: fileId,
                 file: file,
@@ -507,66 +552,114 @@ window.removeFile = removeFile;
 async function handleFormSubmit(e) {
     e.preventDefault();
     
-    // Validate terms checkbox
-    const termsCheckbox = document.getElementById('terms');
-    if (!termsCheckbox.checked) {
-        showAlert('Please accept the terms and conditions to continue.', 'warning');
-        return;
-    }
-    
-    // Get country selection
-    const countryElement = document.querySelector('input[name="country"]:checked');
-    const country = countryElement ? countryElement.value : 'england';
-    
-    // Collect form data
-    formData = {
-        pcnRef: document.getElementById('pcnRef').value.trim().toUpperCase(),
-        vehicleReg: document.getElementById('vehicleReg').value.trim().toUpperCase().replace(/\s+/g, ''),
-        council: document.getElementById('council').value.trim(),
-        contraventionCode: document.getElementById('contraventionCode').value,
-        contraventionDate: document.getElementById('contraventionDate').value,
-        contraventionTime: document.getElementById('contraventionTime').value,
-        location: document.getElementById('location').value.trim(),
-        circumstances: document.getElementById('circumstances').value.trim(),
-        email: document.getElementById('email').value.trim().toLowerCase(),
-        applicantName: document.getElementById('applicantName').value.trim(),
-        applicantAddress: document.getElementById('applicantAddress').value.trim(),
-        applicantPostcode: document.getElementById('applicantPostcode').value.trim().toUpperCase(),
-        country: country,
-        evidenceFiles: []
-    };
-    
-    // Upload evidence files to Firebase Storage (if any)
-    if (uploadedFiles.length > 0) {
-        showLoading('Uploading evidence files...');
-        try {
-            const evidenceUrls = await uploadEvidenceFiles();
-            formData.evidenceFiles = evidenceUrls;
-        } catch (error) {
-            console.error('Error uploading files:', error);
-            showAlert('Error uploading files. Please try again.', 'error');
-            hideLoading();
+    try {
+        // Validate terms checkbox
+        const termsCheckbox = document.getElementById('terms');
+        if (!termsCheckbox) {
+            console.error('Terms checkbox not found in DOM');
+            showAlert('Form error: terms checkbox missing. Please refresh the page.', 'error');
             return;
+        }
+        if (!termsCheckbox.checked) {
+            showAlert('Please accept the terms and conditions to continue.', 'warning');
+            return;
+        }
+        
+        // Get country selection
+        const countryElement = document.querySelector('input[name="country"]:checked');
+        const country = countryElement ? countryElement.value : 'england';
+        
+        // Collect form data
+        formData = {
+            pcnRef: document.getElementById('pcnRef')?.value?.trim()?.toUpperCase() || '',
+            vehicleReg: document.getElementById('vehicleReg')?.value?.trim()?.toUpperCase()?.replace(/\s+/g, '') || '',
+            council: document.getElementById('council')?.value?.trim() || '',
+            contraventionCode: document.getElementById('contraventionCode')?.value || '',
+            contraventionDate: document.getElementById('contraventionDate')?.value || '',
+            contraventionTime: document.getElementById('contraventionTime')?.value || '',
+            location: document.getElementById('location')?.value?.trim() || '',
+            circumstances: document.getElementById('circumstances')?.value?.trim() || '',
+            email: document.getElementById('email')?.value?.trim()?.toLowerCase() || '',
+            applicantName: document.getElementById('applicantName')?.value?.trim() || '',
+            applicantAddress: document.getElementById('applicantAddress')?.value?.trim() || '',
+            applicantPostcode: document.getElementById('applicantPostcode')?.value?.trim()?.toUpperCase() || '',
+            country: country,
+            evidenceFiles: []
+        };
+        
+        // Upload evidence files to Firebase Storage (if any)
+        if (uploadedFiles.length > 0) {
+            showLoading('Uploading evidence files...');
+            try {
+                const evidenceUrls = await uploadEvidenceFiles();
+                formData.evidenceFiles = evidenceUrls;
+            } catch (error) {
+                console.error('Error uploading files:', error.message || error);
+                const userMessage = error.message?.includes('connection') 
+                    ? 'Unable to upload files. Please check your internet connection and try again.'
+                    : 'There was a problem uploading your files. Please try again.';
+                showAlert(userMessage, 'error');
+                hideLoading();
+                return;
+            }
+        }
+        
+        // Store data for preview page
+        sessionStorage.setItem('appealPreviewData', JSON.stringify(formData));
+        
+        // Track form submission
+        if (typeof gtag === 'function') {
+            gtag('event', 'form_submit', {
+                form_name: 'appeal',
+                contravention_code: formData.contraventionCode
+            });
+        }
+        
+        // Redirect to preview
+        showLoading('Generating preview...');
+        window.location.href = 'preview.html';
+        
+    } catch (error) {
+        console.error('Unexpected error in form submission:', error.message || error);
+        hideLoading();
+        showAlert('An unexpected error occurred. Please try again.', 'error');
+    }
+}
+
+async function uploadFileWithRetry(storageRef, file, maxRetries = 2) {
+    const baseDelay = 1000;
+    
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+        try {
+            const snapshot = await storageRef.put(file);
+            const url = await snapshot.ref.getDownloadURL();
+            return { success: true, url };
+        } catch (error) {
+            const isRetryable = error.code === 'storage/retry-limit-exceeded' ||
+                               error.code === 'storage/network-request-failed' ||
+                               error.message?.includes('network') ||
+                               error.message?.includes('timeout');
+            
+            if (isRetryable && attempt < maxRetries) {
+                const delay = baseDelay * Math.pow(2, attempt);
+                console.warn(`Upload failed for ${file.name} (attempt ${attempt + 1}), retrying in ${delay}ms...`);
+                await new Promise(resolve => setTimeout(resolve, delay));
+            } else {
+                throw error;
+            }
         }
     }
     
-    // Store data for preview page
-    sessionStorage.setItem('appealPreviewData', JSON.stringify(formData));
-    
-    // Track form submission
-    gtag('event', 'form_submit', {
-        form_name: 'appeal',
-        contravention_code: formData.contraventionCode
-    });
-    
-    // Redirect to preview
-    showLoading('Generating preview...');
-    window.location.href = 'preview.html';
+    return { success: false };
 }
 
-// Upload evidence files to Firebase Storage
 async function uploadEvidenceFiles() {
     const storage = window.storage;
+    
+    if (!storage) {
+        throw new Error('Storage not initialized. Please refresh the page and try again.');
+    }
+    
     const uploadPromises = uploadedFiles.map(async (fileData) => {
         const file = fileData.file;
         const timestamp = Date.now();
@@ -574,22 +667,35 @@ async function uploadEvidenceFiles() {
         const storageRef = storage.ref(fileName);
         
         try {
-            const snapshot = await storageRef.put(file);
-            const url = await snapshot.ref.getDownloadURL();
-            return {
-                name: file.name,
-                type: file.type,
-                url: url,
-                path: fileName
-            };
+            const result = await uploadFileWithRetry(storageRef, file);
+            if (result.success) {
+                return {
+                    name: file.name,
+                    type: file.type,
+                    url: result.url,
+                    path: fileName
+                };
+            }
+            return null;
         } catch (error) {
-            console.error('Error uploading file:', file.name, error);
+            console.error('Error uploading file:', file.name, error.message || error);
             return null;
         }
     });
     
     const results = await Promise.all(uploadPromises);
-    return results.filter(r => r !== null);
+    const successfulUploads = results.filter(r => r !== null);
+    
+    if (successfulUploads.length === 0 && uploadedFiles.length > 0) {
+        throw new Error('Failed to upload any files. Please check your connection and try again.');
+    }
+    
+    if (successfulUploads.length < uploadedFiles.length) {
+        const failedCount = uploadedFiles.length - successfulUploads.length;
+        console.warn(`${failedCount} file(s) failed to upload`);
+    }
+    
+    return successfulUploads;
 }
 
 // Check if PCN reference has already been paid
@@ -619,6 +725,26 @@ function updateSummary() {
         month: 'long',
         year: 'numeric'
     });
+    
+    // Fallback if shared.js failed to load
+    const codeDescriptions = window.codeDescriptions || {
+        '01': 'Restricted street',
+        '02': 'Loading restriction',
+        '05': 'Expired paid time',
+        '06': 'No ticket displayed',
+        '11': 'No payment',
+        '12': 'No resident permit',
+        '16': 'No permit',
+        '21': 'Suspended bay',
+        '25': 'Loading place',
+        '30': 'Overstay',
+        '31': 'Box junction',
+        '34': 'Bus lane',
+        '40': 'School area',
+        '45': 'Taxi rank',
+        '47': 'Bus stop',
+        '62': 'Footway parking'
+    };
     
     let html = `
         <p><strong>PCN Reference:</strong> ${formData.pcnRef}</p>
@@ -666,70 +792,115 @@ async function handlePayment() {
     
     try {
         // Create a pending appeal record
-        const appealRef = await db.collection('appeals').add({
-            ...formData,
-            captchaVerified: true,
-            paid: false,
-            paidAt: null,
-            stripePaymentId: null,
-            letterGenerated: false
-        });
+        let appealRef;
+        try {
+            appealRef = await db.collection('appeals').add({
+                ...formData,
+                captchaVerified: true,
+                paid: false,
+                paidAt: null,
+                stripePaymentId: null,
+                letterGenerated: false
+            });
+        } catch (dbError) {
+            console.error('Database error creating appeal:', dbError.message || dbError);
+            hideLoading();
+            showAlert('Unable to connect to the server. Please check your connection and try again.', 'error');
+            return;
+        }
         
         console.log('[DEBUG] Appeal created:', appealRef.id);
         
-        // Check for test mode
+        // Check for test mode - SECURITY: Only works on localhost
         const urlParams = new URLSearchParams(window.location.search);
         const isTestMode = urlParams.has('test');
-        console.log('[DEBUG] isTestMode:', isTestMode);
+        const isLocalhost = window.location.hostname === 'localhost' || 
+                           window.location.hostname === '127.0.0.1' ||
+                           window.location.hostname.endsWith('.local');
+        console.log('[DEBUG] isTestMode:', isTestMode, 'isLocalhost:', isLocalhost);
         
-        if (isTestMode) {
-            console.log('[TEST MODE] Bypassing payment...');
+        if (isTestMode && isLocalhost) {
+            console.log('[TEST MODE] Bypassing payment (localhost only)...');
             
-            const testResponse = await fetch('/testBypassPayment', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ appealId: appealRef.id })
-            });
-            
-            if (testResponse.ok) {
-                const testData = await testResponse.json();
-                console.log('[TEST MODE] Payment bypassed, redirecting...');
-                window.location.href = testData.redirectUrl;
-            } else {
-                throw new Error('Test bypass failed');
-            }
-        } else {
-            // Normal payment flow
-            const response = await fetch('/createCheckoutSession', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    appealId: appealRef.id,
-                    email: formData.email,
-                    pcnRef: formData.pcnRef
-                })
-            });
-            
-            if (!response.ok) {
-                throw new Error('Failed to create payment session');
-            }
-            
-            const data = await response.json();
-            
-            // Redirect directly to Stripe Checkout URL
-            if (data.url) {
-                window.location.href = data.url;
-            } else {
-                throw new Error('No checkout URL returned');
+            try {
+                const testResponse = await fetch('/testBypassPayment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        appealId: appealRef.id
+                    })
+                });
+                
+                if (testResponse.ok) {
+                    const testData = await testResponse.json();
+                    console.log('[TEST MODE] Payment bypassed, redirecting...');
+                    window.location.href = testData.redirectUrl;
+                    return;
+                }
+                console.warn('[TEST MODE] Bypass failed, using normal payment');
+            } catch (testError) {
+                console.warn('[TEST MODE] Bypass error, using normal payment:', testError.message);
             }
         }
         
+        // Normal payment flow
+        const response = await fetch('/createCheckoutSession', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                appealId: appealRef.id,
+                email: formData.email,
+                pcnRef: formData.pcnRef
+            })
+        });
+        
+        if (!response.ok) {
+            if (response.status === 429) {
+                hideLoading();
+                showAlert('Too many requests. Please wait a moment and try again.', 'error');
+                return;
+            }
+            if (response.status >= 500) {
+                hideLoading();
+                showAlert('Server is temporarily unavailable. Please try again in a few moments.', 'error');
+                return;
+            }
+            
+            let errorMessage = 'Payment failed. Please try again.';
+            try {
+                const errorData = await response.json();
+                if (errorData.error) {
+                    errorMessage = errorData.error;
+                }
+            } catch (e) {
+                // Keep default message
+            }
+            
+            hideLoading();
+            showAlert(errorMessage, 'error');
+            return;
+        }
+        
+        const data = await response.json();
+        
+        // Redirect directly to Stripe Checkout URL
+        if (data.url) {
+            window.location.href = data.url;
+        } else {
+            throw new Error('No checkout URL returned');
+        }
+            
     } catch (error) {
         hideLoading();
-        console.error('Payment error:', error);
-        showAlert('Payment failed. Please try again.', 'error');
+        console.error('Payment error:', error.message || error);
+        
+        if (error.message?.includes('network') || error.message?.includes('fetch')) {
+            showAlert('Unable to connect to the server. Please check your internet connection.', 'error');
+        } else {
+            showAlert('An unexpected error occurred. Please try again.', 'error');
+        }
     }
 }
 
@@ -941,3 +1112,118 @@ function hideLoading() {
 
 // Make onCaptchaSuccess globally available
 window.onCaptchaSuccess = onCaptchaSuccess;
+
+// =====================
+// INPUT VALIDATION UX
+// =====================
+
+function initializeInputValidation() {
+    initializeCharCounter();
+    initializeVehicleRegFormatting();
+    initializeEmailValidation();
+}
+
+function initializeCharCounter() {
+    const circumstances = document.getElementById('circumstances');
+    const charCounter = document.getElementById('charCounter');
+    
+    if (!circumstances || !charCounter) return;
+    
+    const updateCounter = () => {
+        const length = circumstances.value.length;
+        const maxLength = 5000;
+        charCounter.textContent = `${length} / ${maxLength}`;
+        
+        if (length >= maxLength) {
+            charCounter.classList.remove('text-gray-500', 'text-yellow-600');
+            charCounter.classList.add('text-red-600', 'font-medium');
+        } else if (length >= maxLength * 0.9) {
+            charCounter.classList.remove('text-gray-500', 'text-red-600');
+            charCounter.classList.add('text-yellow-600');
+        } else {
+            charCounter.classList.remove('text-red-600', 'text-yellow-600', 'font-medium');
+            charCounter.classList.add('text-gray-500');
+        }
+    };
+    
+    circumstances.addEventListener('input', updateCounter);
+    updateCounter();
+}
+
+function initializeVehicleRegFormatting() {
+    const vehicleReg = document.getElementById('vehicleReg');
+    const vehicleRegCheck = document.getElementById('vehicleRegCheck');
+    
+    if (!vehicleReg) return;
+    
+    vehicleReg.addEventListener('blur', () => {
+        const value = vehicleReg.value.trim();
+        if (value) {
+            const formatted = value.toUpperCase().replace(/\s+/g, '');
+            vehicleReg.value = formatted;
+            if (vehicleRegCheck) {
+                vehicleRegCheck.classList.remove('hidden');
+            }
+        }
+    });
+    
+    vehicleReg.addEventListener('focus', () => {
+        if (vehicleRegCheck) {
+            vehicleRegCheck.classList.add('hidden');
+        }
+    });
+}
+
+function initializeEmailValidation() {
+    const email = document.getElementById('email');
+    const emailCheck = document.getElementById('emailCheck');
+    const emailError = document.getElementById('emailError');
+    
+    if (!email) return;
+    
+    const validateEmail = (value) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(value);
+    };
+    
+    email.addEventListener('input', () => {
+        const value = email.value.trim();
+        
+        if (value === '') {
+            if (emailCheck) emailCheck.classList.add('hidden');
+            if (emailError) emailError.classList.add('hidden');
+            email.classList.remove('border-green-500', 'border-red-500');
+            return;
+        }
+        
+        const isValid = validateEmail(value);
+        
+        if (isValid) {
+            if (emailCheck) emailCheck.classList.remove('hidden');
+            if (emailError) emailError.classList.add('hidden');
+            email.classList.remove('border-red-500');
+            email.classList.add('border-green-500');
+        } else {
+            if (emailCheck) emailCheck.classList.add('hidden');
+            email.classList.remove('border-green-500');
+        }
+    });
+    
+    email.addEventListener('blur', () => {
+        const value = email.value.trim();
+        
+        if (value === '') return;
+        
+        const isValid = validateEmail(value);
+        
+        if (!isValid) {
+            if (emailError) emailError.classList.remove('hidden');
+            email.classList.add('border-red-500');
+            email.classList.remove('border-green-500');
+        } else {
+            if (emailError) emailError.classList.add('hidden');
+            email.classList.remove('border-red-500');
+            email.classList.add('border-green-500');
+        }
+    });
+}
