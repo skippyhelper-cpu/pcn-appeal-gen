@@ -333,7 +333,7 @@ exports.createCheckoutSession = functions
 });
 
 exports.stripeWebhook = functions
-    .runWith({ secrets: ["STRIPE_SECRET_KEY"] })
+    .runWith({ secrets: ["STRIPE_SECRET_KEY", "STRIPE_WEBHOOK_SECRET"] })
     .https.onRequest(async (req, res) => {
     const stripe = getStripe();
     const sig = req.headers['stripe-signature'];

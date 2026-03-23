@@ -13,6 +13,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
     <!-- Stripe.js -->
     <script src="https://js.stripe.com/v3/"></script>
+    <!-- reCAPTCHA v3 - Site key loaded from config.js -->
     <script src="https://www.google.com/recaptcha/api.js?render=6LdlX40sAAAAADTiPnvn7tLAM-511ALVzSIzxgGp"></script>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-49TJRR76VG"></script>
@@ -34,7 +35,7 @@
     <header class="fixed top-0 w-full z-50 glass-header shadow-sm">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-8">
-                <a href="/" class="text-xl font-bold text-primary tracking-tight">PCN Advocate</a>
+                <a href="/" class="text-xl font-bold text-primary tracking-tight">FineFighters</a>
                 <nav class="hidden md:flex items-center gap-6">
                     <a href="/" class="text-slate-600 hover:text-primary transition-colors font-semibold tracking-tight">← Back to Home</a>
                 </nav>
@@ -323,7 +324,7 @@
     <footer class="w-full py-10 border-t border-slate-200 bg-slate-50 mt-12">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
             <div class="space-y-4">
-                <span class="text-lg font-bold text-primary">PCN Advocate</span>
+                <span class="text-lg font-bold text-primary">FineFighters</span>
                 <p class="text-slate-500 font-['Inter'] text-sm leading-relaxed max-w-sm">© 2026 Filspire Ltd. Professional Legal Support. We provide high-end legal document generation for parking fine appeals.</p>
             </div>
             <div class="flex flex-wrap gap-x-8 gap-y-4 md:justify-end items-center">
@@ -339,6 +340,8 @@
     <script src="js/example-arguments.js?v=2"></script>
     <script src="js/shared.js"></script>
     <script>document.getElementById('progressStepper').innerHTML = window.renderProgressStepper(1);</script>
+    <!-- Environment config (generated from .env) -->
+    <script src="js/config.js"></script>
     <script src="js/firebase-config.js"></script>
     <!-- jsPDF for PDF generation with images -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>

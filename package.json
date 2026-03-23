@@ -1,0 +1,12 @@
+{
+  "name": "pcn-appeal-generator",
+  "version": "1.0.0",
+  "description": "PCN Appeal Letter Generator",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build-config.js",
+    "predeploy": "npm run build",
+    "deploy": "firebase deploy",
+    "serve": "npm run build && firebase serve"
+  }
+}

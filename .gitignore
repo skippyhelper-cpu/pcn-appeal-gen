@@ -1,40 +1,40 @@
 # Dependencies
 node_modules/
-functions/node_modules/
 
-# Firebase
-.firebase/
-firebase-debug.log
-firebase-debug.*.log
-
-# Environment files
+# Environment files - NEVER COMMIT
 .env
 .env.local
 .env.*.local
-.runtimeconfig.json
+
+# Generated config - regenerated from .env on build
+js/config.js
+
+# Build output
+dist/
+build/
 
 # IDE
 .idea/
 .vscode/
 *.swp
 *.swo
-*~
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Build outputs
-dist/
-build/
-
 # Logs
 *.log
 npm-debug.log*
 
-# Test coverage
-coverage/
+# Firebase
+.firebase/
 
-# Temporary files
-tmp/
-temp/
+# Secrets (should never exist here, but just in case)
+*secret*
+*key*.pem
+*.pem
+
+# Backup files
+*.bak
+stripe keys

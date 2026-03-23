@@ -1,16 +1,20 @@
-// Firebase configuration for FineFighters
-const firebaseConfig = {
-    apiKey: "AIzaSyCgMSN9xBJ9iZhgmevdQCB8OM19hMtvYTg",
-    authDomain: "pcn-appeal-generator.firebaseapp.com",
-    projectId: "pcn-appeal-generator",
-    storageBucket: "pcn-appeal-generator.firebasestorage.app",
-    messagingSenderId: "487797350039",
-    appId: "1:487797350039:web:e79c6ee017fd14c54753d2",
-    measurementId: "G-49TJRR76VG"
-};
+/**
+ * Firebase Configuration
+ * ======================
+ * Uses values from config.js (generated from .env)
+ * 
+ * IMPORTANT: This file expects js/config.js to be loaded first!
+ * Run `npm run build` to generate config.js from .env
+ */
+
+// Use config from build process (js/config.js must be loaded before this)
+// Fallback to window.firebaseConfig if already set by config.js
+if (typeof firebaseConfig === 'undefined' && typeof window !== 'undefined' && window.firebaseConfig) {
+    var firebaseConfig = window.firebaseConfig;
+}
 
 // Initialize Firebase
-if (typeof firebase !== 'undefined') {
+if (typeof firebase !== 'undefined' && typeof firebaseConfig !== 'undefined') {
     firebase.initializeApp(firebaseConfig);
     
     // Initialize Firestore
@@ -18,7 +22,8 @@ if (typeof firebase !== 'undefined') {
     
     // Initialize Storage
     window.storage = firebase.storage();
+    
+    console.log('Firebase initialized for project:', firebaseConfig.projectId);
+} else {
+    console.warn('Firebase not initialized - config.js may not be loaded. Run: npm run build');
 }
-
-// Make config available globally
-window.firebaseConfig = firebaseConfig;
