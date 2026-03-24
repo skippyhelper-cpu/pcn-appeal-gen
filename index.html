@@ -12,13 +12,59 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://finefighters.co.uk">
   <link rel="canonical" href="https://finefighters.co.uk">
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-49TJRR76VG"></script>
+  <!-- Google Analytics - Loaded after cookie consent -->
   <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-49TJRR76VG');
+  // Cookie consent management
+  window.cookieConsent = {
+      hasConsent: function() {
+          return localStorage.getItem('cookie_consent') === 'accepted';
+      },
+      accept: function() {
+          localStorage.setItem('cookie_consent', 'accepted');
+          this.loadAnalytics();
+          this.hideBanner();
+      },
+      reject: function() {
+          localStorage.setItem('cookie_consent', 'rejected');
+          this.hideBanner();
+      },
+      loadAnalytics: function() {
+          if (window.analyticsLoaded) return;
+          window.analyticsLoaded = true;
+          
+          // Load Google Analytics
+          var script = document.createElement('script');
+          script.async = true;
+          script.src = 'https://www.googletagmanager.com/gtag/js?id=G-49TJRR76VG';
+          document.head.appendChild(script);
+          
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-49TJRR76VG');
+      },
+      hideBanner: function() {
+          var banner = document.getElementById('cookie-consent-banner');
+          if (banner) banner.style.display = 'none';
+      },
+      showBanner: function() {
+          var banner = document.getElementById('cookie-consent-banner');
+          if (banner) banner.style.display = 'block';
+      },
+      init: function() {
+          if (this.hasConsent()) {
+              this.loadAnalytics();
+          } else if (localStorage.getItem('cookie_consent') !== 'rejected') {
+              // Show banner after a short delay for better UX
+              setTimeout(() => this.showBanner(), 1000);
+          }
+      }
+  };
+  
+  // Initialize on DOM ready
+  document.addEventListener('DOMContentLoaded', function() {
+      window.cookieConsent.init();
+  });
   </script>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
@@ -453,5 +499,25 @@
       <p>© 2026 Filspire Ltd. This is not legal advice.</p>
     </div>
   </footer>
+
+  <!-- Cookie Consent Banner -->
+  <div id="cookie-consent-banner" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #1e293b; color: white; padding: 16px 24px; z-index: 9999; box-shadow: 0 -4px 12px rgba(0,0,0,0.15);">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;">
+      <div style="flex: 1; min-width: 280px;">
+        <p style="margin: 0; font-size: 14px; line-height: 1.5;">
+          We use cookies to improve your experience and analyze site traffic. By clicking "Accept", you agree to our use of cookies.
+          <a href="privacy.html" style="color: #60a5fa; text-decoration: underline;">Learn more</a>
+        </p>
+      </div>
+      <div style="display: flex; gap: 12px; flex-shrink: 0;">
+        <button onclick="window.cookieConsent.reject()" style="background: transparent; border: 1px solid #64748b; color: #94a3b8; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500;">
+          Decline
+        </button>
+        <button onclick="window.cookieConsent.accept()" style="background: #22c55e; border: none; color: white; padding: 8px 24px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600;">
+          Accept
+        </button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

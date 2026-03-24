@@ -13,44 +13,47 @@ service cloud.firestore {
     
     function isValidAppealCreate() {
       let data = request.resource.data;
-      return data.keys().hasAll(['pcnNumber', 'email', 'vehicleReg', 'createdAt', 'status', 'accessToken'])
-        && data.pcnNumber is string && data.pcnNumber.size() > 0
-        && data.email is string && data.email.matches('^[^@]+@[^@]+\\.[^@]+)
+      return data.keys().hasAll(['pcnRef', 'email', 'vehicleReg', 'createdAt'])
+        && data.pcnRef is string && data.pcnRef.size() > 0
+        && data.email is string && data.email.matches('^[^@]+@[^@]+\\.[^@]+')
         && data.vehicleReg is string && data.vehicleReg.size() > 0
-        && data.status is string && data.status in ['pending_payment', 'processing', 'completed', 'failed']
-        && data.createdAt is timestamp
-        && data.accessToken is string && data.accessToken.size() == 32;
+        && data.createdAt is timestamp;
     }
 
     match /appeals/{appealId} {
+      // Anyone can create an appeal (initial submission before payment)
       allow create: if isValidAppealCreate();
       
-      // Allow read if: user provides correct accessToken OR is admin
-      // accessToken is passed via X-Access-Token header in requests
-      allow read: if request.headers['x-access-token'] == resource.data.accessToken
-                  || isAdmin();
+      // Read access: admin only (data accessed via Cloud Functions with admin SDK)
+      // Functions have full access through admin SDK, bypassing these rules
+      allow read: if isAdmin();
       
-      allow update: if false;
-      
-      allow delete: if false;
+      // No direct updates or deletes from client - managed via Cloud Functions
+      allow update, delete: if false;
     }
     
     match /payments/{paymentId} {
+      // Payments are written by Cloud Functions (Stripe webhooks) with admin SDK
+      // Admin SDK bypasses rules, so this just needs to block client access
       allow read, write: if false;
     }
     
     match /feedback/{feedbackId} {
+      // Anyone can submit feedback
       allow create: if request.resource.data.keys().hasAll(['message', 'createdAt']) 
                     && request.resource.data.message is string
                     && request.resource.data.message.size() > 0
                     && request.resource.data.message.size() < 5000;
       
-      allow read: if false;
+      // Only admin can read feedback
+      allow read: if isAdmin();
       
+      // No updates or deletes from client
       allow update, delete: if false;
     }
     
     match /mail/{mailId} {
+      // Mail collection used by Firebase Extensions - admin only
       allow read, write: if false;
     }
   }
