@@ -1,4 +1,6 @@
 // Searchable Council Input Component
+// Uses dynamic import for lazy loading councils data
+
 class CouncilSearch {
     constructor(inputId, containerId, onSelect) {
         this.input = document.getElementById(inputId);
@@ -8,6 +10,8 @@ class CouncilSearch {
         this.isDropdownFocused = false;
         this._debounceTimer = null;
         this._selecting = false;
+        this._councilsLoaded = false;
+        this._councils = null;
         
         this.init();
     }
@@ -43,6 +47,24 @@ class CouncilSearch {
         });
     }
     
+    // Load councils data on first search
+    async _ensureCouncilsLoaded() {
+        if (this._councilsLoaded) {
+            return this._councils;
+        }
+        
+        try {
+            // Dynamic import for lazy loading
+            const module = await import('./councils.js');
+            this._councils = module.COUNCILS;
+            this._councilsLoaded = true;
+            return this._councils;
+        } catch (error) {
+            console.error('Failed to load councils data:', error);
+            return [];
+        }
+    }
+    
     // Debounced input handler
     handleInput(e) {
         const query = e.target.value.toLowerCase().trim();
@@ -64,8 +86,9 @@ class CouncilSearch {
         }, 300);
     }
     
-    performSearch(query) {
-        const matches = COUNCILS.filter(council => 
+    async performSearch(query) {
+        const councils = await this._ensureCouncilsLoaded();
+        const matches = councils.filter(council => 
             council.name.toLowerCase().includes(query) ||
             council.id.toLowerCase().includes(query)
         );

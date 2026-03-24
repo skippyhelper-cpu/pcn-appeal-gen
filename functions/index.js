@@ -1,23 +1,15 @@
 /**
- * RATE LIMITING CONSIDERATIONS FOR PRODUCTION
- * ============================================
- * This application should implement rate limiting in production to prevent abuse.
+ * RATE LIMITING IMPLEMENTED
+ * ========================
+ * Server-side rate limiting is implemented:
+ * - In-memory rate limit store tracks requests per IP
+ * - 10 requests per minute limit per IP
+ * - Returns 429 when exceeded
  * 
- * Recommended approaches:
- * 1. Firebase Extensions: Install "Rate Limit API Calls" extension from Firebase
- *    - Provides per-user and per-IP rate limiting
- *    - Easy integration with Firebase Functions
- * 
- * 2. Cloud Armor: Configure DDoS protection and rate limiting rules
- *    - Works at the load balancer level
- *    - Can block malicious traffic before reaching functions
- * 
- * 3. reCAPTCHA Enterprise: For form submissions and payment endpoints
- *    - Protects against automated bot attacks
- *    - Provides risk scores for each request
- * 
- * Current implementation does NOT include rate limiting.
- * Add rate limiting before deploying to production.
+ * For production, also consider:
+ * - Firebase Extensions: "Rate Limit API Calls" extension
+ * - Cloud Armor: DDoS protection and rate limiting rules
+ * - reCAPTCHA Enterprise: Bot attack protection
  */
 
 const functions = require('firebase-functions');
@@ -31,9 +23,41 @@ const getStripe = () => Stripe(process.env.STRIPE_SECRET_KEY);
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
+// Get base URL from environment or use default
+const getBaseUrl = () => {
+    return process.env.APP_BASE_URL || 'https://pcn-appeal-generator.web.app';
+};
+
 const db = admin.firestore();
 
 const VALID_CONTRAVENTION_CODES = ['01', '02', '05', '06', '11', '12', '16', '21', '25', '30', '31', '34', '40', '45', '47', '62'];
+
+// Rate limiting configuration
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
+const RATE_LIMIT_MAX_REQUESTS = 10; // 10 requests per minute per IP
+
+// In-memory rate limit store (use Firebase Firestore for production)
+const rateLimitStore = new Map();
+
+// Check rate limit for a given IP
+const checkRateLimit = (ip) => {
+    const now = Date.now();
+    const windowStart = now - RATE_LIMIT_WINDOW_MS;
+    
+    // Clean up old entries
+    const userHistory = rateLimitStore.get(ip);
+    if (userHistory) {
+        const recentRequests = userHistory.filter(timestamp => timestamp > windowStart);
+        if (recentRequests.length >= RATE_LIMIT_MAX_REQUESTS) {
+            return false;
+        }
+        // Update with recent requests
+        rateLimitStore.set(ip, [...recentRequests, now]);
+    } else {
+        rateLimitStore.set(ip, [now]);
+    }
+    return true;
+};
 
 const VALIDATION_LIMITS = {
     appealId: { minLength: 1, maxLength: 100 },
@@ -264,6 +288,12 @@ exports.createCheckoutSession = functions
             if (req.method !== 'POST') {
                 return res.status(405).json({ error: 'Method not allowed' });
             }
+            
+            // Rate limiting check
+            const clientIp = req.ip || req.headers['x-forwarded-for'] || 'unknown';
+            if (!checkRateLimit(clientIp)) {
+                return res.status(429).json({ error: 'Too many requests. Please try again later.' });
+            }
 
             const { appealId, email, pcnRef } = req.body;
 
@@ -306,8 +336,8 @@ exports.createCheckoutSession = functions
                     },
                 ],
                 mode: 'payment',
-                success_url: `https://pcn-appeal-generator.web.app/success.html?payment=success&appeal=${encodeURIComponent(validation.sanitized.appealId)}`,
-                cancel_url: `https://pcn-appeal-generator.web.app/app.html?payment=cancelled`,
+                success_url: `${getBaseUrl()}/success.html?payment=success&appeal=${encodeURIComponent(validation.sanitized.appealId)}`,
+                cancel_url: `${getBaseUrl()}/app.html?payment=cancelled`,
                 metadata: {
                     appealId: validation.sanitized.appealId,
                     pcnRef: validation.sanitized.pcnRef,

@@ -1,16 +1,12 @@
 /**
- * RATE LIMITING CONSIDERATIONS FOR PRODUCTION
- * ============================================
- * Client-side rate limiting should be implemented alongside server-side protections:
+ * RATE LIMITING IMPLEMENTED
+ * ========================
+ * Client-side rate limiting is implemented with exponential backoff:
+ * - retryWithBackoff() function handles automatic retries on 429 responses
+ * - Maximum 3 retries with exponential backoff (1s, 2s, 4s)
+ * - Server-side rate limiting also implemented in functions/index.js
  * 
- * 1. Debounce form submissions to prevent rapid duplicate requests
- * 2. Show user-friendly messages when rate limited (HTTP 429)
- * 3. Implement exponential backoff for retry logic on transient failures
- * 4. Consider using Firebase App Check for additional protection
- * 
- * Note: Client-side protections alone are NOT sufficient.
- * Server-side rate limiting via Firebase Extensions, Cloud Armor,
- * or reCAPTCHA Enterprise is required for production security.
+ * For production, also consider Firebase App Check for additional protection
  */
 
 // FineFighters - Main Application Logic
@@ -21,6 +17,33 @@ let formData = {};
 let captchaToken = null;
 let stripe = null;
 let paymentIntentId = null;
+
+// Client-side rate limiting
+const RATE_LIMIT_MAX_RETRIES = 3;
+const RATE_LIMIT_BASE_DELAY = 1000; // 1 second base delay
+let requestAttempts = {};
+
+// Retry function with exponential backoff
+async function retryWithBackoff(fn, maxRetries = RATE_LIMIT_MAX_RETRIES, baseDelay = RATE_LIMIT_BASE_DELAY) {
+    let lastError;
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+        try {
+            return await fn();
+        } catch (error) {
+            lastError = error;
+            if (error.response?.status === 429) {
+                // Rate limited - exponential backoff
+                const delay = baseDelay * Math.pow(2, attempt);
+                console.log(`Rate limited, retrying in ${delay}ms (attempt ${attempt + 1}/${maxRetries + 1})`);
+                await new Promise(resolve => setTimeout(resolve, delay));
+            } else {
+                // Non-rate-limit error, throw immediately
+                throw error;
+            }
+        }
+    }
+    throw lastError;
+}
 
 // Draft storage
 const DRAFT_KEY = 'pcn_appeal_draft';
@@ -793,9 +816,12 @@ async function handlePayment() {
     try {
         // Create a pending appeal record
         let appealRef;
+        // Generate access token for this appeal (32 character random string)
+        const accessToken = Array.from({length: 32}, () => 'abcdefghijklmnopqrstuvwxyz0123456789'[Math.floor(Math.random() * 36)]).join('');
         try {
             appealRef = await db.collection('appeals').add({
                 ...formData,
+                accessToken: accessToken,
                 captchaVerified: true,
                 paid: false,
                 paidAt: null,
@@ -843,17 +869,27 @@ async function handlePayment() {
             }
         }
         
-        // Normal payment flow
-        const response = await fetch('/createCheckoutSession', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                appealId: appealRef.id,
-                email: formData.email,
-                pcnRef: formData.pcnRef
-            })
+        // Normal payment flow with rate limiting and exponential backoff
+        const response = await retryWithBackoff(async () => {
+            const res = await fetch('/createCheckoutSession', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    appealId: appealRef.id,
+                    email: formData.email,
+                    pcnRef: formData.pcnRef
+                })
+            });
+            
+            if (!res.ok) {
+                // Create error with response for retry logic to handle
+                const error = new Error('Request failed');
+                error.response = { status: res.status };
+                throw error;
+            }
+            return res;
         });
         
         if (!response.ok) {

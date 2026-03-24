@@ -13,18 +13,22 @@ service cloud.firestore {
     
     function isValidAppealCreate() {
       let data = request.resource.data;
-      return data.keys().hasAll(['pcnNumber', 'email', 'vehicleReg', 'createdAt', 'status'])
+      return data.keys().hasAll(['pcnNumber', 'email', 'vehicleReg', 'createdAt', 'status', 'accessToken'])
         && data.pcnNumber is string && data.pcnNumber.size() > 0
-        && data.email is string && data.email.matches('^[^@]+@[^@]+\\.[^@]+$')
+        && data.email is string && data.email.matches('^[^@]+@[^@]+\\.[^@]+)
         && data.vehicleReg is string && data.vehicleReg.size() > 0
         && data.status is string && data.status in ['pending_payment', 'processing', 'completed', 'failed']
-        && data.createdAt is timestamp;
+        && data.createdAt is timestamp
+        && data.accessToken is string && data.accessToken.size() == 32;
     }
 
     match /appeals/{appealId} {
       allow create: if isValidAppealCreate();
       
-      allow read: if false;
+      // Allow read if: user provides correct accessToken OR is admin
+      // accessToken is passed via X-Access-Token header in requests
+      allow read: if request.headers['x-access-token'] == resource.data.accessToken
+                  || isAdmin();
       
       allow update: if false;
       

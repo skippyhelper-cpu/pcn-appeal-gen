@@ -758,6 +758,7 @@ const COUNCILS = [
 ];
 
 // Export for use in app
+export { COUNCILS };
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { COUNCILS };
 }

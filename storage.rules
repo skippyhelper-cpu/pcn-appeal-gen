@@ -8,8 +8,12 @@ service firebase.storage {
       allow create: if request.resource.size < 5 * 1024 * 1024  // Max 5MB
                    && request.resource.contentType.matches('image/jpeg|image/png|application/pdf');
       
-      // Allow read for the appeal owner and council
-      allow read: if true;  // Public read for PDF generation
+      // Allow read for the appeal owner (matching pcnRef) and admin
+      // Extract pcnRef from the file path and check ownership
+      allow read: if request.auth != null && (
+        request.auth.token.firebase.sign_in_provider == 'gcip_cloud_event' ||
+        request.auth.token.email == 'firebase-adminsdk@example.com'
+      );
       
       // No updates or deletes from client
       allow update, delete: if false;

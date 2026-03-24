@@ -65,6 +65,21 @@
 
             <!-- Form Card -->
             <div class="bg-surface-container-lowest rounded-3xl p-8 md:p-12 shadow-[0_20px_40px_rgba(18,28,40,0.06)]">
+                <!-- No Account Required Notice -->
+                <div class="mb-8 p-4 bg-blue-50 border border-blue-200 rounded-xl">
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-blue-600 mt-0.5">info</span>
+                        <div class="text-sm text-blue-800">
+                            <p class="font-semibold mb-1">No account required</p>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>Just enter your details to generate your appeal</li>
+                                <li>You won't be able to return to this form after submission</li>
+                                <li>Save your confirmation email to access your letter later</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
                 <form id="appealForm" class="space-y-8">
                     <!-- PCN Details Row -->
                     <div class="grid md:grid-cols-2 gap-8">
@@ -335,7 +350,6 @@
         </div>
     </footer>
 
-    <script src="js/councils.js"></script>
     <script src="js/council-search.js?v=3"></script>
     <script src="js/example-arguments.js?v=2"></script>
     <script src="js/shared.js"></script>
