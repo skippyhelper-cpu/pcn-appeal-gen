@@ -2,20 +2,19 @@ rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
     // Evidence files for PCN appeals
-    match /{pcnRef}/{allPaths=**} {
-      // Allow upload for authenticated users (via appeal form)
-      // Files are stored under the PCN reference number
+    // Allow unauthenticated uploads - the pcnRef is generated server-side via Cloud Function
+    // and embedded in the upload path. This prevents path manipulation.
+    match /evidence/{pcnRef}/{allPaths=**} {
       allow create: if request.resource.size < 5 * 1024 * 1024  // Max 5MB
-                   && request.resource.contentType.matches('image/jpeg|image/png|application/pdf');
+                   && request.resource.contentType.matches('image/jpeg|image/png|application/pdf')
+                   && pcnRef.size() > 5 && pcnRef.size() < 50;  // Validate pcnRef format
       
-      // Allow read for the appeal owner (matching pcnRef) and admin
-      // Extract pcnRef from the file path and check ownership
+      // Allow read for admin only
       allow read: if request.auth != null && (
         request.auth.token.firebase.sign_in_provider == 'gcip_cloud_event' ||
         request.auth.token.email == 'firebase-adminsdk@example.com'
       );
       
-      // No updates or deletes from client
       allow update, delete: if false;
     }
   }

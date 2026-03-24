@@ -95,23 +95,28 @@ const configContent = `/**
  * 2. Run: npm run build
  */
 
-const ENV_CONFIG = ${JSON.stringify(config, null, 2)};
+// Guard against multiple loads
+if (!window.configLoaded) {
+    window.configLoaded = true;
 
-// Firebase configuration
-const firebaseConfig = ENV_CONFIG.FIREBASE;
+    const ENV_CONFIG = ${JSON.stringify(config, null, 2)};
 
-// Stripe publishable key (safe for frontend)
-const STRIPE_PUBLISHABLE_KEY = ENV_CONFIG.STRIPE_PUBLISHABLE_KEY;
+    // Firebase configuration
+    const firebaseConfig = ENV_CONFIG.FIREBASE;
 
-// reCAPTCHA site key (safe for frontend)  
-const RECAPTCHA_SITE_KEY = ENV_CONFIG.RECAPTCHA_SITE_KEY;
+    // Stripe publishable key (safe for frontend)
+    const STRIPE_PUBLISHABLE_KEY = ENV_CONFIG.STRIPE_PUBLISHABLE_KEY;
 
-// Make available globally
-if (typeof window !== 'undefined') {
-  window.ENV_CONFIG = ENV_CONFIG;
-  window.firebaseConfig = firebaseConfig;
-  window.STRIPE_PUBLISHABLE_KEY = STRIPE_PUBLISHABLE_KEY;
-  window.RECAPTCHA_SITE_KEY = RECAPTCHA_SITE_KEY;
+    // reCAPTCHA site key (safe for frontend)  
+    const RECAPTCHA_SITE_KEY = ENV_CONFIG.RECAPTCHA_SITE_KEY;
+
+    // Make available globally
+    if (typeof window !== 'undefined') {
+      window.ENV_CONFIG = ENV_CONFIG;
+      window.firebaseConfig = firebaseConfig;
+      window.STRIPE_PUBLISHABLE_KEY = STRIPE_PUBLISHABLE_KEY;
+      window.RECAPTCHA_SITE_KEY = RECAPTCHA_SITE_KEY;
+    }
 }
 `;
 

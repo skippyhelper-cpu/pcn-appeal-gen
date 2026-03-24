@@ -138,7 +138,7 @@
                 <!-- Strategic Highlights -->
                 <div class="bg-surface-container-low p-8 rounded-full">
                     <h3 class="text-lg font-bold text-primary mb-6">Legal Arguments Used</h3>
-                    <ul id="legalArgumentsList" class="space-y-6">
+                    <ul id="supportingPointsList" class="space-y-6">
                         <li class="flex gap-4">
                             <div class="h-10 w-10 shrink-0 rounded-xl bg-white flex items-center justify-center text-secondary">
                                 <span class="material-symbols-outlined">signpost</span>
@@ -158,14 +158,6 @@
                             </div>
                         </li>
                     </ul>
-                </div>
-                
-                <!-- Support Callout -->
-                <div class="p-8 rounded-full border-2 border-dashed border-outline-variant flex flex-col items-center text-center">
-                    <span class="material-symbols-outlined text-4xl text-outline mb-4">gavel</span>
-                    <h3 class="font-bold text-on-surface">Need a specialized review?</h3>
-                    <p class="text-sm text-on-surface-variant mt-2 mb-6">Our senior paralegals can manually check your appeal for any errors.</p>
-                    <button class="text-secondary font-bold text-sm hover:underline underline-offset-4">Upgrade to Premium Review</button>
                 </div>
             </div>
             
@@ -198,7 +190,7 @@
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
             <div class="space-y-4">
                 <div class="text-lg font-bold text-[#00236f]">FineFighters</div>
-                <p class="text-slate-500">Professional legal support for parking fine appeals. Our AI-driven platform helps you exercise your legal rights with confidence and precision.</p>
+                <p class="text-slate-500">Professional appeal support for parking fine appeals. Our AI-driven platform helps you exercise your legal rights with confidence and precision.</p>
                 <p class="text-slate-500">© 2024 FineFighters. Professional Legal Support.</p>
             </div>
             <div class="grid grid-cols-2 gap-4">
@@ -217,6 +209,7 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
     <script src="js/shared.js"></script>
     <!-- Environment config (generated from .env) -->
     <script src="js/config.js"></script>
@@ -301,7 +294,7 @@
             
             // Update legal arguments if available
             if (data.legalArguments && data.legalArguments.length > 0) {
-                const argsList = document.getElementById('legalArgumentsList');
+                const argsList = document.getElementById('supportingPointsList');
                 argsList.innerHTML = '';
                 
                 const icons = ['signpost', 'history_edu', 'photo_library', 'description', 'fact_check'];

@@ -110,8 +110,20 @@
                     Secure payment powered by Stripe
                 </div>
                 
+                <!-- Terms Checkbox -->
+                <div class="mb-6">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" id="termsCheckbox" class="mt-1 w-5 h-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                        <span class="text-sm text-gray-700">
+                            I understand this is <strong>not legal advice</strong>. I have read and agree to the 
+                            <a href="terms.html" class="underline text-blue-600">Terms of Service</a> and 
+                            <a href="privacy.html" class="underline text-blue-600">Privacy Policy</a>.
+                        </span>
+                    </label>
+                </div>
+                
                 <!-- Pay Button -->
-                <button id="payButton" class="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors">
+                <button id="payButton" class="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed" disabled>
                     Pay £2.99 with Stripe
                 </button>
                 
@@ -130,7 +142,7 @@
                 <a href="terms.html" class="text-gray-400 hover:text-white">Terms of Service</a>
                 <a href="feedback.html" class="text-gray-400 hover:text-white">Feedback</a>
             </div>
-            <p>&copy; 2026 Filspire Ltd. Not legal advice.</p>
+            <p>&copy; 2026 Filspire Ltd. Template service only. Not legal advice.</p>
         </div>
     </footer>
 
@@ -170,7 +182,6 @@
         }
 
         async function handlePayment() {
-            const payButton = document.getElementById('payButton');
             payButton.disabled = true;
             payButton.textContent = 'Processing...';
             
@@ -245,6 +256,14 @@
         }
 
         // Event listeners
+        // Terms checkbox - enable/disable pay button
+        const termsCheckbox = document.getElementById('termsCheckbox');
+        const payButton = document.getElementById('payButton');
+        
+        termsCheckbox.addEventListener('change', function() {
+            payButton.disabled = !this.checked;
+        });
+        
         document.getElementById('payButton').addEventListener('click', handlePayment);
         
         // Initialize

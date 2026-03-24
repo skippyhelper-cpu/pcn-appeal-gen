@@ -7,23 +7,46 @@
  * Run `npm run build` to generate config.js from .env
  */
 
-// Use config from build process (js/config.js must be loaded before this)
-// Fallback to window.firebaseConfig if already set by config.js
-if (typeof firebaseConfig === 'undefined' && typeof window !== 'undefined' && window.firebaseConfig) {
-    var firebaseConfig = window.firebaseConfig;
-}
-
-// Initialize Firebase
-if (typeof firebase !== 'undefined' && typeof firebaseConfig !== 'undefined') {
-    firebase.initializeApp(firebaseConfig);
-    
-    // Initialize Firestore
-    window.db = firebase.firestore();
-    
-    // Initialize Storage
-    window.storage = firebase.storage();
-    
-    console.log('Firebase initialized for project:', firebaseConfig.projectId);
+// Guard against multiple loads
+if (window.firebaseConfigLoaded) {
+    console.log('Firebase config already loaded, skipping');
 } else {
-    console.warn('Firebase not initialized - config.js may not be loaded. Run: npm run build');
+    window.firebaseConfigLoaded = true;
+
+    // Initialize Firebase using config from config.js
+    // config.js must be loaded before this file and sets window.firebaseConfig
+    (function() {
+        'use strict';
+        
+        // Get config from window (set by config.js)
+        const config = (typeof window !== 'undefined' && window.firebaseConfig) || 
+                       (typeof firebaseConfig !== 'undefined' ? firebaseConfig : null);
+        
+        if (!config) {
+            console.warn('Firebase not initialized - config.js may not be loaded. Run: npm run build');
+            return;
+        }
+        
+        // Initialize Firebase
+        if (typeof firebase !== 'undefined') {
+            try {
+                // Check if Firebase is already initialized
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(config);
+                }
+                
+                // Initialize Firestore
+                window.db = firebase.firestore();
+                
+                // Initialize Storage
+                window.storage = firebase.storage();
+                
+                console.log('Firebase initialized for project:', config.projectId);
+            } catch (error) {
+                console.error('Firebase initialization error:', error);
+            }
+        } else {
+            console.warn('Firebase SDK not loaded');
+        }
+    })();
 }
