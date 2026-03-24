@@ -1231,3 +1231,46 @@ exports.testBypassPayment = functions.https.onRequest(async (req, res) => {
         }
     });
 });
+// Scheduled function to delete appeals older than 30 days
+exports.cleanupOldAppeals = functions
+    .runWith({ secrets: ["STRIPE_SECRET_KEY", "STRIPE_WEBHOOK_SECRET", "RESEND_API_KEY"] })
+    .pubsub
+    .schedule('every 24 hours')
+    .onRun(async (context) => {
+        const db = admin.firestore();
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        
+        try {
+            // Delete old appeals
+            const appealsSnapshot = await db.collection('appeals')
+                .where('createdAt', '<', thirtyDaysAgo)
+                .get();
+            
+            const deletePromises = [];
+            appealsSnapshot.forEach((doc) => {
+                deletePromises.push(doc.ref.delete());
+            });
+            
+            const appealsDeleted = await Promise.all(deletePromises);
+            console.log(`Deleted ${appealsDeleted.length} old appeals`);
+            
+            // Delete old payments
+            const paymentsSnapshot = await db.collection('payments')
+                .where('createdAt', '<', thirtyDaysAgo)
+                .get();
+            
+            const paymentDeletePromises = [];
+            paymentsSnapshot.forEach((doc) => {
+                paymentDeletePromises.push(doc.ref.delete());
+            });
+            
+            const paymentsDeleted = await Promise.all(paymentDeletePromises);
+            console.log(`Deleted ${paymentsDeleted.length} old payments`);
+            
+            return null;
+        } catch (error) {
+            console.error('Error cleaning up old data:', error);
+            return null;
+        }
+    });
