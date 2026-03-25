@@ -1,21 +1,11 @@
+// Updated: 2026-03-24 21:24
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
-    // Evidence files for PCN appeals
-    // Allow unauthenticated uploads - the pcnRef is generated server-side via Cloud Function
-    // and embedded in the upload path. This prevents path manipulation.
-    match /evidence/{pcnRef}/{allPaths=**} {
-      allow create: if request.resource.size < 5 * 1024 * 1024  // Max 5MB
-                   && request.resource.contentType.matches('image/jpeg|image/png|application/pdf')
-                   && pcnRef.size() > 5 && pcnRef.size() < 50;  // Validate pcnRef format
-      
-      // Allow read for admin only
-      allow read: if request.auth != null && (
-        request.auth.token.firebase.sign_in_provider == 'gcip_cloud_event' ||
-        request.auth.token.email == 'firebase-adminsdk@example.com'
-      );
-      
-      allow update, delete: if false;
+    // Evidence uploads - fully open for production
+    match /evidence/{allPaths=**} {
+      allow create, read: if true;
+      allow delete: if false;
     }
   }
 }

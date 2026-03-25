@@ -692,10 +692,7 @@ function generateHTMLLetter(content, data, country) {
     <h3 style="margin-top: 28px; font-size: 1em; text-transform: uppercase; letter-spacing: 0.05em;">3. ${content.section3Title}</h3>
     ${content.section3Content}
     
-    <h3 style="margin-top: 28px; font-size: 1em; text-transform: uppercase; letter-spacing: 0.05em;">4. Mitigating Circumstances</h3>
-    <p>${data.circumstances}</p>
-    
-    <h3 style="margin-top: 28px; font-size: 1em; text-transform: uppercase; letter-spacing: 0.05em;">5. Legal Framework</h3>
+    <h3 style="margin-top: 28px; font-size: 1em; text-transform: uppercase; letter-spacing: 0.05em;">4. Legal Framework</h3>
     ${content.legalFramework}
     
     <p>In light of the above, I respectfully request that the Penalty Charge Notice is cancelled in full.</p>

@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-49TJRR76VG"></script>
@@ -68,7 +69,7 @@
                 </div>
                 <h1 class="text-5xl font-extrabold text-primary font-headline tracking-tight mb-4">You're All Set!</h1>
                 <p class="text-xl text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
-                    Your professional appeal letter has been generated. We've taken the stress out of the paperwork—now it's time to take action.
+                    Your professional appeal letter has been generated. We've taken the stress out of the paperwork - now it's time to take action.
                 </p>
             </section>
             
@@ -159,7 +160,7 @@
                                 <span class="material-symbols-outlined text-slate-400">expand_more</span>
                             </h4>
                             <p class="text-on-surface-variant leading-relaxed">
-                                Yes, in most cases. If you appeal within the first 14 days, the council will usually freeze the discount rate until they make a decision.
+                                They should, in most cases. If you appeal within the first 14 days, the council will usually freeze the discount rate until they make a decision. Check with them.
                             </p>
                         </div>
                         <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-100">
@@ -208,7 +209,7 @@
                 <p class="text-slate-500 max-w-sm">
                     Empowering drivers with professional supporting points to challenge unfair parking tickets effectively.
                 </p>
-                <p class="text-slate-500 mt-4">© 2026 Filspire Ltd. Template service only. Not legal advice.c</p>
+                <p class="text-slate-500 mt-4">© 2026 Filspire Ltd. Template service only. Not legal advice.</p>
             </div>
             <div class="grid grid-cols-2 gap-4 items-start">
                 <div class="flex flex-col gap-3">
@@ -258,13 +259,21 @@
 
         async function loadAppeal(appealId) {
             try {
-                const doc = await db.collection('appeals').doc(appealId).get();
+                // Use the getAppeal Cloud Function instead of direct Firestore access
+                // The Cloud Function has admin privileges and can read paid appeals
+                const functionsBase = window.ENV_CONFIG?.FIREBASE?.projectId 
+                    ? `https://us-central1-${window.ENV_CONFIG.FIREBASE.projectId}.cloudfunctions.net`
+                    : 'https://us-central1-pcn-appeal-generator.cloudfunctions.net';
                 
-                if (!doc.exists || !doc.data().paid) {
-                    throw new Error('Appeal not found or not paid');
+                const response = await fetch(`${functionsBase}/getAppeal?appeal=${encodeURIComponent(appealId)}`);
+                
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error || `HTTP ${response.status}`);
                 }
-
-                const data = doc.data();
+                
+                const data = await response.json();
+                
                 window.formData = {
                     appealId: appealId,
                     pcnRef: data.pcnRef,
@@ -274,7 +283,12 @@
                     contraventionDate: data.contraventionDate,
                     contraventionTime: data.contraventionTime,
                     location: data.location,
-                    circumstances: data.circumstances
+                    circumstances: data.circumstances,
+                    country: data.country || 'england',
+                    applicantName: data.applicantName || '',
+                    applicantAddress: data.applicantAddress || '',
+                    applicantPostcode: data.applicantPostcode || '',
+                    evidenceFiles: data.evidenceFiles || []
                 };
 
                 // Display appeal reference
@@ -283,14 +297,62 @@
                 document.getElementById('loading').classList.add('hidden');
                 document.getElementById('success').classList.remove('hidden');
 
-                // Set up download button
-                document.getElementById('downloadBtn').addEventListener('click', () => {
+                // Set up download button - use server-side PDF generation
+                document.getElementById('downloadBtn').addEventListener('click', async () => {
                     // Track download
                     gtag('event', 'download', {
                         event_category: 'Appeal',
                         event_label: 'PDF Download'
                     });
-                    PDFGenerator.download(window.formData);
+                    
+                    // Show loading state
+                    const btn = document.getElementById('downloadBtn');
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = '<span class="material-symbols-outlined">progress_activity</span> Generating PDF...';
+                    btn.disabled = true;
+                    
+                    try {
+                        // Use the server-side PDF generation endpoint
+                        const functionsBase = window.ENV_CONFIG?.FIREBASE?.projectId 
+                            ? `https://us-central1-${window.ENV_CONFIG.FIREBASE.projectId}.cloudfunctions.net`
+                            : 'https://us-central1-pcn-appeal-generator.cloudfunctions.net';
+                        
+                        const response = await fetch(`${functionsBase}/downloadAppealPDF?appeal=${encodeURIComponent(appealId)}`, {
+                            method: 'GET',
+                            headers: {
+                                'Accept': 'application/pdf'
+                            }
+                        });
+                        
+                        if (!response.ok) {
+                            const errorData = await response.json().catch(() => ({}));
+                            throw new Error(errorData.error || `HTTP ${response.status}`);
+                        }
+                        
+                        // Download the PDF
+                        const blob = await response.blob();
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `PCN_Appeal_${window.formData.pcnRef.replace(/[^a-zA-Z0-9]/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(a);
+                        
+                    } catch (error) {
+                        console.error('Error downloading PDF:', error);
+                        alert('Failed to download PDF. Please try again or contact support.');
+                        // Fallback to client-side generation
+                        try {
+                            PDFGenerator.download(window.formData);
+                        } catch (fallbackError) {
+                            console.error('Fallback PDF generation also failed:', fallbackError);
+                        }
+                    } finally {
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    }
                 });
 
             } catch (error) {

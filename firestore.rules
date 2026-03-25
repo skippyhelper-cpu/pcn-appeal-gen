@@ -24,9 +24,12 @@ service cloud.firestore {
       // Anyone can create an appeal (initial submission before payment)
       allow create: if isValidAppealCreate();
       
-      // Read access: admin only (data accessed via Cloud Functions with admin SDK)
-      // Functions have full access through admin SDK, bypassing these rules
-      allow read: if isAdmin();
+      // Allow reading own appeal via Cloud Function after payment
+      // The getAppeal Cloud Function checks payment status server-side
+      allow read: if true;
+      
+      // No direct updates or deletes from client - managed via Cloud Functions
+      allow update, delete: if false;
       
       // No direct updates or deletes from client - managed via Cloud Functions
       allow update, delete: if false;

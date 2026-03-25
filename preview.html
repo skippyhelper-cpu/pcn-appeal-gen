@@ -183,6 +183,20 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Evidence Section -->
+        <div id="evidenceSection" class="mt-12 hidden">
+            <div class="bg-white p-8 md:p-12 rounded-2xl border border-slate-200 shadow-sm">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="material-symbols-outlined text-secondary text-2xl">photo_library</span>
+                    <h2 class="text-2xl font-bold text-primary">Supporting Evidence</h2>
+                </div>
+                <p class="text-on-surface-variant mb-6">The following files have been uploaded as evidence and will be included in your appeal letter.</p>
+                <div id="evidenceGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Evidence items will be populated by JS -->
+                </div>
+            </div>
+        </div>
     </main>
     
     <!-- Footer -->
@@ -190,7 +204,7 @@
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
             <div class="space-y-4">
                 <div class="text-lg font-bold text-[#00236f]">FineFighters</div>
-                <p class="text-slate-500">Professional appeal support for parking fine appeals. Our AI-driven platform helps you exercise your legal rights with confidence and precision.</p>
+                <p class="text-slate-500">Professional appeal support for parking fine appeals. Our platform helps you exercise your rights with confidence and precision.</p>
                 <p class="text-slate-500">© 2024 FineFighters. Professional Legal Support.</p>
             </div>
             <div class="grid grid-cols-2 gap-4">
@@ -258,6 +272,153 @@
             return null;
         }
 
+        // Render evidence section
+        function renderEvidenceSection(evidenceFiles) {
+            const section = document.getElementById('evidenceSection');
+            const grid = document.getElementById('evidenceGrid');
+            
+            if (!evidenceFiles || evidenceFiles.length === 0) {
+                section.classList.add('hidden');
+                return;
+            }
+            
+            section.classList.remove('hidden');
+            grid.innerHTML = '';
+            
+            evidenceFiles.forEach((file, index) => {
+                const item = document.createElement('div');
+                item.className = 'bg-slate-50 rounded-xl border border-slate-200 overflow-hidden';
+                
+                // Build description HTML if available
+                const descriptionHtml = file.description 
+                    ? `<p class="text-sm text-on-surface-variant mt-2 italic">"${escapeHtml(file.description)}"</p>` 
+                    : '';
+                
+                if (file.type.startsWith('image/')) {
+                    // Image file - show preview
+                    item.innerHTML = `
+                        <div class="aspect-video bg-slate-100 flex items-center justify-center overflow-hidden">
+                            <img src="${file.url}" alt="${file.name}" 
+                                 class="w-full h-full object-contain cursor-pointer hover:opacity-90 transition-opacity"
+                                 onclick="openImageModal('${file.url}', '${file.name}')"
+                                 loading="lazy">
+                        </div>
+                        <div class="p-4">
+                            <div class="flex items-start gap-2">
+                                <span class="material-symbols-outlined text-secondary text-lg">image</span>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-on-surface truncate" title="${file.name}">${file.name}</p>
+                                    <p class="text-xs text-on-surface-variant">Evidence ${index + 1}</p>
+                                    ${descriptionHtml}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else if (file.type === 'application/pdf') {
+                    // PDF file - show icon with link
+                    item.innerHTML = `
+                        <div class="aspect-video bg-red-50 flex items-center justify-center">
+                            <div class="text-center p-4">
+                                <span class="material-symbols-outlined text-red-400 text-5xl">picture_as_pdf</span>
+                                <p class="text-sm text-red-600 font-medium mt-2">PDF Document</p>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex items-start gap-2">
+                                <span class="material-symbols-outlined text-red-400 text-lg">picture_as_pdf</span>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-on-surface truncate" title="${file.name}">${file.name}</p>
+                                    <p class="text-xs text-on-surface-variant">Evidence ${index + 1}</p>
+                                    ${descriptionHtml}
+                                </div>
+                                <a href="${file.url}" target="_blank" rel="noopener noreferrer" 
+                                   class="text-primary hover:underline text-xs">Open</a>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // Other file type
+                    item.innerHTML = `
+                        <div class="aspect-video bg-slate-100 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-slate-400 text-5xl">insert_drive_file</span>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex items-start gap-2">
+                                <span class="material-symbols-outlined text-slate-400 text-lg">insert_drive_file</span>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-on-surface truncate" title="${file.name}">${file.name}</p>
+                                    <p class="text-xs text-on-surface-variant">Evidence ${index + 1}</p>
+                                    ${descriptionHtml}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                grid.appendChild(item);
+            });
+        }
+        
+        // Escape HTML to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // Image modal for full-size view
+        function openImageModal(url, name) {
+            // Create modal if it doesn't exist
+            let modal = document.getElementById('imageModal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'imageModal';
+                modal.className = 'fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 hidden';
+                modal.innerHTML = `
+                    <div class="relative max-w-full max-h-full">
+                        <button onclick="closeImageModal()" 
+                                class="absolute -top-12 right-0 text-white/80 hover:text-white flex items-center gap-2">
+                            <span class="material-symbols-outlined">close</span>
+                            <span class="text-sm">Close</span>
+                        </button>
+                        <img id="modalImage" src="" alt="" class="max-w-full max-h-[85vh] object-contain rounded-lg">
+                        <p id="modalCaption" class="text-center text-white/80 mt-4 text-sm"></p>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                
+                // Close on backdrop click
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) closeImageModal();
+                });
+                
+                // Close on Escape key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') closeImageModal();
+                });
+            }
+            
+            const modalImg = document.getElementById('modalImage');
+            const modalCaption = document.getElementById('modalCaption');
+            modalImg.src = url;
+            modalImg.alt = name;
+            modalCaption.textContent = name;
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+        
+        // Make modal functions globally available
+        window.openImageModal = openImageModal;
+        window.closeImageModal = closeImageModal;
+        
         // Render letter preview
         function renderPreview(data) {
             if (!data) return;
@@ -266,6 +427,9 @@
             const htmlContent = template.generate(data);
             
             document.getElementById('letterContent').innerHTML = htmlContent;
+            
+            // Render evidence section
+            renderEvidenceSection(data.evidenceFiles);
             
             // Update confidence score if available
             if (data.confidenceScore) {

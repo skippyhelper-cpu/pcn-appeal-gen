@@ -514,39 +514,60 @@ function renderFilePreviews() {
     
     // Render previews
     previewArea.innerHTML = uploadedFiles.map(fileData => {
+        const descriptionId = `desc-${fileData.id}`;
         if (fileData.type === 'image') {
             return `
-                <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200" id="preview-${fileData.id}">
-                    <img src="${fileData.preview}" alt="${fileData.file.name}" class="w-16 h-16 object-cover rounded border">
-                    <div class="flex-1 min-w-0">
-                        <p class="text-sm font-medium text-gray-900 truncate">${fileData.file.name}</p>
-                        <p class="text-xs text-gray-500">${formatFileSize(fileData.file.size)}</p>
+                <div class="p-3 bg-gray-50 rounded-lg border border-gray-200" id="preview-${fileData.id}">
+                    <div class="flex items-start gap-3">
+                        <img src="${fileData.preview}" alt="${fileData.file.name}" class="w-16 h-16 object-cover rounded border flex-shrink-0">
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-medium text-gray-900 truncate">${fileData.file.name}</p>
+                            <p class="text-xs text-gray-500">${formatFileSize(fileData.file.size)}</p>
+                        </div>
+                        <button type="button" onclick="removeFile('${fileData.id}')" class="text-red-500 hover:text-red-700 p-1 flex-shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                        </button>
                     </div>
-                    <button type="button" onclick="removeFile('${fileData.id}')" class="text-red-500 hover:text-red-700 p-1">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
-                    </button>
+                    <div class="mt-2">
+                        <input type="text" 
+                               id="${descriptionId}"
+                               placeholder="Add a description (optional)..."
+                               class="w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
+                               value="${fileData.description || ''}"
+                               onchange="updateFileDescription('${fileData.id}', this.value)">
+                    </div>
                 </div>
             `;
         } else {
             // PDF
             return `
-                <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200" id="preview-${fileData.id}">
-                    <div class="w-16 h-16 bg-red-100 rounded border flex items-center justify-center">
-                        <svg class="w-8 h-8 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
-                        </svg>
+                <div class="p-3 bg-gray-50 rounded-lg border border-gray-200" id="preview-${fileData.id}">
+                    <div class="flex items-start gap-3">
+                        <div class="w-16 h-16 bg-red-100 rounded border flex items-center justify-center flex-shrink-0">
+                            <svg class="w-8 h-8 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-medium text-gray-900 truncate">${fileData.file.name}</p>
+                            <p class="text-xs text-gray-500">${formatFileSize(fileData.file.size)}</p>
+                        </div>
+                        <button type="button" onclick="removeFile('${fileData.id}')" class="text-red-500 hover:text-red-700 p-1 flex-shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                        </button>
                     </div>
-                    <div class="flex-1 min-w-0">
-                        <p class="text-sm font-medium text-gray-900 truncate">${fileData.file.name}</p>
-                        <p class="text-xs text-gray-500">${formatFileSize(fileData.file.size)}</p>
+                    <div class="mt-2">
+                        <input type="text" 
+                               id="${descriptionId}"
+                               placeholder="Add a description (optional)..."
+                               class="w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
+                               value="${fileData.description || ''}"
+                               onchange="updateFileDescription('${fileData.id}', this.value)">
                     </div>
-                    <button type="button" onclick="removeFile('${fileData.id}')" class="text-red-500 hover:text-red-700 p-1">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
-                    </button>
                 </div>
             `;
         }
@@ -558,6 +579,13 @@ function removeFile(fileId) {
     renderFilePreviews();
 }
 
+function updateFileDescription(fileId, description) {
+    const fileData = uploadedFiles.find(f => f.id === fileId);
+    if (fileData) {
+        fileData.description = description;
+    }
+}
+
 function formatFileSize(bytes) {
     if (bytes < 1024) return bytes + ' B';
     if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
@@ -566,6 +594,7 @@ function formatFileSize(bytes) {
 
 // Make removeFile globally available
 window.removeFile = removeFile;
+window.updateFileDescription = updateFileDescription;
 
 // =====================
 // FORM SUBMISSION
@@ -696,7 +725,8 @@ async function uploadEvidenceFiles() {
                     name: file.name,
                     type: file.type,
                     url: result.url,
-                    path: fileName
+                    path: fileName,
+                    description: fileData.description || ''
                 };
             }
             return null;
@@ -941,7 +971,7 @@ async function handlePayment() {
 }
 
 // Generate and download letter
-function generateLetter() {
+async function generateLetter() {
     try {
         // Prepare evidence data for PDF
         const evidenceForPdf = [...(formData.evidenceFiles || [])];
@@ -952,8 +982,8 @@ function generateLetter() {
             evidenceFiles: evidenceForPdf
         };
         
-        // Generate PDF
-        const doc = PDFGenerator.generate(pdfData);
+        // Generate PDF (now async for image embedding)
+        const doc = await PDFGenerator.generate(pdfData);
         
         // Download
         const filename = `PCN_Appeal_${formData.pcnRef}_${new Date().toISOString().split('T')[0]}.pdf`;

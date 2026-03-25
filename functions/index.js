@@ -1274,3 +1274,45 @@ exports.cleanupOldAppeals = functions
             return null;
         }
     });
+
+// Resend confirmation email for an existing appeal
+exports.resendConfirmationEmail = functions
+    .runWith({ 
+        secrets: ["RESEND_API_KEY", "STRIPE_SECRET_KEY"],
+        memory: '512MB',
+        timeoutSeconds: 120
+    })
+    .https.onRequest(async (req, res) => {
+    return cors(req, res, async () => {
+        try {
+            const { appealId } = req.query;
+            
+            if (!appealId) {
+                return res.status(400).json({ error: 'Appeal ID is required' });
+            }
+            
+            const appealDoc = await db.collection('appeals').doc(appealId).get();
+            
+            if (!appealDoc.exists) {
+                return res.status(404).json({ error: 'Appeal not found' });
+            }
+            
+            const appealData = appealDoc.data();
+            
+            if (!appealData.paid) {
+                return res.status(400).json({ error: 'Appeal has not been paid' });
+            }
+            
+            const result = await sendConfirmationEmail(appealData.email, appealData.pcnRef, appealId, appealData);
+            
+            if (result) {
+                return res.json({ success: true, message: 'Confirmation email sent' });
+            } else {
+                return res.status(500).json({ error: 'Failed to send email' });
+            }
+        } catch (error) {
+            console.error('Error resending confirmation email:', error);
+            return res.status(500).json({ error: error.message });
+        }
+    });
+});

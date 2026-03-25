@@ -38,8 +38,14 @@ if (window.firebaseConfigLoaded) {
                 // Initialize Firestore
                 window.db = firebase.firestore();
                 
-                // Initialize Storage
-                window.storage = firebase.storage();
+                // Initialize Storage (only if storage SDK is loaded)
+                if (typeof firebase.storage === 'function') {
+                    try {
+                        window.storage = firebase.storage();
+                    } catch (e) {
+                        console.warn('Firebase Storage not initialized:', e.message);
+                    }
+                }
                 
                 console.log('Firebase initialized for project:', config.projectId);
             } catch (error) {
