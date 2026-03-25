@@ -212,26 +212,9 @@ var PDFGenerator = {
         });
         yPos += paragraphGap;
         
-        // Section 4: Mitigating Circumstances
+        // Section 4: Legal Framework
         doc.setFont('helvetica', 'bold');
-        doc.text('4. Mitigating Circumstances', margin, yPos);
-        yPos += lineHeight;
-        
-        doc.setFont('helvetica', 'normal');
-        const section4Lines = doc.splitTextToSize(data.circumstances, pageWidth - margin * 2);
-        section4Lines.forEach(line => {
-            if (yPos > pageHeight - margin * 2) {
-                doc.addPage();
-                yPos = margin;
-            }
-            doc.text(line, margin, yPos);
-            yPos += lineHeight;
-        });
-        yPos += paragraphGap;
-        
-        // Section 5: Legal Framework
-        doc.setFont('helvetica', 'bold');
-        doc.text('5. Legal Framework', margin, yPos);
+        doc.text('4. Legal Framework', margin, yPos);
         yPos += lineHeight;
         
         doc.setFont('helvetica', 'normal');

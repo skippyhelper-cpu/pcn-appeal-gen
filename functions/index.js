@@ -488,6 +488,29 @@ exports.stripeWebhook = functions
     res.json({ received: true });
 });
 
+// Fetch image as base64 for embedding in PDF
+async function fetchImageAsBase64(url) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+        
+        // Get content type from headers
+        const contentType = response.headers.get('content-type') || 'image/jpeg';
+        
+        // Convert to buffer using arrayBuffer (works in Node.js 18+)
+        const arrayBuffer = await response.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+        const base64 = buffer.toString('base64');
+        
+        return `data:${contentType};base64,${base64}`;
+    } catch (error) {
+        console.error('Error fetching image:', url, error.message);
+        return null;
+    }
+}
+
 // Generate PDF from HTML using puppeteer + chromium (serverless)
 async function generatePDF(appealData) {
     let browser = null;
@@ -503,7 +526,7 @@ async function generatePDF(appealData) {
         const page = await browser.newPage();
         
         // Generate the appeal letter HTML
-        const htmlContent = generateAppealLetterHTML(appealData);
+        const htmlContent = await generateAppealLetterHTML(appealData);
         
         await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
         
@@ -531,13 +554,52 @@ async function generatePDF(appealData) {
 }
 
 // Generate the appeal letter HTML content
-function generateAppealLetterHTML(data) {
+async function generateAppealLetterHTML(data) {
     const date = formatDate(new Date());
     const contraventionDate = formatDate(data.contraventionDate);
     const country = data.country || 'england';
     
     // Get template content based on contravention code
     const templateContent = getTemplateContent(data.contraventionCode, country);
+    
+    // Fetch evidence images as base64
+    let evidenceImagesHtml = '';
+    if (data.evidenceFiles && data.evidenceFiles.length > 0) {
+        const imageFiles = data.evidenceFiles.filter(f => f.type && f.type.startsWith('image/'));
+        
+        if (imageFiles.length > 0) {
+            evidenceImagesHtml = `
+            <div style="margin-top: 40px; page-break-before: always;">
+                <h2 style="font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 20px;">APPENDIX - Supporting Evidence</h2>
+                <p style="margin-bottom: 16px;">The following ${imageFiles.length} image(s) have been provided as supporting evidence:</p>
+            `;
+            
+            for (let i = 0; i < imageFiles.length; i++) {
+                const file = imageFiles[i];
+                const base64 = await fetchImageAsBase64(file.url);
+                
+                if (base64) {
+                    evidenceImagesHtml += `
+                    <div style="margin-bottom: 24px;">
+                        <p style="font-weight: bold; margin-bottom: 8px;">Evidence ${i + 1}: ${escapeHtml(file.name)}</p>
+                        ${file.description ? `<p style="font-style: italic; color: #666; margin-bottom: 8px;">${escapeHtml(file.description)}</p>` : ''}
+                        <img src="${base64}" style="max-width: 100%; height: auto; border: 1px solid #ccc;" />
+                    </div>
+                    `;
+                } else {
+                    evidenceImagesHtml += `
+                    <div style="margin-bottom: 24px;">
+                        <p style="font-weight: bold; margin-bottom: 8px;">Evidence ${i + 1}: ${escapeHtml(file.name)}</p>
+                        ${file.description ? `<p style="font-style: italic; color: #666; margin-bottom: 8px;">${escapeHtml(file.description)}</p>` : ''}
+                        <p style="color: #999; font-style: italic;">[Image could not be loaded]</p>
+                    </div>
+                    `;
+                }
+            }
+            
+            evidenceImagesHtml += `</div>`;
+        }
+    }
     
     return `
 <!DOCTYPE html>
@@ -623,10 +685,7 @@ function generateAppealLetterHTML(data) {
     <h3>3. ${templateContent.section3Title}</h3>
     ${templateContent.section3Content}
     
-    <h3>4. Mitigating Circumstances</h3>
-    <p>${escapeHtml(data.circumstances)}</p>
-    
-    <h3>5. Legal Framework</h3>
+    <h3>4. Legal Framework</h3>
     ${templateContent.legalFramework}
     
     <p>In light of the above, I respectfully request that the Penalty Charge Notice is cancelled in full.</p>
@@ -657,6 +716,7 @@ function generateAppealLetterHTML(data) {
         <p><strong>Date of Contravention:</strong> ${contraventionDate}</p>
         <p><strong>Location:</strong> ${escapeHtml(data.location)}</p>
     </div>
+    ${evidenceImagesHtml}
 </body>
 </html>
     `;
@@ -1167,7 +1227,11 @@ exports.getAppeal = functions.https.onRequest(async (req, res) => {
                 contraventionTime: data.contraventionTime,
                 location: data.location,
                 circumstances: data.circumstances,
-                country: data.country || 'england'
+                country: data.country || 'england',
+                applicantName: data.applicantName || '',
+                applicantAddress: data.applicantAddress || '',
+                applicantPostcode: data.applicantPostcode || '',
+                evidenceFiles: data.evidenceFiles || []
             });
 
         } catch (error) {
@@ -1313,6 +1377,75 @@ exports.resendConfirmationEmail = functions
         } catch (error) {
             console.error('Error resending confirmation email:', error);
             return res.status(500).json({ error: error.message });
+        }
+    });
+});
+
+// Download appeal PDF endpoint
+exports.downloadAppealPDF = functions
+    .runWith({
+        secrets: ["STRIPE_SECRET_KEY"],
+        memory: '1GB',
+        timeoutSeconds: 120
+    })
+    .https.onRequest(async (req, res) => {
+    return cors(req, res, async () => {
+        try {
+            if (req.method !== 'GET') {
+                return res.status(405).json({ error: 'Method not allowed' });
+            }
+            
+            const appealId = req.query.appeal;
+            
+            if (!appealId || typeof appealId !== 'string') {
+                return res.status(400).json({ error: 'Appeal ID is required' });
+            }
+            
+            const validation = validators.appealId(appealId);
+            if (!validation.valid) {
+                return res.status(400).json({
+                    error: 'Invalid appeal ID',
+                    details: validation.errors
+                });
+            }
+
+            let appealDoc;
+            try {
+                appealDoc = await db.collection('appeals').doc(validation.sanitized).get();
+            } catch (dbError) {
+                console.error('Database error fetching appeal:', dbError.message);
+                return res.status(503).json({ error: 'Service temporarily unavailable. Please try again.' });
+            }
+            
+            if (!appealDoc.exists) {
+                return res.status(404).json({ error: 'Appeal not found' });
+            }
+
+            const appealData = appealDoc.data();
+            
+            if (!appealData.paid) {
+                return res.status(403).json({ error: 'Payment not completed' });
+            }
+
+            // Generate PDF
+            const pdfBuffer = await generatePDF(appealData);
+            
+            if (!pdfBuffer) {
+                return res.status(500).json({ error: 'Failed to generate PDF' });
+            }
+
+            // Set response headers for PDF download
+            res.set({
+                'Content-Type': 'application/pdf',
+                'Content-Disposition': `attachment; filename="PCN_Appeal_${appealData.pcnRef.replace(/[^a-zA-Z0-9]/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf"`,
+                'Content-Length': pdfBuffer.length
+            });
+
+            return res.send(pdfBuffer);
+
+        } catch (error) {
+            console.error('Error in downloadAppealPDF:', error);
+            return res.status(500).json({ error: 'An unexpected error occurred. Please try again.' });
         }
     });
 });
